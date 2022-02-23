@@ -1,0 +1,4 @@
+rootProject.name = 'internet-shop'
+
+include 'rest-server'
+include 'gui-client'
