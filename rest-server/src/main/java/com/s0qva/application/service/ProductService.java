@@ -22,6 +22,10 @@ public class ProductService {
         return product.orElseThrow(() -> new NoSuchProductException("There is no product with id = " + id));
     }
 
+    public Product saveProduct(Product product) {
+        return productRepository.save(product);
+    }
+
     @Autowired
     public void setProductRepository(ProductRepository productRepository) {
         this.productRepository = productRepository;
