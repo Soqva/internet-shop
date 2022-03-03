@@ -26,6 +26,12 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    public String deleteProduct(Long id) {
+        Product product = getProduct(id);
+        productRepository.delete(product);
+        return "Product with id = " + id + " has been deleted";
+    }
+
     @Autowired
     public void setProductRepository(ProductRepository productRepository) {
         this.productRepository = productRepository;
