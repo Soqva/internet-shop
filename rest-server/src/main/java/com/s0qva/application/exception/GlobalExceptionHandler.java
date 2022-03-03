@@ -18,10 +18,20 @@ public class GlobalExceptionHandler {
     public ResponseEntity<IncorrectDataContainer> handleNoSuchProductException(NoSuchProductException exception) {
         Map<String, String> exceptions = new HashMap<>();
 
-        exceptions.put("exception_message", exception.getMessage());
+        exceptions.put("no_such_product", exception.getMessage());
         IncorrectDataContainer responseData = new IncorrectDataContainer(exceptions);
 
         return new ResponseEntity<>(responseData, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({UnsavedProductHasIdException.class})
+    public ResponseEntity<IncorrectDataContainer> handleProductAlreadyExistsException(UnsavedProductHasIdException exception) {
+        Map<String, String> exceptions = new HashMap<>();
+
+        exceptions.put("unsaved_product_has_id", exception.getMessage());
+        IncorrectDataContainer responseData = new IncorrectDataContainer(exceptions);
+
+        return new ResponseEntity<>(responseData, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class})

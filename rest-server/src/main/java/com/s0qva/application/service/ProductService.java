@@ -1,6 +1,7 @@
 package com.s0qva.application.service;
 
 import com.s0qva.application.exception.NoSuchProductException;
+import com.s0qva.application.exception.UnsavedProductHasIdException;
 import com.s0qva.application.model.Product;
 import com.s0qva.application.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +23,18 @@ public class ProductService {
         return product.orElseThrow(() -> new NoSuchProductException("There is no product with id = " + id));
     }
 
-    public Product saveProduct(Product product) {
-        return productRepository.save(product);
+    public Long saveProduct(Product product) {
+        if (product.getId() != null) {
+            throw new UnsavedProductHasIdException("It is wrong that unsaved product has id = " + product.getId());
+        }
+
+        Product savedProduct = productRepository.save(product);
+        return savedProduct.getId();
     }
 
-    public String deleteProduct(Long id) {
+    public void deleteProduct(Long id) {
         Product product = getProduct(id);
         productRepository.delete(product);
-        return "Product with id = " + id + " has been deleted";
     }
 
     @Autowired

@@ -8,5 +8,5 @@ import java.util.Map;
 @Data
 @RequiredArgsConstructor
 public class IncorrectDataContainer {
-    private final Map<String, String> exceptions;
+    private final Map<String, String> errors;
 }
