@@ -34,4 +34,9 @@ public class Product {
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonManagedReference
     private ProductDetails details;
+
+    public void addDetails(ProductDetails details) {
+        details.setProduct(this);
+        this.details = details;
+    }
 }
