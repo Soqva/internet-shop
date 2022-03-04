@@ -14,11 +14,14 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({NoSuchProductException.class})
-    public ResponseEntity<IncorrectDataContainer> handleNoSuchProductException(NoSuchProductException exception) {
+    @ExceptionHandler({
+            NoSuchProductException.class,
+            NoSuchUserException.class
+    })
+    public ResponseEntity<IncorrectDataContainer> handleNoSuchEntityException(RuntimeException exception) {
         Map<String, String> exceptions = new HashMap<>();
 
-        exceptions.put("no_such_product", exception.getMessage());
+        exceptions.put("noSuchEntityError", exception.getMessage());
         IncorrectDataContainer responseData = new IncorrectDataContainer(exceptions);
 
         return new ResponseEntity<>(responseData, HttpStatus.NOT_FOUND);
@@ -28,7 +31,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<IncorrectDataContainer> handleProductAlreadyExistsException(UnsavedProductHasIdException exception) {
         Map<String, String> exceptions = new HashMap<>();
 
-        exceptions.put("unsaved_product_has_id", exception.getMessage());
+        exceptions.put("unsavedEntityHasIdError", exception.getMessage());
         IncorrectDataContainer responseData = new IncorrectDataContainer(exceptions);
 
         return new ResponseEntity<>(responseData, HttpStatus.CONFLICT);
@@ -48,6 +51,6 @@ public class GlobalExceptionHandler {
 
         IncorrectDataContainer responseData = new IncorrectDataContainer(exceptions);
 
-        return new ResponseEntity<>(responseData, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(responseData, HttpStatus.CONFLICT);
     }
 }
