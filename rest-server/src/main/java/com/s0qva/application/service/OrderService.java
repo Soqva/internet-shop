@@ -1,6 +1,6 @@
 package com.s0qva.application.service;
 
-import com.s0qva.application.dto.order.OrderReadDto;
+import com.s0qva.application.dto.order.OrderReadingDto;
 import com.s0qva.application.mapper.Mapper;
 import com.s0qva.application.model.Order;
 import com.s0qva.application.repository.OrderRepository;
@@ -8,20 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
     private OrderRepository orderRepository;
-    private Mapper<Order, OrderReadDto> mapper;
+    private Mapper<Order, OrderReadingDto> orderReadDtoMapper;
 
-    public List<OrderReadDto> getAllOrders() {
+    public List<OrderReadingDto> getAllOrders() {
         List<Order> orders = orderRepository.findAll();
 
         return orders.stream()
-                .map(mapper::map)
+                .map(orderReadDtoMapper::map)
                 .collect(Collectors.toList());
     }
 
@@ -31,8 +30,8 @@ public class OrderService {
     }
 
     @Autowired
-    @Qualifier("orderReadMapper")
-    public void setMapper(Mapper<Order, OrderReadDto> mapper) {
-        this.mapper = mapper;
+    @Qualifier("orderReadingMapper")
+    public void setOrderReadDtoMapper(Mapper<Order, OrderReadingDto> orderReadDtoMapper) {
+        this.orderReadDtoMapper = orderReadDtoMapper;
     }
 }

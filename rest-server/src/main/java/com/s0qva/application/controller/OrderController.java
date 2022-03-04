@@ -1,6 +1,6 @@
 package com.s0qva.application.controller;
 
-import com.s0qva.application.dto.order.OrderReadDto;
+import com.s0qva.application.dto.order.OrderReadingDto;
 import com.s0qva.application.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +16,8 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping("/orders")
-    public ResponseEntity<List<OrderReadDto>> getAll() {
-        List<OrderReadDto> orders = orderService.getAllOrders();
+    public ResponseEntity<List<OrderReadingDto>> getAll() {
+        List<OrderReadingDto> orders = orderService.getAllOrders();
         return ResponseEntity.ok(orders);
     }
 

@@ -10,7 +10,8 @@ import java.util.List;
 
 @Data
 @Builder
-public class OrderReadDto {
+public class OrderReadingDto {
+    private Long id;
     private LocalDateTime orderDate;
     private Long customerId;
     private List<Product> products;

@@ -2,6 +2,7 @@ package com.s0qva.application.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -18,6 +19,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(exclude = {"details"})
@@ -26,11 +28,8 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Name is required attribute")
     private String name;
 
-    @NotNull(message = "Price is required attribute")
-    @DecimalMin(value = "0", message = "Price must be non-negative")
     private Double price;
 
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)

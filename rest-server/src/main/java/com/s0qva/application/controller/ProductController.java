@@ -1,6 +1,7 @@
 package com.s0qva.application.controller;
 
-import com.s0qva.application.model.Product;
+import com.s0qva.application.dto.product.ProductCreationDto;
+import com.s0qva.application.dto.product.ProductReadingDto;
 import com.s0qva.application.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,21 +25,23 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getAll() {
-        List<Product> products = productService.getAllProducts();
+    public ResponseEntity<List<ProductReadingDto>> getAll() {
+        List<ProductReadingDto> products = productService.getAllProducts();
+
         return ResponseEntity.ok()
                 .body(products);
     }
 
     @GetMapping("/products/{id}")
-    public ResponseEntity<Product> getOne(@PathVariable Long id) {
-        Product product = productService.getProduct(id);
+    public ResponseEntity<ProductReadingDto> getOne(@PathVariable Long id) {
+        ProductReadingDto product = productService.getProduct(id);
+
         return ResponseEntity.ok()
                 .body(product);
     }
 
     @PostMapping("/products")
-    public ResponseEntity<Void> save(@Valid @RequestBody Product product) {
+    public ResponseEntity<Void> save(@Valid @RequestBody ProductCreationDto product) {
         Long savedProductId = productService.saveProduct(product);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -50,14 +53,16 @@ public class ProductController {
     }
 
     @PutMapping("/products/{id}")
-    public ResponseEntity<Product> update(@PathVariable Long id, @Valid @RequestBody Product product) {
-        Product updatedProduct = productService.updateProduct(id, product);
+    public ResponseEntity<ProductReadingDto> update(@PathVariable Long id, @Valid @RequestBody ProductCreationDto product) {
+        ProductReadingDto updatedProduct = productService.updateProduct(id, product);
+
         return ResponseEntity.ok(updatedProduct);
     }
 
     @DeleteMapping("/products/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         productService.deleteProduct(id);
+
         return ResponseEntity.ok()
                 .build();
     }
