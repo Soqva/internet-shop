@@ -17,7 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class Order {
     private Long id;
 
     @Column(name = "order_date")
-    private LocalTime orderDate;
+    private LocalDateTime orderDate;
 
     @ManyToOne
     @JsonBackReference

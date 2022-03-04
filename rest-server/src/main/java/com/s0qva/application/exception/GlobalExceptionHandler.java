@@ -27,8 +27,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(responseData, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler({UnsavedProductHasIdException.class})
-    public ResponseEntity<IncorrectDataContainer> handleProductAlreadyExistsException(UnsavedProductHasIdException exception) {
+    @ExceptionHandler({
+            UnsavedProductHasIdException.class,
+            UnsavedUserHasIdException.class
+    })
+    public ResponseEntity<IncorrectDataContainer> handleUnsavedEntityHasIdException(RuntimeException exception) {
         Map<String, String> exceptions = new HashMap<>();
 
         exceptions.put("unsavedEntityHasIdError", exception.getMessage());
