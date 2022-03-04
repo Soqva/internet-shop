@@ -32,6 +32,11 @@ public class UserService {
         return savedUser.getId();
     }
 
+    public void deleteUser(Long id) {
+        User user = getUser(id);
+        userRepository.delete(user);
+    }
+
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;

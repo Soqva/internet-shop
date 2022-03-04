@@ -1,5 +1,9 @@
-package com.s0qva.application.exception;
+package com.s0qva.application.exception.handler;
 
+import com.s0qva.application.exception.NoSuchProductException;
+import com.s0qva.application.exception.NoSuchUserException;
+import com.s0qva.application.exception.UnsavedProductHasIdException;
+import com.s0qva.application.exception.UnsavedUserHasIdException;
 import com.s0qva.application.exception.model.IncorrectDataContainer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
