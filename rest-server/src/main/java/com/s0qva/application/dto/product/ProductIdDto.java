@@ -1,18 +1,14 @@
 package com.s0qva.application.dto.product;
 
-import com.s0qva.application.dto.product.detail.ProductDetailsReadingDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class ProductReadingDto {
+public class ProductIdDto {
     private Long id;
-    private String name;
-    private Double price;
-    private ProductDetailsReadingDto details;
 }

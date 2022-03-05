@@ -1,17 +1,15 @@
 package com.s0qva.application.mapper.product;
 
 import com.s0qva.application.dto.product.ProductCreationDto;
-import com.s0qva.application.dto.product.detail.ProductDetailsCreationDto;
 import com.s0qva.application.mapper.Mapper;
+import com.s0qva.application.mapper.product.detail.ProductDetailsCreationToProductDetailsMapper;
 import com.s0qva.application.model.Product;
-import com.s0qva.application.model.ProductDetails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductMapper implements Mapper<ProductCreationDto, Product> {
-    private Mapper<ProductDetailsCreationDto, ProductDetails> mapper;
+public class ProductCreationToProductMapper implements Mapper<ProductCreationDto, Product> {
+    private ProductDetailsCreationToProductDetailsMapper mapper;
 
     @Override
     public Product map(ProductCreationDto productCreationDto) {
@@ -25,8 +23,7 @@ public class ProductMapper implements Mapper<ProductCreationDto, Product> {
     }
 
     @Autowired
-    @Qualifier("productDetailsMapper")
-    public void setMapper(Mapper<ProductDetailsCreationDto, ProductDetails> mapper) {
+    public void setMapper(ProductDetailsCreationToProductDetailsMapper mapper) {
         this.mapper = mapper;
     }
 }

@@ -6,7 +6,7 @@ import com.s0qva.application.model.ProductDetails;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductDetailsReadingMapper implements Mapper<ProductDetails, ProductDetailsReadingDto> {
+public class ProductDetailsToReadingMapper implements Mapper<ProductDetails, ProductDetailsReadingDto> {
 
     @Override
     public ProductDetailsReadingDto map(ProductDetails productDetails) {

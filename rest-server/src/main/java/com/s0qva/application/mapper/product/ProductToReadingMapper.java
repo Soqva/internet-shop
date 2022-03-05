@@ -1,17 +1,15 @@
 package com.s0qva.application.mapper.product;
 
 import com.s0qva.application.dto.product.ProductReadingDto;
-import com.s0qva.application.dto.product.detail.ProductDetailsReadingDto;
 import com.s0qva.application.mapper.Mapper;
+import com.s0qva.application.mapper.product.detail.ProductDetailsToReadingMapper;
 import com.s0qva.application.model.Product;
-import com.s0qva.application.model.ProductDetails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductReadingMapper implements Mapper<Product, ProductReadingDto> {
-    private Mapper<ProductDetails, ProductDetailsReadingDto> productDetailsReadMapper;
+public class ProductToReadingMapper implements Mapper<Product, ProductReadingDto> {
+    private ProductDetailsToReadingMapper productDetailsReadMapper;
 
     @Override
     public ProductReadingDto map(Product product) {
@@ -24,8 +22,7 @@ public class ProductReadingMapper implements Mapper<Product, ProductReadingDto> 
     }
 
     @Autowired
-    @Qualifier("productDetailsReadingMapper")
-    public void setProductDetailsReadMapper(Mapper<ProductDetails, ProductDetailsReadingDto> productDetailsReadMapper) {
+    public void setProductDetailsReadMapper(ProductDetailsToReadingMapper productDetailsReadMapper) {
         this.productDetailsReadMapper = productDetailsReadMapper;
     }
 }
