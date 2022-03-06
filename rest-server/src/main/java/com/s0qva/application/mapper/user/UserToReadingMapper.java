@@ -17,7 +17,7 @@ public class UserToReadingMapper implements Mapper<User, UserReadingDto> {
 
     @Override
     public UserReadingDto map(User user) {
-        final List<OrderReadingDto> orders = user.getOrders()
+        List<OrderReadingDto> orders = user.getOrders()
                 .stream()
                 .map(mapper::map)
                 .collect(Collectors.toList());

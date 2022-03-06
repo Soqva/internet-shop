@@ -1,14 +1,15 @@
 package com.s0qva.application.dto.user;
 
-import com.s0qva.application.dto.order.OrderCreationDto;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.List;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class UserCreationDto {
     private String name;
-    private List<OrderCreationDto> orders;
 }
