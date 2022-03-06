@@ -3,8 +3,7 @@ package com.s0qva.application.service;
 import com.s0qva.application.dto.product.ProductCreationDto;
 import com.s0qva.application.dto.product.ProductReadingDto;
 import com.s0qva.application.exception.NoSuchProductException;
-import com.s0qva.application.mapper.product.ProductCreationToProductMapper;
-import com.s0qva.application.mapper.product.ProductToReadingMapper;
+import com.s0qva.application.mapper.product.GeneralProductMapper;
 import com.s0qva.application.model.Product;
 import com.s0qva.application.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,25 +16,24 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
     private ProductRepository productRepository;
-    private ProductToReadingMapper productToReadingMapper;
-    private ProductCreationToProductMapper productCreationToProductMapper;
+    private GeneralProductMapper productMapper;
 
     public List<ProductReadingDto> getAllProducts() {
         return productRepository.findAll()
                 .stream()
-                .map(productToReadingMapper::map)
+                .map(productMapper::mapProductToProductReadingDto)
                 .collect(Collectors.toList());
     }
 
     public ProductReadingDto getProduct(Long id) {
         Optional<Product> maybeProduct = productRepository.findById(id);
 
-        return maybeProduct.map(productToReadingMapper::map)
+        return maybeProduct.map(productMapper::mapProductToProductReadingDto)
                 .orElseThrow(() -> new NoSuchProductException("There is no product with id = " + id));
     }
 
     public Long saveProduct(ProductCreationDto productCreationDto) {
-        Product product = productCreationToProductMapper.map(productCreationDto);
+        Product product = productMapper.mapProductCreationDtoToProduct(productCreationDto);
         Product savedProduct = productRepository.save(product);
 
         return savedProduct.getId();
@@ -43,8 +41,7 @@ public class ProductService {
 
     public ProductReadingDto updateProduct(Long id, ProductCreationDto productCreationDto) {
         Optional<Product> maybeOldProduct = productRepository.findById(id);
-        Product newProduct = productCreationToProductMapper.map(productCreationDto);
-
+        Product newProduct = productMapper.mapProductCreationDtoToProduct(productCreationDto);
         Product oldProduct = maybeOldProduct.orElseThrow(() -> new NoSuchProductException("There is no product with id = " + id));
 
         newProduct.getDetails().setId(oldProduct.getDetails().getId());
@@ -54,7 +51,7 @@ public class ProductService {
 
         Product updatedProduct = productRepository.save(oldProduct);
 
-        return productToReadingMapper.map(updatedProduct);
+        return productMapper.mapProductToProductReadingDto(updatedProduct);
     }
 
     public void deleteProduct(Long id) {
@@ -70,12 +67,7 @@ public class ProductService {
     }
 
     @Autowired
-    public void setProductReadingMapper(ProductToReadingMapper productToReadingMapper) {
-        this.productToReadingMapper = productToReadingMapper;
-    }
-
-    @Autowired
-    public void setProductMapper(ProductCreationToProductMapper productCreationToProductMapper) {
-        this.productCreationToProductMapper = productCreationToProductMapper;
+    public void setProductMapper(GeneralProductMapper productMapper) {
+        this.productMapper = productMapper;
     }
 }

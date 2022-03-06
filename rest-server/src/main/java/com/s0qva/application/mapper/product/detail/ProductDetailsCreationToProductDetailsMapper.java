@@ -10,6 +10,10 @@ public class ProductDetailsCreationToProductDetailsMapper implements Mapper<Prod
 
     @Override
     public ProductDetails map(ProductDetailsCreationDto productDetailsCreationDto) {
+        if (productDetailsCreationDto == null) {
+            return new ProductDetails();
+        }
+
         return ProductDetails.builder()
                 .description(productDetailsCreationDto.getDescription())
                 .madeIn(productDetailsCreationDto.getMadeIn())
