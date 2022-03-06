@@ -1,6 +1,7 @@
 package com.s0qva.application.service;
 
 import com.s0qva.application.dto.user.UserCreationDto;
+import com.s0qva.application.dto.user.UserIdDto;
 import com.s0qva.application.dto.user.UserReadingDto;
 import com.s0qva.application.exception.NoSuchUserException;
 import com.s0qva.application.model.User;
@@ -32,11 +33,11 @@ public class UserService {
                 .orElseThrow(() -> new NoSuchUserException("There is no user with id = " + id));
     }
 
-    public Long saveUser(UserCreationDto userCreationDto) {
+    public UserIdDto saveUser(UserCreationDto userCreationDto) {
         User user = userMapper.mapUserCreationDtoToUser(userCreationDto);
         User savedUser = userRepository.save(user);
 
-        return savedUser.getId();
+        return userMapper.mapUserToUserIdDto(savedUser);
     }
 
     public UserReadingDto updateUser(Long id, UserCreationDto userCreationDto) {

@@ -1,6 +1,7 @@
 package com.s0qva.application.controller;
 
 import com.s0qva.application.dto.user.UserCreationDto;
+import com.s0qva.application.dto.user.UserIdDto;
 import com.s0qva.application.dto.user.UserReadingDto;
 import com.s0qva.application.model.User;
 import com.s0qva.application.service.UserService;
@@ -40,10 +41,10 @@ public class UserController {
 
     @PostMapping("/users")
     public ResponseEntity<Void> save(@RequestBody UserCreationDto user) {
-        Long savedUserId = userService.saveUser(user);
+        UserIdDto savedUser = userService.saveUser(user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(savedUserId)
+                .buildAndExpand(savedUser.getId())
                 .toUri();
 
         return ResponseEntity.created(location)

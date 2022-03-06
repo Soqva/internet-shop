@@ -12,14 +12,17 @@ public class GeneralProductMapper {
     private final ProductCreationToProductMapper productCreationToProductMapper;
     private final ProductToReadingMapper productToReadingMapper;
     private final ProductIdToProductMapper productIdToProductMapper;
+    private final ProductToProductIdMapper productToProductIdMapper;
 
     @Autowired
     public GeneralProductMapper(ProductCreationToProductMapper productCreationToProductMapper,
                                 ProductToReadingMapper productToReadingMapper,
-                                ProductIdToProductMapper productIdToProductMapper) {
+                                ProductIdToProductMapper productIdToProductMapper,
+                                ProductToProductIdMapper productToProductIdMapper) {
         this.productCreationToProductMapper = productCreationToProductMapper;
         this.productToReadingMapper = productToReadingMapper;
         this.productIdToProductMapper = productIdToProductMapper;
+        this.productToProductIdMapper = productToProductIdMapper;
     }
 
     public ProductReadingDto mapProductToProductReadingDto(Product product) {
@@ -32,5 +35,9 @@ public class GeneralProductMapper {
 
     public Product mapProductIdDtoToProduct(ProductIdDto productIdDto) {
         return productIdToProductMapper.map(productIdDto);
+    }
+
+    public ProductIdDto mapProductToProductIdDto(Product product) {
+        return productToProductIdMapper.map(product);
     }
 }

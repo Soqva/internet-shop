@@ -2,7 +2,8 @@ package com.s0qva.application.mapper.order;
 
 import com.s0qva.application.dto.order.OrderCreationDto;
 import com.s0qva.application.mapper.Mapper;
-import com.s0qva.application.mapper.product.ProductCreationToProductMapper;
+import com.s0qva.application.mapper.product.ProductIdToProductMapper;
+import com.s0qva.application.mapper.user.UserIdToUserMapper;
 import com.s0qva.application.model.Order;
 import com.s0qva.application.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class OrderCreationToOrderMapper implements Mapper<OrderCreationDto, Order> {
-    private ProductCreationToProductMapper mapper;
+    private ProductIdToProductMapper mapper;
+    private UserIdToUserMapper userIdToUserMapper;
 
     @Override
     public Order map(OrderCreationDto orderCreationDto) {
@@ -23,13 +25,19 @@ public class OrderCreationToOrderMapper implements Mapper<OrderCreationDto, Orde
                 .collect(Collectors.toList());
 
         return Order.builder()
+                .user(userIdToUserMapper.map(orderCreationDto.getUserId()))
                 .orderDate(orderCreationDto.getOrderDate())
                 .products(products)
                 .build();
     }
 
     @Autowired
-    public void setProductMapper(ProductCreationToProductMapper mapper) {
+    public void setMapper(ProductIdToProductMapper mapper) {
         this.mapper = mapper;
+    }
+
+    @Autowired
+    public void setUserIdToUserMapper(UserIdToUserMapper userIdToUserMapper) {
+        this.userIdToUserMapper = userIdToUserMapper;
     }
 }

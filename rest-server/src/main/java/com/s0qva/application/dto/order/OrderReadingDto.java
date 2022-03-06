@@ -2,6 +2,7 @@ package com.s0qva.application.dto.order;
 
 
 import com.s0qva.application.dto.product.ProductReadingDto;
+import com.s0qva.application.dto.user.UserIdDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,7 @@ import java.util.List;
 @Builder
 public class OrderReadingDto {
     private Long id;
-    private Long userId;
+    private UserIdDto userId;
     private LocalDateTime orderDate;
     private List<ProductReadingDto> products;
 }

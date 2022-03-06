@@ -1,6 +1,7 @@
 package com.s0qva.application.service;
 
 import com.s0qva.application.dto.product.ProductCreationDto;
+import com.s0qva.application.dto.product.ProductIdDto;
 import com.s0qva.application.dto.product.ProductReadingDto;
 import com.s0qva.application.exception.NoSuchProductException;
 import com.s0qva.application.mapper.product.GeneralProductMapper;
@@ -32,17 +33,17 @@ public class ProductService {
                 .orElseThrow(() -> new NoSuchProductException("There is no product with id = " + id));
     }
 
-    public Long saveProduct(ProductCreationDto productCreationDto) {
+    public ProductIdDto saveProduct(ProductCreationDto productCreationDto) {
         Product product = productMapper.mapProductCreationDtoToProduct(productCreationDto);
         Product savedProduct = productRepository.save(product);
 
-        return savedProduct.getId();
+        return productMapper.mapProductToProductIdDto(savedProduct);
     }
 
     public ProductReadingDto updateProduct(Long id, ProductCreationDto productCreationDto) {
         Optional<Product> maybeOldProduct = productRepository.findById(id);
-        Product newProduct = productMapper.mapProductCreationDtoToProduct(productCreationDto);
         Product oldProduct = maybeOldProduct.orElseThrow(() -> new NoSuchProductException("There is no product with id = " + id));
+        Product newProduct = productMapper.mapProductCreationDtoToProduct(productCreationDto);
 
         newProduct.getDetails().setId(oldProduct.getDetails().getId());
         oldProduct.setName(newProduct.getName());
@@ -56,8 +57,8 @@ public class ProductService {
 
     public void deleteProduct(Long id) {
         Optional<Product> maybeProduct = productRepository.findById(id);
-
         Product product = maybeProduct.orElseThrow(() -> new NoSuchProductException("There is no product with id = " + id));
+
         productRepository.delete(product);
     }
 

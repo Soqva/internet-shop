@@ -1,6 +1,7 @@
 package com.s0qva.application.controller;
 
 import com.s0qva.application.dto.product.ProductCreationDto;
+import com.s0qva.application.dto.product.ProductIdDto;
 import com.s0qva.application.dto.product.ProductReadingDto;
 import com.s0qva.application.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +43,10 @@ public class ProductController {
 
     @PostMapping("/products")
     public ResponseEntity<Void> save(@Valid @RequestBody ProductCreationDto product) {
-        Long savedProductId = productService.saveProduct(product);
+        ProductIdDto savedProduct = productService.saveProduct(product);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(savedProductId)
+                .buildAndExpand(savedProduct.getId())
                 .toUri();
 
         return ResponseEntity.created(location)

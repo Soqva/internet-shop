@@ -2,8 +2,6 @@ package com.s0qva.application.exception.handler;
 
 import com.s0qva.application.exception.NoSuchProductException;
 import com.s0qva.application.exception.NoSuchUserException;
-import com.s0qva.application.exception.UnsavedProductHasIdException;
-import com.s0qva.application.exception.UnsavedUserHasIdException;
 import com.s0qva.application.exception.model.IncorrectDataContainer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,19 +27,6 @@ public class GlobalExceptionHandler {
         IncorrectDataContainer responseData = new IncorrectDataContainer(exceptions);
 
         return new ResponseEntity<>(responseData, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler({
-            UnsavedProductHasIdException.class,
-            UnsavedUserHasIdException.class
-    })
-    public ResponseEntity<IncorrectDataContainer> handleUnsavedEntityHasIdException(RuntimeException exception) {
-        Map<String, String> exceptions = new HashMap<>();
-
-        exceptions.put("unsavedEntityHasIdError", exception.getMessage());
-        IncorrectDataContainer responseData = new IncorrectDataContainer(exceptions);
-
-        return new ResponseEntity<>(responseData, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class})

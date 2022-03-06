@@ -15,11 +15,11 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Builder
 public class ProductCreationDto {
-    @NotBlank(message = "Name is required attribute")
+    @NotBlank(message = "the product must has a specific name")
     private String name;
 
-    @NotNull(message = "Price is required attribute")
-    @DecimalMin(value = "0", message = "Price must be non-negative")
+    @NotNull(message = "the product must has a specific price")
+    @DecimalMin(value = "0", message = "the product's price must be non-negative")
     private Double price;
 
     private ProductDetailsCreationDto details;
