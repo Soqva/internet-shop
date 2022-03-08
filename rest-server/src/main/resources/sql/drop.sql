@@ -1,0 +1,5 @@
+DROP TABLE users CASCADE;
+DROP TABLE product CASCADE;
+DROP TABLE product_details CASCADE;
+DROP TABLE orders CASCADE;
+DROP TABLE orders_product CASCADE;
