@@ -10,7 +10,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProductCreationToProductMapper implements Mapper<ProductCreationDto, Product> {
-    private ProductDetailsCreationToProductDetailsMapper mapper;
+    private final ProductDetailsCreationToProductDetailsMapper productDetailsCreationToProductDetailsMapper;
+
+    @Autowired
+    public ProductCreationToProductMapper(ProductDetailsCreationToProductDetailsMapper productDetailsCreationToProductDetailsMapper) {
+        this.productDetailsCreationToProductDetailsMapper = productDetailsCreationToProductDetailsMapper;
+    }
 
     @Override
     public Product map(ProductCreationDto productCreationDto) {
@@ -18,13 +23,8 @@ public class ProductCreationToProductMapper implements Mapper<ProductCreationDto
                 .name(productCreationDto.getName())
                 .price(productCreationDto.getPrice())
                 .build();
-        product.addDetails(mapper.map(productCreationDto.getDetails()));
+        product.addDetails(productDetailsCreationToProductDetailsMapper.map(productCreationDto.getDetails()));
 
         return product;
-    }
-
-    @Autowired
-    public void setMapper(ProductDetailsCreationToProductDetailsMapper mapper) {
-        this.mapper = mapper;
     }
 }

@@ -17,8 +17,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
-    private UserRepository userRepository;
-    private GeneralUserMapper userMapper;
+    private final UserRepository userRepository;
+    private final GeneralUserMapper userMapper;
+
+    @Autowired
+    public UserService(UserRepository userRepository, GeneralUserMapper userMapper) {
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
+    }
 
     public List<UserReadingDto> getAllUsers() {
         return userRepository.findAll()
@@ -65,15 +71,5 @@ public class UserService {
                 new NoSuchUserException(DefaultExceptionMessage.NO_SUCH_USER_WITH_ID.getMessage() + id));
 
         userRepository.delete(user);
-    }
-
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    @Autowired
-    public void setUserMapper(GeneralUserMapper userMapper) {
-        this.userMapper = userMapper;
     }
 }

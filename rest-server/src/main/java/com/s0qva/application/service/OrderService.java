@@ -17,8 +17,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
-    private OrderRepository orderRepository;
-    private GeneralOrderMapper orderMapper;
+    private final OrderRepository orderRepository;
+    private final GeneralOrderMapper orderMapper;
+
+    @Autowired
+    public OrderService(OrderRepository orderRepository, GeneralOrderMapper orderMapper) {
+        this.orderRepository = orderRepository;
+        this.orderMapper = orderMapper;
+    }
 
     public List<OrderReadingDto> getAllOrders() {
         List<Order> orders = orderRepository.findAll();
@@ -49,15 +55,5 @@ public class OrderService {
                 new NoSuchProductException(DefaultExceptionMessage.NO_SUCH_ORDER_WITH_ID.getMessage() + id));
 
         orderRepository.delete(order);
-    }
-
-    @Autowired
-    public void setOrderRepository(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
-    }
-
-    @Autowired
-    public void setOrderMapper(GeneralOrderMapper orderMapper) {
-        this.orderMapper = orderMapper;
     }
 }

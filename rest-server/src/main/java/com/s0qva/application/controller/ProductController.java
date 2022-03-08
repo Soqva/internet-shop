@@ -23,7 +23,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1")
 public class ProductController {
-    private ProductService productService;
+    private final ProductService productService;
+
+    @Autowired
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @GetMapping("/products")
     public ResponseEntity<List<ProductReadingDto>> getAll() {
@@ -66,10 +71,5 @@ public class ProductController {
 
         return ResponseEntity.ok()
                 .build();
-    }
-
-    @Autowired
-    public void setProductService(ProductService productService) {
-        this.productService = productService;
     }
 }

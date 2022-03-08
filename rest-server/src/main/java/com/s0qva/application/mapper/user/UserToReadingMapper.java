@@ -13,13 +13,18 @@ import java.util.stream.Collectors;
 
 @Component
 public class UserToReadingMapper implements Mapper<User, UserReadingDto> {
-    private OrderToReadingMapper mapper;
+    private final OrderToReadingMapper orderToReadingMapper;
+
+    @Autowired
+    public UserToReadingMapper(OrderToReadingMapper orderToReadingMapper) {
+        this.orderToReadingMapper = orderToReadingMapper;
+    }
 
     @Override
     public UserReadingDto map(User user) {
         List<OrderReadingDto> orders = user.getOrders()
                 .stream()
-                .map(mapper::map)
+                .map(orderToReadingMapper::map)
                 .collect(Collectors.toList());
 
         return UserReadingDto.builder()
@@ -31,10 +36,5 @@ public class UserToReadingMapper implements Mapper<User, UserReadingDto> {
                 .banned(user.isBanned())
                 .orders(orders)
                 .build();
-    }
-
-    @Autowired
-    public void setMapper(OrderToReadingMapper mapper) {
-        this.mapper = mapper;
     }
 }

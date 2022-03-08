@@ -17,8 +17,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
-    private ProductRepository productRepository;
-    private GeneralProductMapper productMapper;
+    private final ProductRepository productRepository;
+    private final GeneralProductMapper productMapper;
+
+    @Autowired
+    public ProductService(ProductRepository productRepository, GeneralProductMapper productMapper) {
+        this.productRepository = productRepository;
+        this.productMapper = productMapper;
+    }
 
     public List<ProductReadingDto> getAllProducts() {
         return productRepository.findAll()
@@ -64,15 +70,5 @@ public class ProductService {
                 new NoSuchProductException(DefaultExceptionMessage.NO_SUCH_PRODUCT_WITH_ID.getMessage() + id));
 
         productRepository.delete(product);
-    }
-
-    @Autowired
-    public void setProductRepository(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-
-    @Autowired
-    public void setProductMapper(GeneralProductMapper productMapper) {
-        this.productMapper = productMapper;
     }
 }

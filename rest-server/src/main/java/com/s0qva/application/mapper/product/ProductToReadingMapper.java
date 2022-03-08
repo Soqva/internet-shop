@@ -9,7 +9,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProductToReadingMapper implements Mapper<Product, ProductReadingDto> {
-    private ProductDetailsToReadingMapper productDetailsReadMapper;
+    private final ProductDetailsToReadingMapper productDetailsToReadingMapper;
+
+    @Autowired
+    public ProductToReadingMapper(ProductDetailsToReadingMapper productDetailsToReadingMapper) {
+        this.productDetailsToReadingMapper = productDetailsToReadingMapper;
+    }
 
     @Override
     public ProductReadingDto map(Product product) {
@@ -17,12 +22,7 @@ public class ProductToReadingMapper implements Mapper<Product, ProductReadingDto
                 .id(product.getId())
                 .name(product.getName())
                 .price(product.getPrice())
-                .details(productDetailsReadMapper.map(product.getDetails()))
+                .details(productDetailsToReadingMapper.map(product.getDetails()))
                 .build();
-    }
-
-    @Autowired
-    public void setProductDetailsReadMapper(ProductDetailsToReadingMapper productDetailsReadMapper) {
-        this.productDetailsReadMapper = productDetailsReadMapper;
     }
 }

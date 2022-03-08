@@ -14,14 +14,21 @@ import java.util.stream.Collectors;
 
 @Component
 public class OrderCreationToOrderMapper implements Mapper<OrderCreationDto, Order> {
-    private ProductIdToProductMapper mapper;
-    private UserIdToUserMapper userIdToUserMapper;
+    private final ProductIdToProductMapper productIdToProductMapper;
+    private final UserIdToUserMapper userIdToUserMapper;
+
+    @Autowired
+    public OrderCreationToOrderMapper(ProductIdToProductMapper productIdToProductMapper,
+                                      UserIdToUserMapper userIdToUserMapper) {
+        this.productIdToProductMapper = productIdToProductMapper;
+        this.userIdToUserMapper = userIdToUserMapper;
+    }
 
     @Override
     public Order map(OrderCreationDto orderCreationDto) {
         List<Product> products = orderCreationDto.getProducts()
                 .stream()
-                .map(mapper::map)
+                .map(productIdToProductMapper::map)
                 .collect(Collectors.toList());
 
         return Order.builder()
@@ -30,15 +37,5 @@ public class OrderCreationToOrderMapper implements Mapper<OrderCreationDto, Orde
                 .status(orderCreationDto.getStatus())
                 .products(products)
                 .build();
-    }
-
-    @Autowired
-    public void setMapper(ProductIdToProductMapper mapper) {
-        this.mapper = mapper;
-    }
-
-    @Autowired
-    public void setUserIdToUserMapper(UserIdToUserMapper userIdToUserMapper) {
-        this.userIdToUserMapper = userIdToUserMapper;
     }
 }

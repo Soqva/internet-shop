@@ -22,7 +22,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1")
 public class OrderController {
-    private OrderService orderService;
+    private final OrderService orderService;
+
+    @Autowired
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @GetMapping("/orders")
     public ResponseEntity<List<OrderReadingDto>> getAll() {
@@ -56,10 +61,5 @@ public class OrderController {
 
         return ResponseEntity.ok()
                 .build();
-    }
-
-    @Autowired
-    public void setOrderService(OrderService orderService) {
-        this.orderService = orderService;
     }
 }

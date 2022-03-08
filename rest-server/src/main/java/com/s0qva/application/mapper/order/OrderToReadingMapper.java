@@ -14,8 +14,15 @@ import java.util.stream.Collectors;
 
 @Component
 public class OrderToReadingMapper implements Mapper<Order, OrderReadingDto> {
-    private ProductToReadingMapper productToReadingMapper;
-    private UserToUserIdMapper userToUserIdMapper;
+    private final ProductToReadingMapper productToReadingMapper;
+    private final UserToUserIdMapper userToUserIdMapper;
+
+    @Autowired
+    public OrderToReadingMapper(ProductToReadingMapper productToReadingMapper,
+                                UserToUserIdMapper userToUserIdMapper) {
+        this.productToReadingMapper = productToReadingMapper;
+        this.userToUserIdMapper = userToUserIdMapper;
+    }
 
     @Override
     public OrderReadingDto map(Order order) {
@@ -31,15 +38,5 @@ public class OrderToReadingMapper implements Mapper<Order, OrderReadingDto> {
                 .status(order.getStatus())
                 .products(orders)
                 .build();
-    }
-
-    @Autowired
-    public void setProductToReadingMapper(ProductToReadingMapper productToReadingMapper) {
-        this.productToReadingMapper = productToReadingMapper;
-    }
-
-    @Autowired
-    public void setUserToUserIdMapper(UserToUserIdMapper userToUserIdMapper) {
-        this.userToUserIdMapper = userToUserIdMapper;
     }
 }

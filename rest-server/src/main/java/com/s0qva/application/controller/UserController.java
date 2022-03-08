@@ -3,7 +3,6 @@ package com.s0qva.application.controller;
 import com.s0qva.application.dto.user.UserCreationDto;
 import com.s0qva.application.dto.user.UserIdDto;
 import com.s0qva.application.dto.user.UserReadingDto;
-import com.s0qva.application.model.User;
 import com.s0qva.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {
-    private UserService userService;
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/users")
     public ResponseEntity<List<UserReadingDto>> getAll() {
@@ -64,10 +68,5 @@ public class UserController {
 
         return ResponseEntity.ok()
                 .build();
-    }
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
     }
 }
