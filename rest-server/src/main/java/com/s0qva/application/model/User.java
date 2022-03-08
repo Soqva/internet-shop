@@ -1,6 +1,7 @@
 package com.s0qva.application.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.s0qva.application.model.enumeration.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,7 +30,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String username;
+
+    private String firstName;
+
+    private String lastName;
+
+    private UserRole role;
+
+    private Boolean banned;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
@@ -39,10 +48,5 @@ public class User {
     public void addOrder(Order order) {
         orders.add(order);
         order.setUser(this);
-    }
-
-    public void updateOrders(List<Order> orders) {
-        this.orders = orders;
-        orders.forEach((order) -> order.setUser(this));
     }
 }

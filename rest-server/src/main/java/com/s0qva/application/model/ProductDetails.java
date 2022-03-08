@@ -1,6 +1,7 @@
 package com.s0qva.application.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.s0qva.application.model.enumeration.Country;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +10,8 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +34,8 @@ public class ProductDetails {
     private String description;
 
     @Column(name = "made_in")
-    private String madeIn;
+    @Enumerated(EnumType.STRING)
+    private Country madeIn;
 
     @OneToOne
     @JoinColumn
