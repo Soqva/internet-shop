@@ -24,7 +24,11 @@ public class UserToReadingMapper implements Mapper<User, UserReadingDto> {
 
         return UserReadingDto.builder()
                 .id(user.getId())
-                .name(user.getName())
+                .username(user.getUsername())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .role(user.getRole())
+                .banned(user.isBanned())
                 .orders(orders)
                 .build();
     }

@@ -28,6 +28,7 @@ public class OrderToReadingMapper implements Mapper<Order, OrderReadingDto> {
                 .id(order.getId())
                 .userId(userToUserIdMapper.map(order.getUser()))
                 .orderDate(order.getOrderDate())
+                .status(order.getStatus())
                 .products(orders)
                 .build();
     }

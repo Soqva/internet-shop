@@ -10,8 +10,17 @@ public class UserCreationToUserMapper implements Mapper<UserCreationDto, User> {
 
     @Override
     public User map(UserCreationDto userCreationDto) {
-        return User.builder()
-                .name(userCreationDto.getName())
+        User user = User.builder()
+                .username(userCreationDto.getUsername())
+                .firstName(userCreationDto.getFirstName())
+                .lastName(userCreationDto.getLastName())
+                .banned(userCreationDto.isBanned())
                 .build();
+
+        if (userCreationDto.getRole() != null) {
+            user.setRole(userCreationDto.getRole());
+        }
+
+        return user;
     }
 }

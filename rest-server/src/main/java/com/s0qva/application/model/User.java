@@ -9,7 +9,10 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,10 +35,13 @@ public class User {
 
     private String username;
 
+    @Column(name = "firstname")
     private String firstName;
 
+    @Column(name = "lastname")
     private String lastName;
 
+    @Enumerated(EnumType.STRING)
     @Builder.Default
     private UserRole role = UserRole.USER;
 

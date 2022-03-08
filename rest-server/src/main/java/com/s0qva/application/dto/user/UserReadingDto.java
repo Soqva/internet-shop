@@ -19,5 +19,6 @@ public class UserReadingDto {
     private String firstName;
     private String lastName;
     private UserRole role;
+    private boolean banned;
     private List<OrderReadingDto> orders;
 }

@@ -42,7 +42,8 @@ public class Order {
     private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    @Builder.Default
+    private OrderStatus status = OrderStatus.WAITING;
 
     @ManyToOne
     @JsonBackReference

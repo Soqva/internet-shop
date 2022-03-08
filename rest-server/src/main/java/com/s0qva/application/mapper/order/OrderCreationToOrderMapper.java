@@ -27,6 +27,7 @@ public class OrderCreationToOrderMapper implements Mapper<OrderCreationDto, Orde
         return Order.builder()
                 .user(userIdToUserMapper.map(orderCreationDto.getUserId()))
                 .orderDate(orderCreationDto.getOrderDate())
+                .status(orderCreationDto.getStatus())
                 .products(products)
                 .build();
     }

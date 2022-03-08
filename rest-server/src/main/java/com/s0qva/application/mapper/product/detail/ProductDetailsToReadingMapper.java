@@ -12,12 +12,12 @@ public class ProductDetailsToReadingMapper implements Mapper<ProductDetails, Pro
     public ProductDetailsReadingDto map(ProductDetails productDetails) {
         if (productDetails != null) {
             return ProductDetailsReadingDto.builder()
-                    .id(productDetails.getId())
-                    .description(productDetails.getDescription())
-                    .madeIn(productDetails.getMadeIn())
-                    .build();
+                            .id(productDetails.getId())
+                            .description(productDetails.getDescription())
+                            .madeIn(productDetails.getMadeIn())
+                            .build();
         }
-        return ProductDetailsReadingDto.builder()
-                .build();
+
+        return new ProductDetailsReadingDto();
     }
 }

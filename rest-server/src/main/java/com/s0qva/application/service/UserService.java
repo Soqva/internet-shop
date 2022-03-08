@@ -45,7 +45,11 @@ public class UserService {
         User oldUser = maybeOldUser.orElseThrow(() -> new NoSuchUserException("There is no user with id = " + id));
         User newUser = userMapper.mapUserCreationDtoToUser(userCreationDto);
 
-        oldUser.setName(newUser.getName());
+        oldUser.setUsername(newUser.getUsername());
+        oldUser.setFirstName(newUser.getFirstName());
+        oldUser.setLastName(newUser.getLastName());
+        oldUser.setRole(newUser.getRole());
+        oldUser.setBanned(newUser.isBanned());
 
         User updatedUser = userRepository.save(oldUser);
 
