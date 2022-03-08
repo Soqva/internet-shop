@@ -4,6 +4,7 @@ import com.s0qva.application.dto.user.UserCreationDto;
 import com.s0qva.application.dto.user.UserIdDto;
 import com.s0qva.application.dto.user.UserReadingDto;
 import com.s0qva.application.exception.NoSuchUserException;
+import com.s0qva.application.exception.model.enumeration.DefaultExceptionMessage;
 import com.s0qva.application.model.User;
 import com.s0qva.application.repository.UserRepository;
 import com.s0qva.application.mapper.user.GeneralUserMapper;
@@ -30,7 +31,8 @@ public class UserService {
         Optional<User> maybeUser = userRepository.findById(id);
 
         return maybeUser.map(userMapper::mapUserToUserReadingDto)
-                .orElseThrow(() -> new NoSuchUserException("There is no user with id = " + id));
+                .orElseThrow(() ->
+                        new NoSuchUserException(DefaultExceptionMessage.NO_SUCH_USER_WITH_ID.getMessage() + id));
     }
 
     public UserIdDto saveUser(UserCreationDto userCreationDto) {
@@ -42,7 +44,8 @@ public class UserService {
 
     public UserReadingDto updateUser(Long id, UserCreationDto userCreationDto) {
         Optional<User> maybeOldUser = userRepository.findById(id);
-        User oldUser = maybeOldUser.orElseThrow(() -> new NoSuchUserException("There is no user with id = " + id));
+        User oldUser = maybeOldUser.orElseThrow(() ->
+                new NoSuchUserException(DefaultExceptionMessage.NO_SUCH_USER_WITH_ID.getMessage() + id));
         User newUser = userMapper.mapUserCreationDtoToUser(userCreationDto);
 
         oldUser.setUsername(newUser.getUsername());
@@ -58,7 +61,8 @@ public class UserService {
 
     public void deleteUser(Long id) {
         Optional<User> maybeUser = userRepository.findById(id);
-        User user = maybeUser.orElseThrow(() -> new NoSuchUserException("There is no user with id = " + id));
+        User user = maybeUser.orElseThrow(() ->
+                new NoSuchUserException(DefaultExceptionMessage.NO_SUCH_USER_WITH_ID.getMessage() + id));
 
         userRepository.delete(user);
     }

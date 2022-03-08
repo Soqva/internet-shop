@@ -4,6 +4,7 @@ import com.s0qva.application.dto.order.OrderCreationDto;
 import com.s0qva.application.dto.order.OrderIdDto;
 import com.s0qva.application.dto.order.OrderReadingDto;
 import com.s0qva.application.exception.NoSuchProductException;
+import com.s0qva.application.exception.model.enumeration.DefaultExceptionMessage;
 import com.s0qva.application.mapper.order.GeneralOrderMapper;
 import com.s0qva.application.model.Order;
 import com.s0qva.application.repository.OrderRepository;
@@ -31,7 +32,8 @@ public class OrderService {
         Optional<Order> maybeOrder = orderRepository.findById(id);
 
         return maybeOrder.map(orderMapper::mapOrderToOrderReadingDto)
-                .orElseThrow(() -> new NoSuchProductException("There is no order with id = " + id));
+                .orElseThrow(() ->
+                        new NoSuchProductException(DefaultExceptionMessage.NO_SUCH_ORDER_WITH_ID.getMessage() + id));
     }
 
     public OrderIdDto saveOrder(OrderCreationDto orderCreationDto) {
@@ -43,7 +45,8 @@ public class OrderService {
 
     public void deleteOrder(Long id) {
         Optional<Order> maybeOrder = orderRepository.findById(id);
-        Order order = maybeOrder.orElseThrow(() -> new NoSuchProductException("There is no order with id = " + id));
+        Order order = maybeOrder.orElseThrow(() ->
+                new NoSuchProductException(DefaultExceptionMessage.NO_SUCH_ORDER_WITH_ID.getMessage() + id));
 
         orderRepository.delete(order);
     }

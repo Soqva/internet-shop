@@ -4,6 +4,7 @@ import com.s0qva.application.dto.product.ProductCreationDto;
 import com.s0qva.application.dto.product.ProductIdDto;
 import com.s0qva.application.dto.product.ProductReadingDto;
 import com.s0qva.application.exception.NoSuchProductException;
+import com.s0qva.application.exception.model.enumeration.DefaultExceptionMessage;
 import com.s0qva.application.mapper.product.GeneralProductMapper;
 import com.s0qva.application.model.Product;
 import com.s0qva.application.repository.ProductRepository;
@@ -30,7 +31,8 @@ public class ProductService {
         Optional<Product> maybeProduct = productRepository.findById(id);
 
         return maybeProduct.map(productMapper::mapProductToProductReadingDto)
-                .orElseThrow(() -> new NoSuchProductException("There is no product with id = " + id));
+                .orElseThrow(() ->
+                        new NoSuchProductException(DefaultExceptionMessage.NO_SUCH_PRODUCT_WITH_ID.getMessage() + id));
     }
 
     public ProductIdDto saveProduct(ProductCreationDto productCreationDto) {
@@ -42,7 +44,8 @@ public class ProductService {
 
     public ProductReadingDto updateProduct(Long id, ProductCreationDto productCreationDto) {
         Optional<Product> maybeOldProduct = productRepository.findById(id);
-        Product oldProduct = maybeOldProduct.orElseThrow(() -> new NoSuchProductException("There is no product with id = " + id));
+        Product oldProduct = maybeOldProduct.orElseThrow(() ->
+                new NoSuchProductException(DefaultExceptionMessage.NO_SUCH_PRODUCT_WITH_ID.getMessage() + id));
         Product newProduct = productMapper.mapProductCreationDtoToProduct(productCreationDto);
 
         newProduct.getDetails().setId(oldProduct.getDetails().getId());
@@ -57,7 +60,8 @@ public class ProductService {
 
     public void deleteProduct(Long id) {
         Optional<Product> maybeProduct = productRepository.findById(id);
-        Product product = maybeProduct.orElseThrow(() -> new NoSuchProductException("There is no product with id = " + id));
+        Product product = maybeProduct.orElseThrow(() ->
+                new NoSuchProductException(DefaultExceptionMessage.NO_SUCH_PRODUCT_WITH_ID.getMessage() + id));
 
         productRepository.delete(product);
     }
