@@ -36,9 +36,10 @@ public class User {
 
     private String lastName;
 
-    private UserRole role;
+    @Builder.Default
+    private UserRole role = UserRole.USER;
 
-    private Boolean banned;
+    private boolean banned;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference

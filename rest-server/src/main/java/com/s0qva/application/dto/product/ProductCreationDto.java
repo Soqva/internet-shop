@@ -6,9 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 @Data
 @NoArgsConstructor
@@ -19,7 +19,7 @@ public class ProductCreationDto {
     private String name;
 
     @NotNull(message = "the product must has a specific price")
-    @DecimalMin(value = "0", message = "the product's price must be non-negative")
+    @PositiveOrZero(message = "the product's price must be non-negative")
     private Double price;
 
     private ProductDetailsCreationDto details;

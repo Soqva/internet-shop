@@ -1,5 +1,6 @@
 package com.s0qva.application.dto.product.detail;
 
+import com.s0qva.application.model.enumeration.Country;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,5 +12,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ProductDetailsCreationDto {
     private String description;
-    private String madeIn;
+    private Country madeIn;
 }
