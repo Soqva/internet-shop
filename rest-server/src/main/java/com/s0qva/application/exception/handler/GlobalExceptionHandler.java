@@ -1,5 +1,6 @@
 package com.s0qva.application.exception.handler;
 
+import com.s0qva.application.exception.NoSuchOrderException;
 import com.s0qva.application.exception.NoSuchProductException;
 import com.s0qva.application.exception.NoSuchUserException;
 import com.s0qva.application.exception.model.IncorrectDataContainer;
@@ -18,7 +19,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({
             NoSuchProductException.class,
-            NoSuchUserException.class
+            NoSuchUserException.class,
+            NoSuchOrderException.class
     })
     public ResponseEntity<IncorrectDataContainer> handleNoSuchEntityException(RuntimeException exception) {
         Map<String, String> exceptions = new HashMap<>();

@@ -51,7 +51,7 @@ class ProductServiceTest {
                 new Product(),
                 new Product()
         );
-        List<ProductReadingDto> expectedProductsReadingDto = List.of(
+        List<ProductReadingDto> expectedProductReadingDtoList = List.of(
                 new ProductReadingDto(),
                 new ProductReadingDto(),
                 new ProductReadingDto()
@@ -62,24 +62,24 @@ class ProductServiceTest {
         when(generalProductMapper.mapProductToProductReadingDto(any(Product.class)))
                 .thenReturn(new ProductReadingDto());
 
-        List<ProductReadingDto> actualProductsReadingDto = productService.getAllProducts();
+        List<ProductReadingDto> actualProductReadingDtoList = productService.getAllProducts();
 
         assertAll(() -> {
-            assertThat(actualProductsReadingDto.size())
-                    .isEqualTo(expectedProductsReadingDto.size());
-            assertThat(actualProductsReadingDto)
-                    .isEqualTo(expectedProductsReadingDto);
+            assertThat(actualProductReadingDtoList.size())
+                    .isEqualTo(expectedProductReadingDtoList.size());
+            assertThat(actualProductReadingDtoList)
+                    .isEqualTo(expectedProductReadingDtoList);
         });
 
         verify(productRepository, times(1))
                 .findAll();
-        verify(generalProductMapper, times(expectedProductsReadingDto.size()))
+        verify(generalProductMapper, times(expectedProductReadingDtoList.size()))
                 .mapProductToProductReadingDto(any(Product.class));
     }
 
     @Test
     void isShouldReturnListWithTwoSpecificProductReadingDto() {
-        Long firstProductId = CommonTestValue.EXISTING_PRODUCT_ID;
+        Long firstProductId = ProductTestValue.EXISTING_PRODUCT_ID;
         Long secondProductId = firstProductId++;
         Product firstProduct = Product.builder()
                 .id(firstProductId)
@@ -131,7 +131,7 @@ class ProductServiceTest {
 
     @Test
     void itShouldReturnOneProductAsProductReadingDtoByItsId() {
-        Long productId = CommonTestValue.EXISTING_PRODUCT_ID;
+        Long productId = ProductTestValue.EXISTING_PRODUCT_ID;
         Product productBeforeMapping = Product.builder()
                 .id(productId)
                 .build();
@@ -157,7 +157,7 @@ class ProductServiceTest {
 
     @Test
     void itShouldThrowsNoSuchProductExceptionWithSpecificMessageWhenProductDoesntExistWithSentId() {
-        Long nonExistentProductId = CommonTestValue.NON_EXISTENT_PRODUCT_ID;
+        Long nonExistentProductId = ProductTestValue.NON_EXISTENT_PRODUCT_ID;
         Optional<Product> nonExistentProduct = Optional.empty();
         String expectedExceptionMessage = DefaultExceptionMessage.NO_SUCH_PRODUCT_WITH_ID.getMessage() + nonExistentProductId;
 
@@ -177,8 +177,8 @@ class ProductServiceTest {
 
     @Test
     void itShouldReturnSavedProductIdWhenSendProductCreationDto() {
-        String productName = "productCreationDto";
-        Long savedProductId = CommonTestValue.EXISTING_PRODUCT_ID;
+        String productName = ProductTestValue.PRODUCT_NAME;
+        Long savedProductId = ProductTestValue.EXISTING_PRODUCT_ID;
         ProductCreationDto productCreationDto = ProductCreationDto.builder()
                 .name(productName)
                 .build();
@@ -215,9 +215,9 @@ class ProductServiceTest {
 
     @Test
     void itShouldReturnProductReadingDtoContainsUpdatedProductInfoByProductId() {
-        Long productId = CommonTestValue.EXISTING_PRODUCT_ID;
-        Long productDetailsId = CommonTestValue.EXISTING_PRODUCT_DETAILS_ID;
-        String newProductName = CommonTestValue.PRODUCT_NAME;
+        Long productId = ProductTestValue.EXISTING_PRODUCT_ID;
+        Long productDetailsId = ProductTestValue.EXISTING_PRODUCT_DETAILS_ID;
+        String newProductName = ProductTestValue.PRODUCT_NAME;
         ProductCreationDto newProductCreationDto = ProductCreationDto.builder()
                 .name(newProductName)
                 .build();
@@ -274,7 +274,7 @@ class ProductServiceTest {
 
     @Test
     void itShouldDeleteProductByItsId() {
-        Long productId = CommonTestValue.EXISTING_PRODUCT_ID;
+        Long productId = ProductTestValue.EXISTING_PRODUCT_ID;
         Product product = Product.builder()
                 .id(productId)
                 .build();
@@ -293,7 +293,7 @@ class ProductServiceTest {
                 .delete(product);
     }
 
-    private static class CommonTestValue {
+    private static class ProductTestValue {
         private static final Long EXISTING_PRODUCT_ID = 1L;
         private static final Long NON_EXISTENT_PRODUCT_ID = -1L;
         public static final Long EXISTING_PRODUCT_DETAILS_ID = 1L;
