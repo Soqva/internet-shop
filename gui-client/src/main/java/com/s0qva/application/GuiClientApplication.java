@@ -1,32 +1,43 @@
 package com.s0qva.application;
 
-import com.s0qva.application.config.ComponentConfiguration;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
-import java.io.IOException;
-
+@SpringBootApplication
 public class GuiClientApplication extends Application {
+    private ConfigurableApplicationContext context;
+    private Parent root;
 
     public static void main(String[] args) {
-        try (AnnotationConfigApplicationContext context =
-                     new AnnotationConfigApplicationContext(ComponentConfiguration.class)) {
-            launch(args);
-        };
+        launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/home-page.fxml"));
+    public void init() throws Exception {
+        context = SpringApplication.run(GuiClientApplication.class);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/registration-page.fxml"));
+        loader.setControllerFactory(context::getBean);
+        root = loader.load();
+    }
 
+    @Override
+    public void start(Stage primaryStage) {
         Scene scene = new Scene(root);
 
+        primaryStage.setResizable(false);
         primaryStage.setTitle("Internet-shop");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    @Override
+    public void stop() {
+        context.close();
     }
 }

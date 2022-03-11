@@ -1,5 +1,6 @@
 package com.s0qva.application.dto.order;
 
+import com.s0qva.application.dto.CreationDto;
 import com.s0qva.application.dto.product.ProductIdDto;
 import com.s0qva.application.dto.user.UserIdDto;
 import com.s0qva.application.model.enumeration.OrderStatus;
@@ -15,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderCreationDto {
+public class OrderCreationDto implements CreationDto {
     private LocalDateTime orderDate;
     private OrderStatus status;
     private UserIdDto userId;

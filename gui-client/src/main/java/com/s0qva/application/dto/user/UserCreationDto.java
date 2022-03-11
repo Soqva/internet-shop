@@ -1,5 +1,6 @@
 package com.s0qva.application.dto.user;
 
+import com.s0qva.application.dto.CreationDto;
 import com.s0qva.application.model.enumeration.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserCreationDto {
+public class UserCreationDto implements CreationDto {
     private String username;
     private String firstName;
     private String lastName;
