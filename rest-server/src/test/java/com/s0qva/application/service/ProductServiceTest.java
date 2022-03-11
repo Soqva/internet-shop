@@ -3,14 +3,12 @@ package com.s0qva.application.service;
 import com.s0qva.application.dto.product.ProductCreationDto;
 import com.s0qva.application.dto.product.ProductIdDto;
 import com.s0qva.application.dto.product.ProductReadingDto;
-import com.s0qva.application.dto.product.detail.ProductDetailsCreationDto;
 import com.s0qva.application.dto.product.detail.ProductDetailsReadingDto;
 import com.s0qva.application.exception.NoSuchProductException;
 import com.s0qva.application.exception.model.enumeration.DefaultExceptionMessage;
 import com.s0qva.application.mapper.product.GeneralProductMapper;
 import com.s0qva.application.model.Product;
 import com.s0qva.application.model.ProductDetails;
-import com.s0qva.application.model.enumeration.Country;
 import com.s0qva.application.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -81,10 +79,20 @@ class ProductServiceTest {
 
     @Test
     void isShouldReturnListWithTwoSpecificProductReadingDto() {
-        Product firstProduct = CommonTestProductEntity.FAKE_PRODUCT_WITH_ID_1;
-        Product secondProduct = CommonTestProductEntity.FAKE_PRODUCT_WITH_ID_2;
-        ProductReadingDto firstProductReadingDto = CommonTestProductEntity.FAKE_PRODUCT_READING_DTO_WITH_ID_1;
-        ProductReadingDto secondProductReadingDto = CommonTestProductEntity.FAKE_PRODUCT_READING_DTO_WITH_ID_2;
+        Long firstProductId = CommonTestValue.EXISTING_PRODUCT_ID;
+        Long secondProductId = firstProductId++;
+        Product firstProduct = Product.builder()
+                .id(firstProductId)
+                .build();
+        Product secondProduct = Product.builder()
+                .id(secondProductId)
+                .build();
+        ProductReadingDto firstProductReadingDto = ProductReadingDto.builder()
+                .id(firstProduct.getId())
+                .build();
+        ProductReadingDto secondProductReadingDto = ProductReadingDto.builder()
+                .id(secondProduct.getId())
+                .build();
 
         List<Product> productsBeforeMapping = List.of(
                 firstProduct,
@@ -123,30 +131,35 @@ class ProductServiceTest {
 
     @Test
     void itShouldReturnOneProductAsProductReadingDtoByItsId() {
-        Long possibleProductId = CommonTestProductEntity.POSSIBLE_PRODUCT_ID;
-        Product productBeforeMapping = CommonTestProductEntity.FAKE_PRODUCT_WITH_ID_1;
-        ProductReadingDto expectedProductReadingDto = CommonTestProductEntity.FAKE_PRODUCT_READING_DTO_WITH_ID_1;
+        Long productId = CommonTestValue.EXISTING_PRODUCT_ID;
+        Product productBeforeMapping = Product.builder()
+                .id(productId)
+                .build();
+        ProductReadingDto expectedProductReadingDto = ProductReadingDto.builder()
+                .id(productId)
+                .build();
 
-        when(productRepository.findById(possibleProductId))
+        when(productRepository.findById(productId))
                 .thenReturn(Optional.of(productBeforeMapping));
         when(generalProductMapper.mapProductToProductReadingDto(productBeforeMapping))
                 .thenReturn(expectedProductReadingDto);
 
-        ProductReadingDto actualProductReadingDto = productService.getProduct(possibleProductId);
+        ProductReadingDto actualProductReadingDto = productService.getProduct(productId);
 
         assertThat(actualProductReadingDto)
                 .isEqualTo(expectedProductReadingDto);
 
         verify(productRepository, times(1))
-                .findById(possibleProductId);
+                .findById(productId);
         verify(generalProductMapper, times(1))
                 .mapProductToProductReadingDto(productBeforeMapping);
     }
 
     @Test
     void itShouldThrowsNoSuchProductExceptionWithSpecificMessageWhenProductDoesntExistWithSentId() {
-        Optional<Product> nonExistentProduct = CommonTestProductEntity.FAKE_NON_EXISTENT_PRODUCT;
-        Long nonExistentProductId = CommonTestProductEntity.NON_EXISTENT_PRODUCT_ID;
+        Long nonExistentProductId = CommonTestValue.NON_EXISTENT_PRODUCT_ID;
+        Optional<Product> nonExistentProduct = Optional.empty();
+        String expectedExceptionMessage = DefaultExceptionMessage.NO_SUCH_PRODUCT_WITH_ID.getMessage() + nonExistentProductId;
 
         when(productRepository.findById(nonExistentProductId))
                 .thenReturn(nonExistentProduct);
@@ -156,7 +169,7 @@ class ProductServiceTest {
 
         assertThat(actualException)
                 .isOfAnyClassIn(NoSuchProductException.class)
-                .hasMessage(DefaultExceptionMessage.NO_SUCH_PRODUCT_WITH_ID.getMessage() + nonExistentProductId);
+                .hasMessage(expectedExceptionMessage);
 
         verify(productRepository, times(1))
                 .findById(nonExistentProductId);
@@ -164,14 +177,25 @@ class ProductServiceTest {
 
     @Test
     void itShouldReturnSavedProductIdWhenSendProductCreationDto() {
-        ProductCreationDto productCreationDto = CommonTestProductEntity.FAKE_PRODUCT_CREATION_DTO;
-        Product unsavedProduct = CommonTestProductEntity.FAKE_PRODUCT_WITHOUT_ID;
-        Product savedProduct = CommonTestProductEntity.FAKE_PRODUCT_WITH_ID_1;
-        ProductIdDto expectedProductIdDto = CommonTestProductEntity.FAKE_PRODUCT_ID_DTO_WITH_ID_1;
+        String productName = "productCreationDto";
+        Long savedProductId = CommonTestValue.EXISTING_PRODUCT_ID;
+        ProductCreationDto productCreationDto = ProductCreationDto.builder()
+                .name(productName)
+                .build();
+        Product unsavedProductAfterMapping = Product.builder()
+                .name(productName)
+                .build();
+        Product savedProduct = Product.builder()
+                .id(savedProductId)
+                .name(productName)
+                .build();
+        ProductIdDto expectedProductIdDto = ProductIdDto.builder()
+                .id(savedProductId)
+                .build();
 
         when(generalProductMapper.mapProductCreationDtoToProduct(productCreationDto))
-                .thenReturn(unsavedProduct);
-        when(productRepository.save(unsavedProduct))
+                .thenReturn(unsavedProductAfterMapping);
+        when(productRepository.save(unsavedProductAfterMapping))
                 .thenReturn(savedProduct);
         when(generalProductMapper.mapProductToProductIdDto(savedProduct))
                 .thenReturn(expectedProductIdDto);
@@ -184,40 +208,47 @@ class ProductServiceTest {
         verify(generalProductMapper, times(1))
                 .mapProductCreationDtoToProduct(productCreationDto);
         verify(productRepository, times(1))
-                .save(unsavedProduct);
+                .save(unsavedProductAfterMapping);
         verify(generalProductMapper, times(1))
                 .mapProductToProductIdDto(savedProduct);
     }
 
     @Test
-    void itShouldReplaceOldProductWithNewProductByOldProductIdAndReturnProductReadingDto() {
-        Long possibleOldProductId = CommonTestProductEntity.POSSIBLE_PRODUCT_ID;
-        ProductCreationDto newProductCreationDto = CommonTestProductEntity.FAKE_PRODUCT_CREATION_DTO;
-        Product oldProduct = CommonTestProductEntity.FAKE_PRODUCT_WITH_ID_1;
-        oldProduct.addDetails(CommonTestProductEntity.PRODUCT_DETAILS_WITH_ID);
-        Product newProduct = CommonTestProductEntity.FAKE_PRODUCT_WITHOUT_ID;
-        newProduct.addDetails(CommonTestProductEntity.PRODUCT_DETAILS_WITHOUT_ID);
-        Product updatedProduct = Product.builder()
-                .id(oldProduct.getId())
-                .name(newProduct.getName())
-                .price(newProduct.getPrice())
+    void itShouldReturnProductReadingDtoContainsUpdatedProductInfoByProductId() {
+        Long productId = CommonTestValue.EXISTING_PRODUCT_ID;
+        Long productDetailsId = CommonTestValue.EXISTING_PRODUCT_DETAILS_ID;
+        String newProductName = CommonTestValue.PRODUCT_NAME;
+        ProductCreationDto newProductCreationDto = ProductCreationDto.builder()
+                .name(newProductName)
                 .build();
-        updatedProduct.addDetails(ProductDetails.builder()
-                .id(oldProduct.getDetails().getId())
-                .description(newProduct.getDetails().getDescription())
-                .madeIn(newProduct.getDetails().getMadeIn())
-                .build());
+        ProductDetails newProductDetails = ProductDetails.builder()
+                .build();
+        Product newProduct = Product.builder()
+                .name(newProductName)
+                .details(newProductDetails)
+                .build();
+        ProductDetails oldProductDetails = ProductDetails.builder()
+                .id(productDetailsId)
+                .build();
+        Product oldProduct = Product.builder()
+                .id(productId)
+                .details(oldProductDetails)
+                .build();
+        Product updatedProduct = Product.builder()
+                .id(productId)
+                .name(newProductName)
+                .details(newProductDetails)
+                .build();
+        ProductDetailsReadingDto productDetailsReadingDto = ProductDetailsReadingDto.builder()
+                .id(productDetailsId)
+                .build();
         ProductReadingDto expectedProductReadingDto = ProductReadingDto.builder()
-                .id(updatedProduct.getId())
-                .name(updatedProduct.getName())
-                .price(updatedProduct.getPrice())
-                .details(ProductDetailsReadingDto.builder()
-                        .id(updatedProduct.getDetails().getId())
-                        .description(updatedProduct.getDetails().getDescription())
-                        .build())
+                .id(productId)
+                .name(newProductName)
+                .details(productDetailsReadingDto)
                 .build();
 
-        when(productRepository.findById(possibleOldProductId))
+        when(productRepository.findById(productId))
                 .thenReturn(Optional.of(oldProduct));
         when(generalProductMapper.mapProductCreationDtoToProduct(newProductCreationDto))
                 .thenReturn(newProduct);
@@ -226,13 +257,13 @@ class ProductServiceTest {
         when(generalProductMapper.mapProductToProductReadingDto(updatedProduct))
                 .thenReturn(expectedProductReadingDto);
 
-        ProductReadingDto actualProductReadingDto = productService.updateProduct(possibleOldProductId, newProductCreationDto);
+        ProductReadingDto actualProductReadingDto = productService.updateProduct(productId, newProductCreationDto);
 
         assertThat(actualProductReadingDto)
                 .isEqualTo(expectedProductReadingDto);
 
         verify(productRepository, times(1))
-                .findById(possibleOldProductId);
+                .findById(productId);
         verify(productRepository, times(1))
                 .save(oldProduct);
         verify(generalProductMapper, times(1))
@@ -243,74 +274,29 @@ class ProductServiceTest {
 
     @Test
     void itShouldDeleteProductByItsId() {
-        Product product = CommonTestProductEntity.FAKE_PRODUCT_WITH_ID_1;
-        Long possibleProductId = CommonTestProductEntity.POSSIBLE_PRODUCT_ID;
+        Long productId = CommonTestValue.EXISTING_PRODUCT_ID;
+        Product product = Product.builder()
+                .id(productId)
+                .build();
 
-        when(productRepository.findById(possibleProductId))
+        when(productRepository.findById(productId))
                 .thenReturn(Optional.of(product));
         doNothing()
                 .when(productRepository)
                 .delete(product);
 
-        productService.deleteProduct(possibleProductId);
+        productService.deleteProduct(productId);
 
         verify(productRepository, times(1))
-                .findById(possibleProductId);
+                .findById(productId);
         verify(productRepository, times(1))
                 .delete(product);
     }
 
-    private static class CommonTestProductEntity {
+    private static class CommonTestValue {
+        private static final Long EXISTING_PRODUCT_ID = 1L;
         private static final Long NON_EXISTENT_PRODUCT_ID = -1L;
-        private static final Long POSSIBLE_PRODUCT_ID = 1L;
-        private static final Optional<Product> FAKE_NON_EXISTENT_PRODUCT = Optional.empty();
-        private static final Product FAKE_EMPTY_PRODUCT = Product.builder()
-                .build();
-        private static final Product FAKE_PRODUCT_WITH_ID_1 = Product.builder()
-                .id(1L)
-                .name("FAKE_PRODUCT_WITH_ID")
-                .price(100.100)
-                .details(new ProductDetails())
-                .build();
-        private static final Product FAKE_PRODUCT_WITH_ID_2 = Product.builder()
-                .id(2L)
-                .name("FAKE_PRODUCT_WITH_ID")
-                .price(100.100)
-                .details(new ProductDetails())
-                .build();
-        private static final Product FAKE_PRODUCT_WITHOUT_ID = Product.builder()
-                .name("FAKE_PRODUCT_WITHOUT_ID")
-                .price(100.100)
-                .details(new ProductDetails())
-                .build();
-        private static final ProductDetails PRODUCT_DETAILS_WITH_ID = ProductDetails.builder()
-                .id(1L)
-                .description("PRODUCT_DETAILS_DESCRIPTION")
-                .madeIn(Country.RUSSIA)
-                .build();
-        private static final ProductDetails PRODUCT_DETAILS_WITHOUT_ID = ProductDetails.builder()
-                .description("PRODUCT_DETAILS_WITHOUT_ID")
-                .madeIn(Country.RUSSIA)
-                .build();
-        private static final ProductCreationDto FAKE_PRODUCT_CREATION_DTO = ProductCreationDto.builder()
-                .name("FAKE_PRODUCT_CREATION_DTO")
-                .price(100.100)
-                .details(new ProductDetailsCreationDto())
-                .build();
-        private static final ProductReadingDto FAKE_PRODUCT_READING_DTO_WITH_ID_1 = ProductReadingDto.builder()
-                .id(1L)
-                .name("FAKE_PRODUCT_READING_DTO")
-                .price(100.100)
-                .details(new ProductDetailsReadingDto())
-                .build();
-        private static final ProductReadingDto FAKE_PRODUCT_READING_DTO_WITH_ID_2 = ProductReadingDto.builder()
-                .id(2L)
-                .name("FAKE_PRODUCT_READING_DTO")
-                .price(100.100)
-                .details(new ProductDetailsReadingDto())
-                .build();
-        private static final ProductIdDto FAKE_PRODUCT_ID_DTO_WITH_ID_1 = ProductIdDto.builder()
-                .id(1L)
-                .build();
+        public static final Long EXISTING_PRODUCT_DETAILS_ID = 1L;
+        public static final String PRODUCT_NAME = "PRODUCT_NAME";
     }
 }
