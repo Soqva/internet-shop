@@ -1,17 +1,22 @@
 package com.s0qva.application;
 
+import com.s0qva.application.config.ComponentConfiguration;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.IOException;
 
 public class GuiClientApplication extends Application {
 
     public static void main(String[] args) {
-        launch(args);
+        try (AnnotationConfigApplicationContext context =
+                     new AnnotationConfigApplicationContext(ComponentConfiguration.class)) {
+            launch(args);
+        };
     }
 
     @Override
