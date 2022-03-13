@@ -35,6 +35,8 @@ public class User {
 
     private String username;
 
+    private String password;
+
     @Column(name = "firstname")
     private String firstName;
 

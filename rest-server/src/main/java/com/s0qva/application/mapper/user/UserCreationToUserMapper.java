@@ -12,6 +12,7 @@ public class UserCreationToUserMapper implements Mapper<UserCreationDto, User> {
     public User map(UserCreationDto userCreationDto) {
         User user = User.builder()
                 .username(userCreationDto.getUsername())
+                .password(userCreationDto.getPassword())
                 .firstName(userCreationDto.getFirstName())
                 .lastName(userCreationDto.getLastName())
                 .banned(userCreationDto.isBanned())

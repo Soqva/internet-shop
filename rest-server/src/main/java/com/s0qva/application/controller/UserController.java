@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<Void> save(@RequestBody UserCreationDto user) {
+    public ResponseEntity<Void> save(@Valid @RequestBody UserCreationDto user) {
         UserIdDto savedUser = userService.saveUser(user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -56,7 +57,7 @@ public class UserController {
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity<UserReadingDto> update(@PathVariable Long id, @RequestBody UserCreationDto user) {
+    public ResponseEntity<UserReadingDto> update(@PathVariable Long id, @Valid @RequestBody UserCreationDto user) {
         UserReadingDto updatedUser = userService.updateUser(id, user);
 
         return ResponseEntity.ok(updatedUser);

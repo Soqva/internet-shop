@@ -1,3 +1,9 @@
+INSERT INTO users (username, password, firstname, lastname, role, banned)
+VALUES ('s0qva', 's0qva', 'Nikita', 'Semakov', 'USER', FALSE),
+       ('misha', 'misha', 'Misha', 'Mihailov', 'USER', FALSE),
+       ('egor', 'egor', 'Egor', 'Egorov', 'ADMIN', FALSE),
+       ('zenya', 'zenya', 'Zenya', 'Zenyov', 'USER', FALSE);
+
 INSERT INTO product (name, price)
 VALUES ('Apple', 10),
        ('Bread', 5),

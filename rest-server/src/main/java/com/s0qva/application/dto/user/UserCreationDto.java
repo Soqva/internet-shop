@@ -16,6 +16,8 @@ import javax.validation.constraints.NotBlank;
 public class UserCreationDto {
     @NotBlank(message = "the user must has a specific username")
     private String username;
+    @NotBlank(message = "the user must has a specific password")
+    private String password;
     private String firstName;
     private String lastName;
     private UserRole role;

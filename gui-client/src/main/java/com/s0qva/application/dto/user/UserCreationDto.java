@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserCreationDto implements CreationDto {
     private String username;
+    private String password;
     private String firstName;
     private String lastName;
     private UserRole role;
