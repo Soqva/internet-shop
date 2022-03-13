@@ -1,5 +1,6 @@
 package com.s0qva.application.service;
 
+import com.s0qva.application.dto.user.UserAuthenticationDto;
 import com.s0qva.application.dto.user.UserCreationDto;
 import com.s0qva.application.dto.user.UserIdDto;
 import com.s0qva.application.dto.user.UserReadingDto;
@@ -34,12 +35,22 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public UserReadingDto getUser(Long id) {
+    public UserReadingDto getUserById(Long id) {
         Optional<User> maybeUser = userRepository.findById(id);
 
         return maybeUser.map(userMapper::mapUserToUserReadingDto)
                 .orElseThrow(() ->
                         new NoSuchUserException(DefaultExceptionMessage.NO_SUCH_USER_WITH_ID.getMessage() + id));
+    }
+
+    public boolean signIn(UserAuthenticationDto userAuthenticationDto) {
+        Optional<User> maybeUser = userRepository.findByUsername(userAuthenticationDto.getUsername());
+
+        User user = maybeUser.orElseThrow(() ->
+                new NoSuchUserException(DefaultExceptionMessage.NO_SUCH_USER_WITH_USERNAME.getMessage()
+                        + userAuthenticationDto.getUsername()));
+
+        return user.getPassword().equals(userAuthenticationDto.getPassword());
     }
 
     public UserIdDto saveUser(UserCreationDto userCreationDto) {

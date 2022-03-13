@@ -1,10 +1,12 @@
 package com.s0qva.application.controller;
 
+import com.s0qva.application.dto.user.UserAuthenticationDto;
 import com.s0qva.application.dto.user.UserCreationDto;
 import com.s0qva.application.dto.user.UserIdDto;
 import com.s0qva.application.dto.user.UserReadingDto;
 import com.s0qva.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,10 +40,23 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<UserReadingDto> getOne(@PathVariable Long id) {
-        UserReadingDto user = userService.getUser(id);
+    public ResponseEntity<UserReadingDto> getOneById(@PathVariable Long id) {
+        UserReadingDto user = userService.getUserById(id);
 
         return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/users/sign-in")
+    public ResponseEntity<Void> signIn(@RequestBody @Valid UserAuthenticationDto userAuthenticationDto) {
+        boolean isSignIn = userService.signIn(userAuthenticationDto);
+
+        if (isSignIn) {
+            return ResponseEntity.ok()
+                    .build();
+        }
+
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .build();
     }
 
     @PostMapping("/users")

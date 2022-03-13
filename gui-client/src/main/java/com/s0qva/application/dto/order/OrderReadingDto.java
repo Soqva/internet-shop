@@ -1,6 +1,7 @@
 package com.s0qva.application.dto.order;
 
 
+import com.s0qva.application.dto.ReadingDto;
 import com.s0qva.application.dto.product.ProductReadingDto;
 import com.s0qva.application.dto.user.UserIdDto;
 import com.s0qva.application.model.enumeration.OrderStatus;
@@ -16,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderReadingDto {
+public class OrderReadingDto implements ReadingDto {
     private Long id;
     private LocalDateTime orderDate;
     private OrderStatus status;

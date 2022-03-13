@@ -1,5 +1,6 @@
 package com.s0qva.application.dto.user;
 
+import com.s0qva.application.dto.ReadingDto;
 import com.s0qva.application.dto.order.OrderReadingDto;
 import com.s0qva.application.model.enumeration.UserRole;
 import lombok.AllArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserReadingDto {
+public class UserReadingDto implements ReadingDto {
     private Long id;
     private String username;
     private String firstName;

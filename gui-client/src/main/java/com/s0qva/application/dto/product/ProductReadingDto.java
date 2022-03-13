@@ -1,5 +1,6 @@
 package com.s0qva.application.dto.product;
 
+import com.s0qva.application.dto.ReadingDto;
 import com.s0qva.application.dto.product.detail.ProductDetailsReadingDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductReadingDto {
+public class ProductReadingDto implements ReadingDto {
     private Long id;
     private String name;
     private Double price;

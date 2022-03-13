@@ -1,5 +1,6 @@
 package com.s0qva.application.dto.product.detail;
 
+import com.s0qva.application.dto.ReadingDto;
 import com.s0qva.application.model.enumeration.Country;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductDetailsReadingDto {
+public class ProductDetailsReadingDto implements ReadingDto {
     private Long id;
     private String description;
     private Country madeIn;
