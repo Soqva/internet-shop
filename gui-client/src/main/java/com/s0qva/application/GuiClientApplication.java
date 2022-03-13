@@ -27,13 +27,13 @@ public class GuiClientApplication extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage stage) {
         Scene scene = new Scene(root);
 
-        primaryStage.setResizable(false);
-        primaryStage.setTitle("Internet-shop");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.setResizable(false);
+        stage.setTitle("Internet-shop");
+        stage.setScene(scene);
+        stage.show();
     }
 
     @Override

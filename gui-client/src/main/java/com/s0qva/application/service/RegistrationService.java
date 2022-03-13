@@ -12,11 +12,10 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class RegistrationService {
     @Value("${rest-server.url.users}")
-    private String USERS_URL;
+    private String usersUrl;
 
     public boolean signUp(UserCreationDto userCreationDto) {
-        ResponseEntity<Void> responseEntity = RestRequestSender.post(USERS_URL, userCreationDto);
-        log.info(responseEntity.toString());
+        ResponseEntity<Void> responseEntity = RestRequestSender.post(usersUrl, userCreationDto);
 
         return responseEntity.getStatusCode()
                 .equals(HttpStatus.CREATED);
