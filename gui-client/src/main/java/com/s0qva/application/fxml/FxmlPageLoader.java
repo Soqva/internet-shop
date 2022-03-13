@@ -1,21 +1,22 @@
 package com.s0qva.application.fxml;
 
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import net.rgielen.fxweaver.core.FxWeaver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.Optional;
 
 @Component
 public class FxmlPageLoader {
+    private final FxWeaver fxWeaver;
 
-    public Optional<Parent> loadFxmlFile(String pathToFxmlFile) {
-        try {
-            return Optional.ofNullable(FXMLLoader.load(getClass().getResource(pathToFxmlFile)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
+    @Autowired
+    public FxmlPageLoader(FxWeaver fxWeaver) {
+        this.fxWeaver = fxWeaver;
+    }
+
+    public Parent loadFxmlFile(Class<?> controllerClass) {
+        return fxWeaver.loadView(controllerClass);
     }
 }

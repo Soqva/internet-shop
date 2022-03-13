@@ -2,7 +2,6 @@ package com.s0qva.application.controller;
 
 import com.s0qva.application.controller.scene.SceneSwitcher;
 import com.s0qva.application.dto.user.UserCreationDto;
-import com.s0qva.application.exception.FxmlPageLoadingException;
 import com.s0qva.application.fxml.FxmlPageLoader;
 import com.s0qva.application.model.enumeration.UserRole;
 import com.s0qva.application.service.RegistrationService;
@@ -12,19 +11,18 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.TextField;
 import lombok.extern.slf4j.Slf4j;
+import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @Slf4j
 @Component
+@FxmlView("registration-page.fxml")
 public class RegistrationController {
     private final RegistrationService registrationService;
     private final FxmlPageLoader fxmlPageLoader;
-    @Value("${gui-client.path.page.products}")
-    private String pathToProductPage;
+    private final Class<LoginController> loginControllerClass;
+    private final Class<ProductController> productControllerClass;
     @FXML
     private TextField username;
     @FXML
@@ -38,6 +36,8 @@ public class RegistrationController {
     public RegistrationController(RegistrationService registrationService, FxmlPageLoader fxmlPageLoader) {
         this.registrationService = registrationService;
         this.fxmlPageLoader = fxmlPageLoader;
+        this.loginControllerClass = LoginController.class;
+        this.productControllerClass = ProductController.class;
     }
 
     public void onSignUp(ActionEvent event) {
@@ -45,9 +45,8 @@ public class RegistrationController {
         boolean isCreated = registrationService.signUp(userCreationDto);
 
         if (isCreated) {
-            Optional<Parent> maybeParent = fxmlPageLoader.loadFxmlFile(pathToProductPage);
-            Parent parent = maybeParent.orElseThrow(() -> new FxmlPageLoadingException(pathToProductPage + " wasn't loaded"));
-            SceneSwitcher.switchScene(event, parent);
+            Parent root = fxmlPageLoader.loadFxmlFile(productControllerClass);
+            SceneSwitcher.switchScene(event, root);
         } else {
             AlertUtil.generateErrorAlert(
                     DefaultAlertValue.ERROR_ALERT_TITLE,
@@ -55,6 +54,11 @@ public class RegistrationController {
                     DefaultAlertValue.ERROR_ALERT_CONTENT
             );
         }
+    }
+
+    public void onBackToLogin(ActionEvent event) {
+        Parent root = fxmlPageLoader.loadFxmlFile(loginControllerClass);
+        SceneSwitcher.switchScene(event, root);
     }
 
     private UserCreationDto buildUserCreationDto() {
