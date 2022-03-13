@@ -4,6 +4,7 @@ import com.s0qva.application.dto.user.UserCreationDto;
 import com.s0qva.application.dto.user.UserIdDto;
 import com.s0qva.application.dto.user.UserReadingDto;
 import com.s0qva.application.exception.NoSuchUserException;
+import com.s0qva.application.exception.UserAlreadyExistsException;
 import com.s0qva.application.exception.model.enumeration.DefaultExceptionMessage;
 import com.s0qva.application.model.User;
 import com.s0qva.application.repository.UserRepository;
@@ -43,6 +44,14 @@ public class UserService {
 
     public UserIdDto saveUser(UserCreationDto userCreationDto) {
         User user = userMapper.mapUserCreationDtoToUser(userCreationDto);
+
+        Optional<User> maybeExistingUser = userRepository.findByUsername(user.getUsername());
+
+        if (maybeExistingUser.isPresent()) {
+            throw new UserAlreadyExistsException(DefaultExceptionMessage.USER_ALREADY_EXISTS_WITH_USERNAME.getMessage()
+                    + user.getUsername());
+        }
+
         User savedUser = userRepository.save(user);
 
         return userMapper.mapUserToUserIdDto(savedUser);

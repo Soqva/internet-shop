@@ -19,7 +19,7 @@
             </Label>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Label text="Username">
+                  <Label prefHeight="25.0" prefWidth="80.0" text="Username">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -36,7 +36,21 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Label text="First name">
+                  <Label prefHeight="25.0" prefWidth="80.0" text="Password">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="password" prefHeight="25.0" prefWidth="180.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </PasswordField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Label prefHeight="25.0" text="First name">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -53,7 +67,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Label text="Last name">
+                  <Label prefHeight="25.0" text="Last name">
                      <font>
                         <Font size="18.0" />
                      </font>

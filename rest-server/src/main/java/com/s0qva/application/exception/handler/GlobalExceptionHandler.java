@@ -3,6 +3,7 @@ package com.s0qva.application.exception.handler;
 import com.s0qva.application.exception.NoSuchOrderException;
 import com.s0qva.application.exception.NoSuchProductException;
 import com.s0qva.application.exception.NoSuchUserException;
+import com.s0qva.application.exception.UserAlreadyExistsException;
 import com.s0qva.application.exception.model.IncorrectDataContainer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,16 @@ public class GlobalExceptionHandler {
         IncorrectDataContainer responseData = new IncorrectDataContainer(exceptions);
 
         return new ResponseEntity<>(responseData, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({UserAlreadyExistsException.class})
+    public ResponseEntity<IncorrectDataContainer> handleEntityAlreadyExistsException(RuntimeException exception) {
+        Map<String, String> exceptions = new HashMap<>();
+
+        exceptions.put("entityAlreadyExists", exception.getMessage());
+        IncorrectDataContainer responseData = new IncorrectDataContainer(exceptions);
+
+        return new ResponseEntity<>(responseData, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class})
