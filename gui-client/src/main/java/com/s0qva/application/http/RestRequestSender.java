@@ -1,6 +1,7 @@
 package com.s0qva.application.http;
 
 import com.s0qva.application.dto.CreationDto;
+import com.s0qva.application.dto.ReadingDto;
 import com.s0qva.application.dto.user.UserAuthenticationDto;
 import com.s0qva.application.dto.user.UserReadingDto;
 import com.s0qva.application.http.error.handler.ServerResponseErrorHandler;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 @UtilityClass
 public class RestRequestSender {
     private static final RestTemplate REST_TEMPLATE;
@@ -19,6 +22,10 @@ public class RestRequestSender {
         REST_TEMPLATE = new RestTemplateBuilder()
                 .errorHandler(new ServerResponseErrorHandler())
                 .build();
+    }
+
+    public <T> ResponseEntity<T[]> getAll(String url, Class<T[]> receivingClass) {
+        return REST_TEMPLATE.exchange(url, HttpMethod.GET, null, receivingClass);
     }
 
     public ResponseEntity<Void> post(String url, CreationDto creationDto) {

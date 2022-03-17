@@ -16,4 +16,9 @@ public class ProductReadingDto implements ReadingDto {
     private String name;
     private Double price;
     private ProductDetailsReadingDto details;
+
+    @Override
+    public String toString() {
+        return name + ", price: " + price;
+    }
 }

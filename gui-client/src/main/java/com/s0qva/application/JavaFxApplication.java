@@ -27,6 +27,7 @@ public class JavaFxApplication extends Application {
         FxWeaver fxWeaver = applicationContext.getBean(FxWeaver.class);
         Parent root = fxWeaver.loadView(LoginController.class);
         Scene scene = new Scene(root);
+        stage.setTitle("online shop");
         stage.setScene(scene);
         stage.show();
     }

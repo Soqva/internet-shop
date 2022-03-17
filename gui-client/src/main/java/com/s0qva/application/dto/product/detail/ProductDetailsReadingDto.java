@@ -15,4 +15,9 @@ public class ProductDetailsReadingDto implements ReadingDto {
     private Long id;
     private String description;
     private Country madeIn;
+
+    @Override
+    public String toString() {
+        return description + " " + madeIn + "\n";
+    }
 }
