@@ -22,7 +22,6 @@ public class RegistrationController {
     private final RegistrationService registrationService;
     private final FxmlPageLoader fxmlPageLoader;
     private final Class<LoginController> loginControllerClass;
-    private final Class<ProductController> productControllerClass;
     @FXML
     private TextField username;
     @FXML
@@ -37,7 +36,6 @@ public class RegistrationController {
         this.registrationService = registrationService;
         this.fxmlPageLoader = fxmlPageLoader;
         this.loginControllerClass = LoginController.class;
-        this.productControllerClass = ProductController.class;
     }
 
     public void onSignUp(ActionEvent event) {
@@ -45,8 +43,14 @@ public class RegistrationController {
         boolean isCreated = registrationService.signUp(userCreationDto);
 
         if (isCreated) {
-            Parent root = fxmlPageLoader.loadFxmlFile(productControllerClass);
+            Parent root = fxmlPageLoader.loadFxmlFile(loginControllerClass);
             SceneSwitcher.switchScene(event, root);
+
+            AlertUtil.generateInformationAlert(
+                    DefaultAlertValue.INFO_ALERT_TITLE,
+                    DefaultAlertValue.INFO_ALERT_HEADER,
+                    DefaultAlertValue.INFO_ALERT_CONTENT
+            );
         } else {
             AlertUtil.generateErrorAlert(
                     DefaultAlertValue.ERROR_ALERT_TITLE,
@@ -75,6 +79,11 @@ public class RegistrationController {
     private static class DefaultAlertValue {
         private static final String ERROR_ALERT_TITLE = "Registration error";
         private static final String ERROR_ALERT_HEADER = "The username already exists";
-        private static final String ERROR_ALERT_CONTENT = "User with this username already exists. Please, enter a unique username";
+        private static final String ERROR_ALERT_CONTENT = "User with this username already exists. Please," +
+                " enter a unique username";
+        private static final String INFO_ALERT_TITLE = "Successful registration";
+        private static final String INFO_ALERT_HEADER = "Registration has been completed successfully. Please," +
+                " sign in now to continue.";
+        private static final String INFO_ALERT_CONTENT = "";
     }
 }
