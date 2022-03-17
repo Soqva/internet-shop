@@ -2,6 +2,7 @@ package com.s0qva.application.http;
 
 import com.s0qva.application.dto.CreationDto;
 import com.s0qva.application.dto.user.UserAuthenticationDto;
+import com.s0qva.application.dto.user.UserReadingDto;
 import com.s0qva.application.http.error.handler.ServerResponseErrorHandler;
 import lombok.experimental.UtilityClass;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -26,9 +27,9 @@ public class RestRequestSender {
         return REST_TEMPLATE.exchange(url, HttpMethod.POST, requestEntity, Void.class);
     }
 
-    public ResponseEntity<Void> signIn(String url, UserAuthenticationDto userAuthenticationDto) {
+    public ResponseEntity<UserReadingDto> signIn(String url, UserAuthenticationDto userAuthenticationDto) {
         HttpEntity<UserAuthenticationDto> requestEntity = new HttpEntity<>(userAuthenticationDto);
 
-        return REST_TEMPLATE.exchange(url, HttpMethod.POST, requestEntity, Void.class);
+        return REST_TEMPLATE.exchange(url, HttpMethod.POST, requestEntity, UserReadingDto.class);
     }
 }

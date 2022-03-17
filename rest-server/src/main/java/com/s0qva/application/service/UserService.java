@@ -43,16 +43,6 @@ public class UserService {
                         new NoSuchUserException(DefaultExceptionMessage.NO_SUCH_USER_WITH_ID.getMessage() + id));
     }
 
-    public boolean signIn(UserAuthenticationDto userAuthenticationDto) {
-        Optional<User> maybeUser = userRepository.findByUsername(userAuthenticationDto.getUsername());
-
-        User user = maybeUser.orElseThrow(() ->
-                new NoSuchUserException(DefaultExceptionMessage.NO_SUCH_USER_WITH_USERNAME.getMessage()
-                        + userAuthenticationDto.getUsername()));
-
-        return user.getPassword().equals(userAuthenticationDto.getPassword());
-    }
-
     public UserIdDto saveUser(UserCreationDto userCreationDto) {
         User user = userMapper.mapUserCreationDtoToUser(userCreationDto);
 

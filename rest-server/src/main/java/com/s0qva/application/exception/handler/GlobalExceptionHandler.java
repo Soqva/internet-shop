@@ -1,5 +1,6 @@
 package com.s0qva.application.exception.handler;
 
+import com.s0qva.application.exception.InvalidPasswordDuringSignInException;
 import com.s0qva.application.exception.NoSuchOrderException;
 import com.s0qva.application.exception.NoSuchProductException;
 import com.s0qva.application.exception.NoSuchUserException;
@@ -37,6 +38,16 @@ public class GlobalExceptionHandler {
         Map<String, String> exceptions = new HashMap<>();
 
         exceptions.put("entityAlreadyExists", exception.getMessage());
+        IncorrectDataContainer responseData = new IncorrectDataContainer(exceptions);
+
+        return new ResponseEntity<>(responseData, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler({InvalidPasswordDuringSignInException.class})
+    public ResponseEntity<IncorrectDataContainer> handleSignInException(RuntimeException exception) {
+        Map<String, String> exceptions = new HashMap<>();
+
+        exceptions.put("invalidPassword", exception.getMessage());
         IncorrectDataContainer responseData = new IncorrectDataContainer(exceptions);
 
         return new ResponseEntity<>(responseData, HttpStatus.CONFLICT);

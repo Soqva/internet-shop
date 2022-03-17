@@ -46,19 +46,6 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @PostMapping("/users/sign-in")
-    public ResponseEntity<Void> signIn(@RequestBody @Valid UserAuthenticationDto userAuthenticationDto) {
-        boolean isSignIn = userService.signIn(userAuthenticationDto);
-
-        if (isSignIn) {
-            return ResponseEntity.ok()
-                    .build();
-        }
-
-        return ResponseEntity.status(HttpStatus.CONFLICT)
-                .build();
-    }
-
     @PostMapping("/users")
     public ResponseEntity<Void> save(@Valid @RequestBody UserCreationDto user) {
         UserIdDto savedUser = userService.saveUser(user);
