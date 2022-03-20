@@ -2,6 +2,8 @@ package com.s0qva.application.http;
 
 import com.s0qva.application.dto.CreationDto;
 import com.s0qva.application.dto.ReadingDto;
+import com.s0qva.application.dto.order.OrderCreationDto;
+import com.s0qva.application.dto.order.OrderReadingDto;
 import com.s0qva.application.dto.user.UserAuthenticationDto;
 import com.s0qva.application.dto.user.UserReadingDto;
 import com.s0qva.application.http.error.handler.ServerResponseErrorHandler;
@@ -24,6 +26,12 @@ public class RestRequestSender {
                 .build();
     }
 
+    public ResponseEntity<UserReadingDto> signIn(String url, UserAuthenticationDto userAuthenticationDto) {
+        HttpEntity<UserAuthenticationDto> requestEntity = new HttpEntity<>(userAuthenticationDto);
+
+        return REST_TEMPLATE.exchange(url, HttpMethod.POST, requestEntity, UserReadingDto.class);
+    }
+
     public <T> ResponseEntity<T[]> getAll(String url, Class<T[]> receivingClass) {
         return REST_TEMPLATE.exchange(url, HttpMethod.GET, null, receivingClass);
     }
@@ -34,9 +42,9 @@ public class RestRequestSender {
         return REST_TEMPLATE.exchange(url, HttpMethod.POST, requestEntity, Void.class);
     }
 
-    public ResponseEntity<UserReadingDto> signIn(String url, UserAuthenticationDto userAuthenticationDto) {
-        HttpEntity<UserAuthenticationDto> requestEntity = new HttpEntity<>(userAuthenticationDto);
+    public <T extends ReadingDto> ResponseEntity<T> update(String url, CreationDto creationDto, Class<T> receivingType) {
+        HttpEntity<CreationDto> requestEntity = new HttpEntity<>(creationDto);
 
-        return REST_TEMPLATE.exchange(url, HttpMethod.POST, requestEntity, UserReadingDto.class);
+        return REST_TEMPLATE.exchange(url, HttpMethod.PUT, requestEntity, receivingType);
     }
 }

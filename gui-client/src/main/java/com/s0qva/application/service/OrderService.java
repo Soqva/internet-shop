@@ -1,5 +1,6 @@
 package com.s0qva.application.service;
 
+import com.s0qva.application.dto.ReadingDto;
 import com.s0qva.application.dto.order.OrderCreationDto;
 import com.s0qva.application.dto.order.OrderReadingDto;
 import com.s0qva.application.http.RestRequestSender;
@@ -45,5 +46,16 @@ public class OrderService {
         ResponseEntity<Void> responseEntity = RestRequestSender.post(ordersUrl, orderCreationDto);
         return responseEntity.getStatusCode()
                 .equals(HttpStatus.CREATED);
+    }
+
+    public OrderReadingDto updateOrderStatus(Long id, OrderCreationDto orderCreationDto) {
+        String url = ordersUrl + "/" + id;
+        ResponseEntity<OrderReadingDto> responseEntity = RestRequestSender.update(url, orderCreationDto, OrderReadingDto.class);
+
+        if (responseEntity.getBody() != null) {
+            return responseEntity.getBody();
+        }
+
+        return new OrderReadingDto();
     }
 }

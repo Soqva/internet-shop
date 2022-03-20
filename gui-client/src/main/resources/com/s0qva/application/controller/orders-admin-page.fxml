@@ -30,5 +30,12 @@
             <Font size="14.0" />
          </font>
       </Button>
+      <VBox fx:id="windowForChanges" alignment="CENTER" layoutX="302.0" layoutY="145.0" prefHeight="150.0" prefWidth="200.0" spacing="20.0" style="-fx-background-color: #F0F8FF;" visible="false">
+         <children>
+            <Label text="Choose new order status" />
+            <ComboBox fx:id="statusOrderComboBox" prefWidth="150.0" />
+            <Button mnemonicParsing="false" onAction="#onConfirmStatusChange" text="Confirm" />
+         </children>
+      </VBox>
     </children>
 </AnchorPane>

@@ -49,6 +49,20 @@ public class OrderService {
         return orderMapper.mapOrderToOrderIdDto(savedOrder);
     }
 
+    public OrderReadingDto updateOrder(Long id, OrderCreationDto orderCreationDto) {
+        Optional<Order> maybeOldOrder = orderRepository.findById(id);
+        Order oldOrder = maybeOldOrder.orElseThrow(() ->
+                new NoSuchOrderException(DefaultExceptionMessage.NO_SUCH_ORDER_WITH_ID.getMessage() + id));
+        Order newOrder = orderMapper.mapOrderCreationDtoToOrder(orderCreationDto);
+
+        oldOrder.setStatus(newOrder.getStatus());
+
+        Order updatedOrder = orderRepository.save(oldOrder);
+
+        return orderMapper.mapOrderToOrderReadingDto(updatedOrder);
+
+    }
+
     public void deleteOrder(Long id) {
         Optional<Order> maybeOrder = orderRepository.findById(id);
         Order order = maybeOrder.orElseThrow(() ->
