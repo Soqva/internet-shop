@@ -1,15 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.s0qva.application.controller.ProductController">
    <children>
-      <Pane fx:id="tablePane" layoutX="62.0" layoutY="100.0" prefHeight="400.0" prefWidth="450.0">
+      <Pane fx:id="tablePane" layoutX="62.0" layoutY="100.0" prefHeight="400.0" prefWidth="300.0">
          <children>
-            <ListView fx:id="products" layoutX="25.0" layoutY="25.0" prefHeight="350.0" prefWidth="400.0" />
+            <ListView fx:id="products" layoutX="25.0" layoutY="25.0" prefHeight="350.0" prefWidth="250.0" />
          </children>
       </Pane>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="175.0" layoutY="87.0" text="Products" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="addingToCartButton" alignment="CENTER" contentDisplay="CENTER" layoutX="155.0" layoutY="500.0" mnemonicParsing="false" onAction="#addToCartOnMouseClicked" text="Add to the cart" textAlignment="CENTER">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Pane layoutX="450.0" layoutY="100.0" prefHeight="400.0" prefWidth="300.0">
+         <children>
+            <ListView fx:id="productsInCart" layoutX="25.0" layoutY="25.0" prefHeight="350.0" prefWidth="250.0" />
+         </children>
+      </Pane>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="568.0" layoutY="87.0" text="My cart" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="creatingOrderButton" layoutX="551.0" layoutY="500.0" mnemonicParsing="false" onAction="#onCreateOrder" text="Create order">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="353.0" layoutY="23.0" text="Products page">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

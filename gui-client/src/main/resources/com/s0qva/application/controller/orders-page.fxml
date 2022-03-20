@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.s0qva.application.controller.OrderController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="361.0" layoutY="14.0" text="Orders page">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <ListView fx:id="userOrders" layoutX="101.0" layoutY="120.0" prefHeight="150.0" prefWidth="600.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="357.0" layoutY="85.0" text="My orders">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="backToProductsButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onBackToProducts" text="Back to products">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <ListView fx:id="userCurrentOrder" layoutX="303.0" layoutY="333.0" prefHeight="200.0" prefWidth="200.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="330.0" layoutY="287.0" text="My current order">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="351.0" layoutY="545.0" mnemonicParsing="false" onAction="#onCreateOrder" text="Create order" textAlignment="CENTER">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
