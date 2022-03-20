@@ -31,6 +31,16 @@ public class OrderService {
         return Collections.emptyList();
     }
 
+    public List<OrderReadingDto> getAllOrders() {
+        ResponseEntity<OrderReadingDto[]> responseEntity = RestRequestSender.getAll(ordersUrl, OrderReadingDto[].class);
+
+        if (responseEntity.getBody() != null) {
+            return Arrays.asList(responseEntity.getBody());
+        }
+
+        return Collections.emptyList();
+    }
+
     public boolean createOrder(OrderCreationDto orderCreationDto) {
         ResponseEntity<Void> responseEntity = RestRequestSender.post(ordersUrl, orderCreationDto);
         return responseEntity.getStatusCode()

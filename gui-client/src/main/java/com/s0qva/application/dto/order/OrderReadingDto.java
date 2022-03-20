@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -36,9 +37,10 @@ public class OrderReadingDto implements ReadingDto {
                 .mapToDouble(ProductReadingDto::getPrice)
                 .sum();
 
-        return "Date: " + orderDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) +
-                ", Status: " + status +
-                ", Products: " + productsAsString +
-                ", Total price: " + totalPrice;
+        return String.format("Date: %-35s Status: %-15s Products: %-50s Total price: %f",
+                orderDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+                status,
+                productsAsString,
+                totalPrice);
     }
 }
