@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,6 +26,6 @@ public class OrderCreationDto {
     @NotNull(message = "the order must be associated with a specific user")
     private UserIdDto userId;
 
-    @NotNull(message = "the order must has a list of products")
+    @NotEmpty(message = "the order must has a list of products")
     private List<ProductIdDto> products;
 }

@@ -11,7 +11,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -23,4 +25,20 @@ public class OrderReadingDto implements ReadingDto {
     private OrderStatus status;
     private UserIdDto userId;
     private List<ProductReadingDto> products;
+
+    @Override
+    public String toString() {
+        String productsAsString = products.stream()
+                .map(ProductReadingDto::getName)
+                .collect(Collectors.joining(", "));
+
+        double totalPrice = products.stream()
+                .mapToDouble(ProductReadingDto::getPrice)
+                .sum();
+
+        return "Date: " + orderDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) +
+                ", Status: " + status +
+                ", Products: " + productsAsString +
+                ", Total price: " + totalPrice;
+    }
 }

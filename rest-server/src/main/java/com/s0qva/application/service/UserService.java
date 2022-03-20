@@ -1,12 +1,13 @@
 package com.s0qva.application.service;
 
-import com.s0qva.application.dto.user.UserAuthenticationDto;
+import com.s0qva.application.dto.order.OrderReadingDto;
 import com.s0qva.application.dto.user.UserCreationDto;
 import com.s0qva.application.dto.user.UserIdDto;
 import com.s0qva.application.dto.user.UserReadingDto;
 import com.s0qva.application.exception.NoSuchUserException;
 import com.s0qva.application.exception.UserAlreadyExistsException;
 import com.s0qva.application.exception.model.enumeration.DefaultExceptionMessage;
+import com.s0qva.application.mapper.order.GeneralOrderMapper;
 import com.s0qva.application.model.User;
 import com.s0qva.application.repository.UserRepository;
 import com.s0qva.application.mapper.user.GeneralUserMapper;
@@ -41,6 +42,11 @@ public class UserService {
         return maybeUser.map(userMapper::mapUserToUserReadingDto)
                 .orElseThrow(() ->
                         new NoSuchUserException(DefaultExceptionMessage.NO_SUCH_USER_WITH_ID.getMessage() + id));
+    }
+
+    public List<OrderReadingDto> getAllOrdersByUserId(Long id) {
+        UserReadingDto userReadingDto = getUserById(id);
+        return userReadingDto.getOrders();
     }
 
     public UserIdDto saveUser(UserCreationDto userCreationDto) {

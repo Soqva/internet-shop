@@ -2,6 +2,7 @@ package com.s0qva.application.controller;
 
 import com.s0qva.application.controller.scene.SceneSwitcher;
 import com.s0qva.application.dto.order.OrderCreationDto;
+import com.s0qva.application.dto.order.OrderReadingDto;
 import com.s0qva.application.dto.product.ProductIdDto;
 import com.s0qva.application.dto.product.ProductReadingDto;
 import com.s0qva.application.dto.user.UserIdDto;
@@ -36,7 +37,7 @@ public class OrderController implements Initializable {
     private final UserSession userSession;
     private final Cart cart;
     @FXML
-    private ListView<ProductReadingDto> userOrders;
+    private ListView<OrderReadingDto> userOrders;
     @FXML
     private ListView<ProductReadingDto> userCurrentOrder;
 
@@ -51,6 +52,9 @@ public class OrderController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        userOrders.getItems().clear();
+        List<OrderReadingDto> userAllOrders = orderService.getAllOrdersForSpecificUser(userSession.getId());
+        userOrders.setItems(FXCollections.observableArrayList(userAllOrders));
         fillCurrentOrder();
     }
 

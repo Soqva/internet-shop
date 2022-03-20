@@ -1,5 +1,6 @@
 package com.s0qva.application.controller;
 
+import com.s0qva.application.dto.order.OrderReadingDto;
 import com.s0qva.application.dto.user.UserAuthenticationDto;
 import com.s0qva.application.dto.user.UserCreationDto;
 import com.s0qva.application.dto.user.UserIdDto;
@@ -44,6 +45,13 @@ public class UserController {
         UserReadingDto user = userService.getUserById(id);
 
         return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/users/{id}/orders")
+    public ResponseEntity<List<OrderReadingDto>> getAllOrdersForSpecificUser(@PathVariable Long id) {
+        List<OrderReadingDto> userOrders = userService.getAllOrdersByUserId(id);
+
+        return ResponseEntity.ok(userOrders);
     }
 
     @PostMapping("/users")
