@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 @Component
 public class ProductAdminController extends ProductController implements Initializable {
     private final Class<OrderAdminController> orderAdminControllerClass;
+    private final Class<OrderUserController> orderUserControllerClass;
     @FXML
     private ListView<ProductReadingDto> products;
     @FXML
@@ -31,6 +32,7 @@ public class ProductAdminController extends ProductController implements Initial
     public ProductAdminController(ProductService productService, FxmlPageLoader fxmlPageLoader) {
         super(productService, fxmlPageLoader);
         this.orderAdminControllerClass = OrderAdminController.class;
+        this.orderUserControllerClass = OrderUserController.class;
     }
 
     @Override
@@ -54,6 +56,11 @@ public class ProductAdminController extends ProductController implements Initial
     }
 
     public void onCreateOrder(ActionEvent event) {
+        Parent root = getFxmlPageLoader().loadFxmlFile(orderUserControllerClass);
+        SceneSwitcher.switchScene(event, root);
+    }
+
+    public void onGoToAdminOrderPage(ActionEvent event) {
         Parent root = getFxmlPageLoader().loadFxmlFile(orderAdminControllerClass);
         SceneSwitcher.switchScene(event, root);
     }

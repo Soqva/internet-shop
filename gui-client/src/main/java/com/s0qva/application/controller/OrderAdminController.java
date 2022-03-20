@@ -2,7 +2,6 @@ package com.s0qva.application.controller;
 
 import com.s0qva.application.controller.scene.SceneSwitcher;
 import com.s0qva.application.dto.order.OrderReadingDto;
-import com.s0qva.application.dto.product.ProductReadingDto;
 import com.s0qva.application.fxml.FxmlPageLoader;
 import com.s0qva.application.service.OrderService;
 import javafx.event.ActionEvent;

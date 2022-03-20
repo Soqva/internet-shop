@@ -7,10 +7,9 @@ import com.s0qva.application.dto.product.ProductIdDto;
 import com.s0qva.application.dto.product.ProductReadingDto;
 import com.s0qva.application.dto.user.UserIdDto;
 import com.s0qva.application.fxml.FxmlPageLoader;
-import com.s0qva.application.model.Cart;
 import com.s0qva.application.model.enumeration.OrderStatus;
+import com.s0qva.application.model.enumeration.UserRole;
 import com.s0qva.application.service.OrderService;
-import com.s0qva.application.session.UserSession;
 import com.s0qva.application.util.AlertUtil;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -99,7 +98,12 @@ public class OrderUserController extends OrderController implements Initializabl
     }
 
     public void onBackToProducts(ActionEvent event) {
-        Parent root = getFxmlPageLoader().loadFxmlFile(productUserControllerClass);
+        Parent root;
+        if (getUserSession().getRole() == UserRole.ADMIN) {
+            root = getFxmlPageLoader().loadFxmlFile(ProductAdminController.class);
+        } else {
+            root = getFxmlPageLoader().loadFxmlFile(productUserControllerClass);
+        }
         SceneSwitcher.switchScene(event, root);
     }
 

@@ -7,7 +7,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.s0qva.application.controller.ProductAdminController">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="330.0" layoutY="22.0" text="Products admin page">
@@ -40,12 +39,17 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="558.0" layoutY="491.0" mnemonicParsing="false" onAction="#removeFromCart" text="Remove from the cart">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="500.0" layoutY="491.0" mnemonicParsing="false" onAction="#removeFromCart" text="Remove from the cart">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="creatingOrderButton" layoutX="443.0" layoutY="491.0" mnemonicParsing="false" onAction="#onCreateOrder" text="Create order">
+      <Button fx:id="creatingOrderButton" layoutX="517.0" layoutY="525.0" mnemonicParsing="false" onAction="#onCreateOrder" text="Create my order">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="492.0" layoutY="560.0" mnemonicParsing="false" onAction="#onGoToAdminOrderPage" text="Go to admin order page">
          <font>
             <Font size="14.0" />
          </font>
