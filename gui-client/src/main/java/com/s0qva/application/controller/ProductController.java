@@ -77,9 +77,15 @@ public class ProductController implements Initializable {
         }
     }
 
-    public void addToCartOnMouseClicked() {
+    public void addToCart() {
         ProductReadingDto selectedProduct = products.getSelectionModel().getSelectedItem();
         cart.addToCart(selectedProduct);
+        productsInCart.setItems(FXCollections.observableArrayList(cart.getProducts()));
+    }
+
+    public void removeFromCart() {
+        ProductReadingDto selectedProduct = productsInCart.getSelectionModel().getSelectedItem();
+        cart.removeFromCart(selectedProduct);
         productsInCart.setItems(FXCollections.observableArrayList(cart.getProducts()));
     }
 

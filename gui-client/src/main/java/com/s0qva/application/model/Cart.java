@@ -22,6 +22,10 @@ public class Cart {
         products.add(productReadingDto);
     }
 
+    public void removeFromCart(ProductReadingDto productReadingDto) {
+        products.remove(productReadingDto);
+    }
+
     public void clearCart() {
         products.clear();
     }

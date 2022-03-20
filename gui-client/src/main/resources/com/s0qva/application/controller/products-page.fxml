@@ -17,7 +17,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="addingToCartButton" alignment="CENTER" contentDisplay="CENTER" layoutX="155.0" layoutY="500.0" mnemonicParsing="false" onAction="#addToCartOnMouseClicked" text="Add to the cart" textAlignment="CENTER">
+      <Button fx:id="addingToCartButton" alignment="CENTER" contentDisplay="CENTER" layoutX="155.0" layoutY="500.0" mnemonicParsing="false" onAction="#addToCart" text="Add to the cart" textAlignment="CENTER">
          <font>
             <Font size="14.0" />
          </font>
@@ -32,7 +32,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="creatingOrderButton" layoutX="551.0" layoutY="500.0" mnemonicParsing="false" onAction="#onCreateOrder" text="Create order">
+      <Button fx:id="creatingOrderButton" layoutX="470.0" layoutY="500.0" mnemonicParsing="false" onAction="#onCreateOrder" text="Create order">
          <font>
             <Font size="14.0" />
          </font>
@@ -42,5 +42,10 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="585.0" layoutY="500.0" mnemonicParsing="false" onAction="#removeFromCart" text="Remove from the cart">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
