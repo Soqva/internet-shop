@@ -3,7 +3,9 @@ package com.s0qva.application.controller;
 import com.s0qva.application.controller.scene.SceneSwitcher;
 import com.s0qva.application.dto.user.UserAuthenticationDto;
 import com.s0qva.application.fxml.FxmlPageLoader;
+import com.s0qva.application.model.enumeration.UserRole;
 import com.s0qva.application.service.LoginService;
+import com.s0qva.application.session.UserSession;
 import com.s0qva.application.util.AlertUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,8 +22,10 @@ import org.springframework.stereotype.Component;
 public class LoginController {
     private final FxmlPageLoader fxmlPageLoader;
     private final LoginService loginService;
-    private final Class<ProductController> productControllerClass;
+    private final Class<ProductUserController> productUserControllerClass;
+    private final Class<ProductAdminController> productAdminControllerClass;
     private final Class<RegistrationController> registrationControllerClass;
+    private final UserSession userSession;
     @FXML
     private TextField username;
     @FXML
@@ -31,8 +35,10 @@ public class LoginController {
     public LoginController(FxmlPageLoader fxmlPageLoader, LoginService loginService) {
         this.fxmlPageLoader = fxmlPageLoader;
         this.loginService = loginService;
-        this.productControllerClass = ProductController.class;
+        this.productUserControllerClass = ProductUserController.class;
+        this.productAdminControllerClass = ProductAdminController.class;
         this.registrationControllerClass = RegistrationController.class;
+        this.userSession = UserSession.getInstance();
     }
 
     public void onSignIn(ActionEvent event) {
@@ -40,7 +46,13 @@ public class LoginController {
         boolean isOk = loginService.signIn(userAuthenticationDto);
 
         if (isOk) {
-            Parent root = fxmlPageLoader.loadFxmlFile(productControllerClass);
+            Parent root;
+            UserRole userRole = userSession.getRole();
+            if (userRole == UserRole.USER) {
+                root = fxmlPageLoader.loadFxmlFile(productUserControllerClass);
+            } else {
+                root = fxmlPageLoader.loadFxmlFile(productAdminControllerClass);
+            }
             SceneSwitcher.switchScene(event, root);
         } else {
             AlertUtil.generateErrorAlert(

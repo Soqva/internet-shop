@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.s0qva.application.controller.ProductAdminController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="330.0" layoutY="22.0" text="Products admin page">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Pane fx:id="tablePane" layoutX="61.0" layoutY="100.0" prefHeight="400.0" prefWidth="300.0">
+         <children>
+            <ListView fx:id="products" layoutX="25.0" layoutY="25.0" prefHeight="350.0" prefWidth="250.0" />
+         </children>
+      </Pane>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="174.0" layoutY="87.0" text="Products" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Pane layoutX="427.0" layoutY="100.0" prefHeight="400.0" prefWidth="300.0">
+         <children>
+            <ListView fx:id="productsInCart" layoutX="25.0" layoutY="25.0" prefHeight="350.0" prefWidth="250.0" />
+         </children>
+      </Pane>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="516.0" layoutY="87.0" text="My admin cart" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="addingToCartButton" alignment="CENTER" contentDisplay="CENTER" layoutX="154.0" layoutY="491.0" mnemonicParsing="false" onAction="#addToCart" text="Add to the cart" textAlignment="CENTER">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="558.0" layoutY="491.0" mnemonicParsing="false" onAction="#removeFromCart" text="Remove from the cart">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="creatingOrderButton" layoutX="443.0" layoutY="491.0" mnemonicParsing="false" onAction="#onCreateOrder" text="Create order">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
