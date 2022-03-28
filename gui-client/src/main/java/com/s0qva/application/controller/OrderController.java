@@ -7,7 +7,7 @@ import com.s0qva.application.session.UserSession;
 import lombok.Data;
 
 @Data
-public class OrderController {
+public abstract class OrderController {
     private final OrderService orderService;
     private final FxmlPageLoader fxmlPageLoader;
     private final UserSession userSession;

@@ -1,4 +1,4 @@
-package com.s0qva.application.controller;
+package com.s0qva.application.controller.admin;
 
 import com.s0qva.application.controller.scene.SceneSwitcher;
 import com.s0qva.application.fxml.FxmlPageLoader;
