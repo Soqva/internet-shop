@@ -42,7 +42,7 @@ public class ProductAdminController extends ProductController implements Initial
         List<ProductReadingDto> receivedProducts = getProductService().getAllProducts();
         products.setItems(FXCollections.observableArrayList(receivedProducts));
         productsInCart.setItems(FXCollections.observableArrayList(getCart().getProducts()));
-        showProductDetailsOnDoubleMouseClicked(products, productsInCart);
+        addEventToShowProductDetails(products, productsInCart);
     }
 
     public void addToCart() {

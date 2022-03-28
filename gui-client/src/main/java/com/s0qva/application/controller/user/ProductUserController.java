@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.HBox;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,6 +28,8 @@ public class ProductUserController extends ProductController implements Initiali
     private ListView<ProductReadingDto> products;
     @FXML
     private ListView<ProductReadingDto> productsInCart;
+    @FXML
+    private HBox account;
 
     @Autowired
     public ProductUserController(ProductService productService, FxmlPageLoader fxmlPageLoader) {
@@ -39,7 +42,8 @@ public class ProductUserController extends ProductController implements Initiali
         List<ProductReadingDto> receivedProducts = getProductService().getAllProducts();
         products.setItems(FXCollections.observableArrayList(receivedProducts));
         productsInCart.setItems(FXCollections.observableArrayList(getCart().getProducts()));
-        showProductDetailsOnDoubleMouseClicked(products, productsInCart);
+        addEventToShowProductDetails(products, productsInCart);
+        addEventToShowUserAccount(account);
     }
 
     public void addToCart() {

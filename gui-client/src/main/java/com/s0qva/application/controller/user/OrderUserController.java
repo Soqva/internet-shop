@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.HBox;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -38,6 +39,8 @@ public class OrderUserController extends OrderController implements Initializabl
     private ListView<OrderReadingDto> userOrders;
     @FXML
     private ListView<ProductReadingDto> userCurrentOrder;
+    @FXML
+    private HBox account;
 
     @Autowired
     public OrderUserController(OrderService orderService, FxmlPageLoader fxmlPageLoader) {
@@ -52,6 +55,7 @@ public class OrderUserController extends OrderController implements Initializabl
         List<OrderReadingDto> userAllOrders = getOrderService().getAllOrdersForSpecificUser(getUserSession().getId());
         userOrders.setItems(FXCollections.observableArrayList(userAllOrders));
         fillCurrentOrder();
+        addEventToShowUserAccount(account);
     }
 
     public void fillCurrentOrder() {
