@@ -24,7 +24,7 @@
             </Label>
             <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onGoToAdminProductsPage" prefWidth="100.0" text="products page" />
             <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onGoToAdminOrdersPage" prefWidth="100.0" text="orders page" />
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="100.0" text="users page" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onGoToAdminUsersPage" prefWidth="100.0" text="users page" />
          </children>
       </VBox>
    </children>

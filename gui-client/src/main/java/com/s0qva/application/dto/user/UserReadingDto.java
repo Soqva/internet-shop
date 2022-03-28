@@ -22,4 +22,14 @@ public class UserReadingDto implements ReadingDto {
     private UserRole role;
     private boolean banned;
     private List<OrderReadingDto> orders;
+
+    @Override
+    public String toString() {
+        return "id: " + id
+                + ", username: " + username
+                + ", full name: " + firstName + " " + lastName
+                + ", role: " + role
+                + " banned: " + banned
+                + ", amount of orders: " + orders.size();
+    }
 }

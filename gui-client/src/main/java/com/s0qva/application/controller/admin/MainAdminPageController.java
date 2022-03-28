@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 public class MainAdminPageController {
     private final Class<ProductAdminController> productAdminControllerClass;
     private final Class<OrderAdminController> orderAdminControllerClass;
+    private final Class<UserAdminController> userAdminControllerClass;
     private final FxmlPageLoader fxmlPageLoader;
 
     @Autowired
@@ -20,6 +21,7 @@ public class MainAdminPageController {
         this.fxmlPageLoader = fxmlPageLoader;
         this.productAdminControllerClass = ProductAdminController.class;
         this.orderAdminControllerClass = OrderAdminController.class;
+        this.userAdminControllerClass = UserAdminController.class;
     }
 
     public void onGoToAdminProductsPage(ActionEvent event) {
@@ -29,6 +31,11 @@ public class MainAdminPageController {
 
     public void onGoToAdminOrdersPage(ActionEvent event) {
         Parent root = fxmlPageLoader.loadFxmlFile(orderAdminControllerClass);
+        SceneSwitcher.switchScene(event, root);
+    }
+
+    public void onGoToAdminUsersPage(ActionEvent event) {
+        Parent root = fxmlPageLoader.loadFxmlFile(userAdminControllerClass);
         SceneSwitcher.switchScene(event, root);
     }
 }
