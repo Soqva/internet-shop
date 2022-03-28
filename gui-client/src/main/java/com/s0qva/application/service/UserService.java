@@ -1,5 +1,6 @@
 package com.s0qva.application.service;
 
+import com.s0qva.application.dto.user.UserCreationDto;
 import com.s0qva.application.dto.user.UserReadingDto;
 import com.s0qva.application.http.RestRequestSender;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,5 +24,16 @@ public class UserService {
         }
 
         return Collections.emptyList();
+    }
+
+    public UserReadingDto changeUserAccess(Long id, UserCreationDto userCreationDto) {
+        String url = usersUrl + "/" + id;
+        ResponseEntity<UserReadingDto> responseEntity = RestRequestSender.update(url, userCreationDto, UserReadingDto.class);
+
+        if (responseEntity.getBody() != null) {
+            return responseEntity.getBody();
+        }
+
+        return new UserReadingDto();
     }
 }

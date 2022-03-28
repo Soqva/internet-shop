@@ -5,7 +5,6 @@ import com.s0qva.application.dto.user.UserReadingDto;
 import com.s0qva.application.http.RestRequestSender;
 import com.s0qva.application.session.UserSession;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +15,10 @@ public class LoginService {
 
     public boolean signIn(UserAuthenticationDto userAuthenticationDto) {
         ResponseEntity<UserReadingDto> responseEntity = RestRequestSender.signIn(signInUrl, userAuthenticationDto);
+        UserReadingDto user = responseEntity.getBody();
 
-        if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
-            UserReadingDto user = responseEntity.getBody();
+        if (user != null) {
             UserSession.getInstance().createUserSession(user);
-
             return true;
         }
 

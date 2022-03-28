@@ -48,8 +48,18 @@ public class LoginController {
         boolean isOk = loginService.signIn(userAuthenticationDto);
 
         if (isOk) {
+            if (UserSession.getInstance().isBanned()) {
+                AlertUtil.generateErrorAlert(
+                        DefaultAlertValue.ERROR_ALERT_TITLE,
+                        DefaultAlertValue.ERROR_ALERT_BAN_HEADER,
+                        DefaultAlertValue.ERROR_ALERT_BAN_CONTENT
+                );
+                return;
+            }
+
             Parent root;
             UserRole userRole = userSession.getRole();
+
             if (userRole == UserRole.USER) {
                 root = fxmlPageLoader.loadFxmlFile(productUserControllerClass);
             } else {
@@ -82,5 +92,8 @@ public class LoginController {
         private static final String ERROR_ALERT_HEADER = "The entered information is wrong";
         private static final String ERROR_ALERT_CONTENT = "Username or password is incorrect. Please," +
                 " check the data or sign up if you do not have an account";
+        private static final String ERROR_ALERT_BAN_HEADER = "Your account has been banned";
+        private static final String ERROR_ALERT_BAN_CONTENT = "The store administrator has banned your account" +
+                " for violating store rules";
     }
 }

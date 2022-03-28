@@ -22,5 +22,21 @@
       </Button>
       <ListView fx:id="users" layoutX="85.0" layoutY="109.0" prefHeight="280.0" prefWidth="630.0" />
       <Button alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="419.0" mnemonicParsing="false" onAction="#onReceiveAllUsers" text="Receive all users" textAlignment="CENTER" />
+      <VBox fx:id="windowForBan" alignment="CENTER" layoutX="267.0" layoutY="160.0" prefHeight="178.0" prefWidth="268.0" spacing="30.0" style="-fx-background-color: #81c483;" visible="false">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Choose the action" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="230.0" spacing="10.0">
+               <children>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onCloseWindowForBan" prefWidth="80.0" text="Close" textAlignment="CENTER" />
+                  <Button fx:id="cancelBanButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onUnbanSelectedUser" prefWidth="80.0" text="Unban" textAlignment="CENTER" />
+                  <Button fx:id="confirmBanButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onBanSelectedUser" prefWidth="80.0" text="Ban" textAlignment="CENTER" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
