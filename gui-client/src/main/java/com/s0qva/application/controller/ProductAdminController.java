@@ -21,8 +21,8 @@ import java.util.ResourceBundle;
 @FxmlView("products-admin-page.fxml")
 @Component
 public class ProductAdminController extends ProductController implements Initializable {
-    private final Class<OrderAdminController> orderAdminControllerClass;
     private final Class<OrderUserController> orderUserControllerClass;
+    private final Class<MainAdminPageController> mainAdminPageControllerClass;
     @FXML
     private ListView<ProductReadingDto> products;
     @FXML
@@ -31,8 +31,8 @@ public class ProductAdminController extends ProductController implements Initial
     @Autowired
     public ProductAdminController(ProductService productService, FxmlPageLoader fxmlPageLoader) {
         super(productService, fxmlPageLoader);
-        this.orderAdminControllerClass = OrderAdminController.class;
         this.orderUserControllerClass = OrderUserController.class;
+        this.mainAdminPageControllerClass = MainAdminPageController.class;
     }
 
     @Override
@@ -60,8 +60,8 @@ public class ProductAdminController extends ProductController implements Initial
         SceneSwitcher.switchScene(event, root);
     }
 
-    public void onGoToAdminOrderPage(ActionEvent event) {
-        Parent root = getFxmlPageLoader().loadFxmlFile(orderAdminControllerClass);
+    public void onBackToMainAdminPage(ActionEvent event) {
+        Parent root = getFxmlPageLoader().loadFxmlFile(mainAdminPageControllerClass);
         SceneSwitcher.switchScene(event, root);
     }
 }

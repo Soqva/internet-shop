@@ -5,7 +5,6 @@ import com.s0qva.application.dto.order.OrderCreationDto;
 import com.s0qva.application.dto.order.OrderReadingDto;
 import com.s0qva.application.dto.product.ProductIdDto;
 import com.s0qva.application.dto.product.ProductReadingDto;
-import com.s0qva.application.dto.user.UserIdDto;
 import com.s0qva.application.fxml.FxmlPageLoader;
 import com.s0qva.application.model.enumeration.OrderStatus;
 import com.s0qva.application.service.OrderService;
@@ -24,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -32,7 +30,7 @@ import java.util.stream.Collectors;
 @Component
 @FxmlView("orders-admin-page.fxml")
 public class OrderAdminController extends OrderController implements Initializable {
-    private final Class<ProductAdminController> productAdminControllerClass;
+    private final Class<MainAdminPageController> mainAdminPageControllerClass;
     private OrderReadingDto selectedOrderForChanges;
     @FXML
     private ListView<OrderReadingDto> userOrders;
@@ -44,7 +42,7 @@ public class OrderAdminController extends OrderController implements Initializab
     @Autowired
     public OrderAdminController(OrderService orderService, FxmlPageLoader fxmlPageLoader) {
         super(orderService, fxmlPageLoader);
-        this.productAdminControllerClass = ProductAdminController.class;
+        this.mainAdminPageControllerClass = MainAdminPageController.class;
     }
 
     @Override
@@ -58,8 +56,8 @@ public class OrderAdminController extends OrderController implements Initializab
         userOrders.setItems(FXCollections.observableArrayList(orders));
     }
 
-    public void onBackToProducts(ActionEvent event) {
-        Parent root = getFxmlPageLoader().loadFxmlFile(productAdminControllerClass);
+    public void onBackToMainAdminPage(ActionEvent event) {
+        Parent root = getFxmlPageLoader().loadFxmlFile(mainAdminPageControllerClass);
         SceneSwitcher.switchScene(event, root);
     }
 

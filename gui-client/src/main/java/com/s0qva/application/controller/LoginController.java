@@ -23,7 +23,7 @@ public class LoginController {
     private final FxmlPageLoader fxmlPageLoader;
     private final LoginService loginService;
     private final Class<ProductUserController> productUserControllerClass;
-    private final Class<ProductAdminController> productAdminControllerClass;
+    private final Class<MainAdminPageController> mainAdminPageControllerClass;
     private final Class<RegistrationController> registrationControllerClass;
     private final UserSession userSession;
     @FXML
@@ -36,7 +36,7 @@ public class LoginController {
         this.fxmlPageLoader = fxmlPageLoader;
         this.loginService = loginService;
         this.productUserControllerClass = ProductUserController.class;
-        this.productAdminControllerClass = ProductAdminController.class;
+        this.mainAdminPageControllerClass = MainAdminPageController.class;
         this.registrationControllerClass = RegistrationController.class;
         this.userSession = UserSession.getInstance();
     }
@@ -51,7 +51,7 @@ public class LoginController {
             if (userRole == UserRole.USER) {
                 root = fxmlPageLoader.loadFxmlFile(productUserControllerClass);
             } else {
-                root = fxmlPageLoader.loadFxmlFile(productAdminControllerClass);
+                root = fxmlPageLoader.loadFxmlFile(mainAdminPageControllerClass);
             }
             SceneSwitcher.switchScene(event, root);
         } else {

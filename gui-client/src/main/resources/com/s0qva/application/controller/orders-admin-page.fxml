@@ -20,11 +20,6 @@
                 <Font name="System Bold" size="18.0" />
             </font>
         </Label>
-        <Button fx:id="backToProductsButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onBackToProducts" text="Back to products">
-            <font>
-                <Font size="10.0" />
-            </font>
-        </Button>
       <Button layoutX="101.0" layoutY="351.0" mnemonicParsing="false" onAction="#onReceiveAllOrders" text="Receive all orders">
          <font>
             <Font size="14.0" />
@@ -37,5 +32,10 @@
             <Button mnemonicParsing="false" onAction="#onConfirmStatusChange" text="Confirm" />
          </children>
       </VBox>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onAction="#onBackToMainAdminPage" prefWidth="89.0" text="Back to main" textAlignment="CENTER">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>

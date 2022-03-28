@@ -49,9 +49,9 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="492.0" layoutY="560.0" mnemonicParsing="false" onAction="#onGoToAdminOrderPage" text="Go to admin order page">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="25.0" layoutY="21.0" mnemonicParsing="false" onAction="#onBackToMainAdminPage" text="back to main" textAlignment="CENTER">
          <font>
-            <Font size="14.0" />
+            <Font size="10.0" />
          </font>
       </Button>
    </children>
