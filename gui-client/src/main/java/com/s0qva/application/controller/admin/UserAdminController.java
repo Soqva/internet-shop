@@ -1,18 +1,16 @@
 package com.s0qva.application.controller.admin;
 
+import com.s0qva.application.controller.eventhandler.DefaultUserAccountEventHandler;
 import com.s0qva.application.controller.scene.SceneSwitcher;
 import com.s0qva.application.dto.user.UserCreationDto;
 import com.s0qva.application.dto.user.UserReadingDto;
 import com.s0qva.application.fxml.FxmlPageLoader;
 import com.s0qva.application.service.UserService;
-import com.s0qva.application.session.UserSession;
-import com.s0qva.application.util.AlertUtil;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -47,7 +45,7 @@ public class UserAdminController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         addEventToShowWindowToBanSelectedUser();
-        addEventToShowUserAccount();
+        DefaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
     }
 
     public void onReceiveAllUsers() {
@@ -90,24 +88,6 @@ public class UserAdminController implements Initializable {
         });
     }
 
-    private void addEventToShowUserAccount() {
-        UserSession user = UserSession.getInstance();
-        Label username = (Label) account.getChildren().get(0);
-        username.setText(user.getUsername());
-
-        account.setOnMouseClicked((click) -> {
-            String content = "username: " + user.getUsername()
-                    + "\nfull name: " + user.getFirstName() + " " + user.getLastName()
-                    + "\namount of orders: " + user.getOrders().size();
-
-            AlertUtil.generateInformationAlert(
-                    DefaultAlertValue.INFO_ALERT_ACCOUNT_TITLE,
-                    DefaultAlertValue.INFO_ALERT_ACCOUNT_HEADER,
-                    content
-            );
-        });
-    }
-
     private UserCreationDto buildUserCreationDto(UserReadingDto user, boolean isBanned) {
         return UserCreationDto.builder()
                 .username(user.getUsername())
@@ -116,10 +96,5 @@ public class UserAdminController implements Initializable {
                 .role(user.getRole())
                 .banned(isBanned)
                 .build();
-    }
-
-    private static class DefaultAlertValue {
-        private static final String INFO_ALERT_ACCOUNT_TITLE = "My account";
-        private static final String INFO_ALERT_ACCOUNT_HEADER = "Here is information about me";
     }
 }

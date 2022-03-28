@@ -1,5 +1,6 @@
 package com.s0qva.application.controller.admin;
 
+import com.s0qva.application.controller.eventhandler.DefaultUserAccountEventHandler;
 import com.s0qva.application.controller.user.OrderUserController;
 import com.s0qva.application.controller.ProductController;
 import com.s0qva.application.controller.scene.SceneSwitcher;
@@ -42,11 +43,10 @@ public class ProductAdminController extends ProductController implements Initial
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<ProductReadingDto> receivedProducts = getProductService().getAllProducts();
-        products.setItems(FXCollections.observableArrayList(receivedProducts));
-        productsInCart.setItems(FXCollections.observableArrayList(getCart().getProducts()));
+        fillProducts();
+        fillProductsInCart();
         addEventToShowProductDetails(products, productsInCart);
-        addEventToShowUserAccount(account);
+        DefaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
     }
 
     public void addToCart() {
@@ -69,5 +69,14 @@ public class ProductAdminController extends ProductController implements Initial
     public void onBackToMainAdminPage(ActionEvent event) {
         Parent root = getFxmlPageLoader().loadFxmlFile(mainAdminPageControllerClass);
         SceneSwitcher.switchScene(event, root);
+    }
+
+    private void fillProducts() {
+        List<ProductReadingDto> receivedProducts = getProductService().getAllProducts();
+        products.setItems(FXCollections.observableArrayList(receivedProducts));
+    }
+
+    private void fillProductsInCart() {
+        productsInCart.setItems(FXCollections.observableArrayList(getCart().getProducts()));
     }
 }

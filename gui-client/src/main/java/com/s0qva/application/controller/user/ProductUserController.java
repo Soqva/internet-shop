@@ -1,6 +1,7 @@
 package com.s0qva.application.controller.user;
 
 import com.s0qva.application.controller.ProductController;
+import com.s0qva.application.controller.eventhandler.DefaultUserAccountEventHandler;
 import com.s0qva.application.controller.scene.SceneSwitcher;
 import com.s0qva.application.dto.product.ProductReadingDto;
 import com.s0qva.application.fxml.FxmlPageLoader;
@@ -39,11 +40,10 @@ public class ProductUserController extends ProductController implements Initiali
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<ProductReadingDto> receivedProducts = getProductService().getAllProducts();
-        products.setItems(FXCollections.observableArrayList(receivedProducts));
-        productsInCart.setItems(FXCollections.observableArrayList(getCart().getProducts()));
+        fillProducts();
+        fillProductsInCart();
         addEventToShowProductDetails(products, productsInCart);
-        addEventToShowUserAccount(account);
+        DefaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
     }
 
     public void addToCart() {
@@ -61,5 +61,14 @@ public class ProductUserController extends ProductController implements Initiali
     public void onCreateOrder(ActionEvent event) {
         Parent root = getFxmlPageLoader().loadFxmlFile(orderUserControllerClass);
         SceneSwitcher.switchScene(event, root);
+    }
+
+    private void fillProducts() {
+        List<ProductReadingDto> receivedProducts = getProductService().getAllProducts();
+        products.setItems(FXCollections.observableArrayList(receivedProducts));
+    }
+
+    private void fillProductsInCart() {
+        productsInCart.setItems(FXCollections.observableArrayList(getCart().getProducts()));
     }
 }

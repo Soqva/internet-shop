@@ -1,6 +1,7 @@
 package com.s0qva.application.controller.admin;
 
 import com.s0qva.application.controller.OrderController;
+import com.s0qva.application.controller.eventhandler.DefaultUserAccountEventHandler;
 import com.s0qva.application.controller.scene.SceneSwitcher;
 import com.s0qva.application.dto.order.OrderCreationDto;
 import com.s0qva.application.dto.order.OrderReadingDto;
@@ -51,9 +52,9 @@ public class OrderAdminController extends OrderController implements Initializab
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        DefaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
+        addEventHandlerToShowSelectedOrder();
         fillStatusOrderComboBox();
-        addMouseClickedEventsOnUserOrders();
-        addEventToShowUserAccount(account);
     }
 
     public void onReceiveAllOrders() {
@@ -61,26 +62,28 @@ public class OrderAdminController extends OrderController implements Initializab
         userOrders.setItems(FXCollections.observableArrayList(orders));
     }
 
-    public void onBackToMainAdminPage(ActionEvent event) {
-        Parent root = getFxmlPageLoader().loadFxmlFile(mainAdminPageControllerClass);
-        SceneSwitcher.switchScene(event, root);
-    }
-
     public void onConfirmStatusChange() {
         OrderStatus selectedOrderStatus = statusOrderComboBox.getSelectionModel().getSelectedItem();
         selectedOrderForChanges.setStatus(selectedOrderStatus);
+
         OrderCreationDto updatingOrder = buildOrderCreationDto();
         OrderReadingDto updatedOrder = getOrderService().updateOrderStatus(selectedOrderForChanges.getId(), updatingOrder);
-        userOrders.getItems().remove(selectedOrderForChanges);
-        userOrders.getItems().add(updatedOrder);
+
+        int replacementIndex = userOrders.getItems().indexOf(selectedOrderForChanges);
+        userOrders.getItems().set(replacementIndex, updatedOrder);
         windowForChanges.setVisible(false);
+    }
+
+    public void onBackToMainAdminPage(ActionEvent event) {
+        Parent root = getFxmlPageLoader().loadFxmlFile(mainAdminPageControllerClass);
+        SceneSwitcher.switchScene(event, root);
     }
 
     private void fillStatusOrderComboBox() {
         statusOrderComboBox.setItems(FXCollections.observableArrayList(OrderStatus.values()));
     }
 
-    private void addMouseClickedEventsOnUserOrders() {
+    private void addEventHandlerToShowSelectedOrder() {
         userOrders.setOnMouseClicked((click) -> {
             MouseButton button = click.getButton();
 

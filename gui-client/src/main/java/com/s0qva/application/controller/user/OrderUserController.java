@@ -2,6 +2,7 @@ package com.s0qva.application.controller.user;
 
 import com.s0qva.application.controller.OrderController;
 import com.s0qva.application.controller.admin.ProductAdminController;
+import com.s0qva.application.controller.eventhandler.DefaultUserAccountEventHandler;
 import com.s0qva.application.controller.scene.SceneSwitcher;
 import com.s0qva.application.dto.order.OrderCreationDto;
 import com.s0qva.application.dto.order.OrderReadingDto;
@@ -51,16 +52,9 @@ public class OrderUserController extends OrderController implements Initializabl
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        userOrders.getItems().clear();
-        List<OrderReadingDto> userAllOrders = getOrderService().getAllOrdersForSpecificUser(getUserSession().getId());
-        userOrders.setItems(FXCollections.observableArrayList(userAllOrders));
+        fillUserOrders();
         fillCurrentOrder();
-        addEventToShowUserAccount(account);
-    }
-
-    public void fillCurrentOrder() {
-        List<ProductReadingDto> buyingProducts = getCart().getProducts();
-        userCurrentOrder.setItems(FXCollections.observableArrayList(buyingProducts));
+        DefaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
     }
 
     public void onCreateOrder(ActionEvent event) {
@@ -87,6 +81,27 @@ public class OrderUserController extends OrderController implements Initializabl
         }
     }
 
+    public void onBackToProducts(ActionEvent event) {
+        Parent root;
+        if (getUserSession().getRole() == UserRole.ADMIN) {
+            root = getFxmlPageLoader().loadFxmlFile(productAdminControllerClass);
+        } else {
+            root = getFxmlPageLoader().loadFxmlFile(productUserControllerClass);
+        }
+        SceneSwitcher.switchScene(event, root);
+    }
+
+    private void fillUserOrders() {
+        List<OrderReadingDto> userAllOrders = getOrderService().getAllOrdersForSpecificUser(getUserSession().getId());
+        userOrders.getItems().clear();
+        userOrders.setItems(FXCollections.observableArrayList(userAllOrders));
+    }
+
+    private void fillCurrentOrder() {
+        List<ProductReadingDto> buyingProducts = getCart().getProducts();
+        userCurrentOrder.setItems(FXCollections.observableArrayList(buyingProducts));
+    }
+
     private OrderCreationDto buildOrderCreationDto() {
         UserIdDto userIdDto = UserIdDto.builder()
                 .id(getUserSession().getId())
@@ -103,16 +118,6 @@ public class OrderUserController extends OrderController implements Initializabl
                 .userId(userIdDto)
                 .products(buyingProductIdDtos)
                 .build();
-    }
-
-    public void onBackToProducts(ActionEvent event) {
-        Parent root;
-        if (getUserSession().getRole() == UserRole.ADMIN) {
-            root = getFxmlPageLoader().loadFxmlFile(productAdminControllerClass);
-        } else {
-            root = getFxmlPageLoader().loadFxmlFile(productUserControllerClass);
-        }
-        SceneSwitcher.switchScene(event, root);
     }
 
     private static class DefaultAlertValue {
