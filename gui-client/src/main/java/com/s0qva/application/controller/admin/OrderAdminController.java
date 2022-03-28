@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,8 @@ public class OrderAdminController extends OrderController implements Initializab
     @FXML
     private ListView<OrderReadingDto> userOrders;
     @FXML
+    private HBox account;
+    @FXML
     private VBox windowForChanges;
     @FXML
     private ComboBox<OrderStatus> statusOrderComboBox;
@@ -50,6 +53,7 @@ public class OrderAdminController extends OrderController implements Initializab
     public void initialize(URL location, ResourceBundle resources) {
         fillStatusOrderComboBox();
         addMouseClickedEventsOnUserOrders();
+        addEventToShowUserAccount(account);
     }
 
     public void onReceiveAllOrders() {

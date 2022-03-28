@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -37,5 +38,15 @@
             <Font size="10.0" />
          </font>
       </Button>
+      <HBox fx:id="account" alignment="CENTER_RIGHT" layoutX="546.0" layoutY="12.0" prefHeight="30.0" prefWidth="155.0" spacing="30.0">
+         <children>
+            <Label fx:id="username" />
+            <ImageView fx:id="userPhoto" fitHeight="29.0" fitWidth="60.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../image/default-user-photo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
     </children>
 </AnchorPane>

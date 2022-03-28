@@ -29,8 +29,6 @@ public abstract class OrderController {
         username.setText(user.getUsername());
 
         account.setOnMouseClicked((click) -> {
-
-
             String content = "username: " + user.getUsername()
                     + "\nfull name: " + user.getFirstName() + " " + user.getLastName()
                     + "\namount of orders: " + user.getOrders().size();
