@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -45,5 +46,57 @@
             <Font size="14.0" />
          </font>
       </Button>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="86.0" layoutY="358.0" mnemonicParsing="false" onAction="#onCreateNewProduct" text="Create new product">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <VBox fx:id="windowsForCreating" alignment="TOP_CENTER" layoutX="270.0" layoutY="156.0" prefHeight="350.0" prefWidth="250.0" spacing="15.0" style="-fx-background-color: aqua;" visible="false">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Creating a new product">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="250.0" spacing="20.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="65.0" text="Name" />
+                  <TextField fx:id="productName" prefWidth="150.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="250.0" spacing="20.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="65.0" text="Price" />
+                  <TextField fx:id="productPrice" prefWidth="150.0" />
+               </children>
+            </HBox>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Product's details">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="250.0" spacing="20.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="65.0" text="Description" />
+                  <TextField fx:id="productDescription" prefWidth="150.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="250.0" spacing="20.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="65.0" text="Made in" />
+                  <ComboBox fx:id="productMadeInComboBox" prefWidth="150.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="250.0" spacing="20.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onCancelCreatingProduct" prefWidth="70.0" text="Cancel" />
+                  <Button mnemonicParsing="false" onAction="#onConfirmCreatingProduct" prefWidth="70.0" text="Confirm" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="10.0" top="10.0" />
+         </padding>
+      </VBox>
    </children>
 </AnchorPane>

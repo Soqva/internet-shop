@@ -35,7 +35,6 @@ import java.util.stream.Collectors;
 @FxmlView("orders-page.fxml")
 public class OrderUserController extends OrderController implements Initializable {
     private final Class<ProductUserController> productUserControllerClass;
-    private final Class<ProductAdminController> productAdminControllerClass;
     @FXML
     private ListView<OrderReadingDto> userOrders;
     @FXML
@@ -46,7 +45,6 @@ public class OrderUserController extends OrderController implements Initializabl
     @Autowired
     public OrderUserController(OrderService orderService, FxmlPageLoader fxmlPageLoader) {
         super(orderService, fxmlPageLoader);
-        this.productAdminControllerClass = ProductAdminController.class;
         this.productUserControllerClass = ProductUserController.class;
     }
 
@@ -82,12 +80,7 @@ public class OrderUserController extends OrderController implements Initializabl
     }
 
     public void onBackToProducts(ActionEvent event) {
-        Parent root;
-        if (getUserSession().getRole() == UserRole.ADMIN) {
-            root = getFxmlPageLoader().loadFxmlFile(productAdminControllerClass);
-        } else {
-            root = getFxmlPageLoader().loadFxmlFile(productUserControllerClass);
-        }
+        Parent root = getFxmlPageLoader().loadFxmlFile(productUserControllerClass);
         SceneSwitcher.switchScene(event, root);
     }
 

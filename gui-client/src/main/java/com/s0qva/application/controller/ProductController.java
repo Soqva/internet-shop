@@ -31,8 +31,11 @@ public abstract class ProductController {
                     String description = "There is no any description";
                     String madeIn = "Unknown";
 
-                    if (productDetails.getId() != null) {
+                    if (productDetails.getDescription() != null) {
                         description = productDetails.getDescription();
+                    }
+
+                    if (productDetails.getMadeIn() != null) {
                         madeIn = productDetails.getMadeIn().getFullName();
                     }
 
