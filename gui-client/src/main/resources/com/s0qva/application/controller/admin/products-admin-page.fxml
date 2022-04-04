@@ -15,41 +15,16 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Pane fx:id="tablePane" layoutX="61.0" layoutY="100.0" prefHeight="400.0" prefWidth="300.0">
+      <Pane fx:id="tablePane" layoutX="61.0" layoutY="100.0" prefHeight="208.0" prefWidth="656.0">
          <children>
-            <ListView fx:id="products" layoutX="25.0" layoutY="25.0" prefHeight="350.0" prefWidth="250.0" />
+            <ListView fx:id="products" layoutX="25.0" layoutY="25.0" prefHeight="160.0" prefWidth="608.0" />
          </children>
       </Pane>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="174.0" layoutY="87.0" text="Products" textAlignment="CENTER">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="352.0" layoutY="73.0" text="Products" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Pane layoutX="427.0" layoutY="100.0" prefHeight="400.0" prefWidth="300.0">
-         <children>
-            <ListView fx:id="productsInCart" layoutX="25.0" layoutY="25.0" prefHeight="350.0" prefWidth="250.0" />
-         </children>
-      </Pane>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="516.0" layoutY="87.0" text="My admin cart" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <Button fx:id="addingToCartButton" alignment="CENTER" contentDisplay="CENTER" layoutX="154.0" layoutY="491.0" mnemonicParsing="false" onAction="#addToCart" text="Add to the cart" textAlignment="CENTER">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="500.0" layoutY="491.0" mnemonicParsing="false" onAction="#removeFromCart" text="Remove from the cart">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
-      <Button fx:id="creatingOrderButton" layoutX="517.0" layoutY="525.0" mnemonicParsing="false" onAction="#onCreateOrder" text="Create my order">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
       <Button alignment="CENTER" contentDisplay="CENTER" layoutX="25.0" layoutY="21.0" mnemonicParsing="false" onAction="#onBackToMainAdminPage" text="back to main" textAlignment="CENTER">
          <font>
             <Font size="10.0" />
@@ -65,5 +40,10 @@
             </ImageView>
          </children>
       </HBox>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="86.0" layoutY="315.0" mnemonicParsing="false" onAction="#onReceiveAllProducts" text="Receive all products">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

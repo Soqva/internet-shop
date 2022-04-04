@@ -22,9 +22,10 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onGoToAdminProductsPage" prefWidth="100.0" text="products page" />
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onGoToAdminOrdersPage" prefWidth="100.0" text="orders page" />
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onGoToAdminUsersPage" prefWidth="100.0" text="users page" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onGoToAdminProductsPage" prefWidth="150.0" text="admin's products page" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onGoToProductsPage" prefWidth="150.0" text="products page" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onGoToAdminOrdersPage" prefWidth="150.0" text="orders page" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onGoToAdminUsersPage" prefWidth="150.0" text="users page" />
          </children>
       </VBox>
       <HBox fx:id="account" alignment="CENTER_RIGHT" layoutX="553.0" layoutY="44.0" prefHeight="30.0" prefWidth="155.0" spacing="30.0">

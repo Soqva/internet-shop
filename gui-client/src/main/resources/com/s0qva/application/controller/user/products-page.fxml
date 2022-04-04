@@ -58,5 +58,10 @@
             </ImageView>
          </children>
       </HBox>
+      <Button fx:id="backToMainAdminPageButton" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="22.0" mnemonicParsing="false" onAction="#onBackToMainAdminPage" prefWidth="89.0" text="Back to main" textAlignment="CENTER" visible="false">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
