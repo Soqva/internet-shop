@@ -23,12 +23,15 @@ public class MainAdminPageController implements Initializable {
     private final Class<ProductUserController> productUserControllerClass;
     private final Class<OrderAdminController> orderAdminControllerClass;
     private final Class<UserAdminController> userAdminControllerClass;
+    private final DefaultUserAccountEventHandler defaultUserAccountEventHandler;
     private final FxmlPageLoader fxmlPageLoader;
     @FXML
     private HBox account;
 
     @Autowired
-    public MainAdminPageController(FxmlPageLoader fxmlPageLoader) {
+    public MainAdminPageController(DefaultUserAccountEventHandler defaultUserAccountEventHandler,
+                                   FxmlPageLoader fxmlPageLoader) {
+        this.defaultUserAccountEventHandler = defaultUserAccountEventHandler;
         this.fxmlPageLoader = fxmlPageLoader;
         this.productAdminControllerClass = ProductAdminController.class;
         this.productUserControllerClass = ProductUserController.class;
@@ -38,7 +41,7 @@ public class MainAdminPageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        DefaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
+        defaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
     }
 
     public void onGoToAdminProductsPage(ActionEvent event) {

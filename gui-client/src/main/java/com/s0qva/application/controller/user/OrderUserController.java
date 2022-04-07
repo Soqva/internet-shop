@@ -34,6 +34,7 @@ import java.util.stream.Collectors;
 @Component
 @FxmlView("orders-page.fxml")
 public class OrderUserController extends OrderController implements Initializable {
+    private final DefaultUserAccountEventHandler defaultUserAccountEventHandler;
     private final Class<ProductUserController> productUserControllerClass;
     @FXML
     private ListView<OrderReadingDto> userOrders;
@@ -43,8 +44,11 @@ public class OrderUserController extends OrderController implements Initializabl
     private HBox account;
 
     @Autowired
-    public OrderUserController(OrderService orderService, FxmlPageLoader fxmlPageLoader) {
+    public OrderUserController(OrderService orderService,
+                               FxmlPageLoader fxmlPageLoader,
+                               DefaultUserAccountEventHandler defaultUserAccountEventHandler) {
         super(orderService, fxmlPageLoader);
+        this.defaultUserAccountEventHandler = defaultUserAccountEventHandler;
         this.productUserControllerClass = ProductUserController.class;
     }
 
@@ -52,7 +56,7 @@ public class OrderUserController extends OrderController implements Initializabl
     public void initialize(URL location, ResourceBundle resources) {
         fillUserOrders();
         fillCurrentOrder();
-        DefaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
+        defaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
     }
 
     public void onCreateOrder(ActionEvent event) {

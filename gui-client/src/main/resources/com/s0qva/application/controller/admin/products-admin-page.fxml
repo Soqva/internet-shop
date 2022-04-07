@@ -41,12 +41,12 @@
             </ImageView>
          </children>
       </HBox>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="86.0" layoutY="315.0" mnemonicParsing="false" onAction="#onReceiveAllProducts" text="Receive all products">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="193.0" layoutY="316.0" mnemonicParsing="false" onAction="#onReceiveAllProducts" prefWidth="180.0" text="Receive all products">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="86.0" layoutY="358.0" mnemonicParsing="false" onAction="#onCreateNewProduct" text="Create new product">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="406.0" layoutY="316.0" mnemonicParsing="false" onAction="#onCreateNewProduct" prefWidth="180.0" text="Create new product">
          <font>
             <Font size="14.0" />
          </font>

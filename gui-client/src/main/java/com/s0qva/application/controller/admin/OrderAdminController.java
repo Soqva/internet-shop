@@ -34,6 +34,7 @@ import java.util.stream.Collectors;
 @FxmlView("orders-admin-page.fxml")
 public class OrderAdminController extends OrderController implements Initializable {
     private final Class<MainAdminPageController> mainAdminPageControllerClass;
+    private final DefaultUserAccountEventHandler defaultUserAccountEventHandler;
     private OrderReadingDto selectedOrderForChanges;
     @FXML
     private ListView<OrderReadingDto> userOrders;
@@ -45,14 +46,17 @@ public class OrderAdminController extends OrderController implements Initializab
     private ComboBox<OrderStatus> statusOrderComboBox;
 
     @Autowired
-    public OrderAdminController(OrderService orderService, FxmlPageLoader fxmlPageLoader) {
+    public OrderAdminController(OrderService orderService,
+                                FxmlPageLoader fxmlPageLoader,
+                                DefaultUserAccountEventHandler defaultUserAccountEventHandler) {
         super(orderService, fxmlPageLoader);
+        this.defaultUserAccountEventHandler = defaultUserAccountEventHandler;
         this.mainAdminPageControllerClass = MainAdminPageController.class;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        DefaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
+        defaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
         addEventHandlerToShowSelectedOrder();
         fillStatusOrderComboBox();
     }

@@ -2,8 +2,6 @@ package com.s0qva.application.http;
 
 import com.s0qva.application.dto.CreationDto;
 import com.s0qva.application.dto.ReadingDto;
-import com.s0qva.application.dto.order.OrderCreationDto;
-import com.s0qva.application.dto.order.OrderReadingDto;
 import com.s0qva.application.dto.user.UserAuthenticationDto;
 import com.s0qva.application.dto.user.UserReadingDto;
 import com.s0qva.application.http.error.handler.ServerResponseErrorHandler;
@@ -13,8 +11,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
 
 @UtilityClass
 public class RestRequestSender {
@@ -46,5 +42,9 @@ public class RestRequestSender {
         HttpEntity<CreationDto> requestEntity = new HttpEntity<>(creationDto);
 
         return REST_TEMPLATE.exchange(url, HttpMethod.PUT, requestEntity, receivingType);
+    }
+
+    public ResponseEntity<Void> delete(String url) {
+        return REST_TEMPLATE.exchange(url, HttpMethod.DELETE, null, Void.class);
     }
 }

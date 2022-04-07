@@ -28,6 +28,7 @@ public class UserAdminController implements Initializable {
     private final Class<MainAdminPageController> mainAdminPageControllerClass;
     private final UserService userService;
     private final FxmlPageLoader fxmlPageLoader;
+    private final DefaultUserAccountEventHandler defaultUserAccountEventHandler;
     @FXML
     private ListView<UserReadingDto> users;
     @FXML
@@ -36,16 +37,19 @@ public class UserAdminController implements Initializable {
     private HBox account;
 
     @Autowired
-    public UserAdminController(UserService userService, FxmlPageLoader fxmlPageLoader) {
+    public UserAdminController(UserService userService,
+                               FxmlPageLoader fxmlPageLoader,
+                               DefaultUserAccountEventHandler defaultUserAccountEventHandler) {
         this.userService = userService;
         this.fxmlPageLoader = fxmlPageLoader;
+        this.defaultUserAccountEventHandler = defaultUserAccountEventHandler;
         this.mainAdminPageControllerClass = MainAdminPageController.class;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         addEventToShowWindowToBanSelectedUser();
-        DefaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
+        defaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
     }
 
     public void onReceiveAllUsers() {

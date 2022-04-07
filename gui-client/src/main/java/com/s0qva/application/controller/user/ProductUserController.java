@@ -28,6 +28,7 @@ import java.util.ResourceBundle;
 @Component
 @FxmlView("products-page.fxml")
 public class ProductUserController extends ProductController implements Initializable {
+    private final DefaultUserAccountEventHandler defaultUserAccountEventHandler;
     private final Class<OrderUserController> orderUserControllerClass;
     private final Class<MainAdminPageController> mainAdminPageControllerClass;
     @FXML
@@ -40,8 +41,11 @@ public class ProductUserController extends ProductController implements Initiali
     private Button backToMainAdminPageButton;
 
     @Autowired
-    public ProductUserController(ProductService productService, FxmlPageLoader fxmlPageLoader) {
+    public ProductUserController(ProductService productService,
+                                 FxmlPageLoader fxmlPageLoader,
+                                 DefaultUserAccountEventHandler defaultUserAccountEventHandler) {
         super(productService, fxmlPageLoader);
+        this.defaultUserAccountEventHandler = defaultUserAccountEventHandler;
         this.orderUserControllerClass = OrderUserController.class;
         this.mainAdminPageControllerClass = MainAdminPageController.class;
     }
@@ -52,7 +56,7 @@ public class ProductUserController extends ProductController implements Initiali
         fillProducts();
         fillProductsInCart();
         addEventToShowProductDetails(products, productsInCart);
-        DefaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
+        defaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
     }
 
     public void addToCart() {

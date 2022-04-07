@@ -3,7 +3,6 @@ package com.s0qva.application.controller.admin;
 import com.s0qva.application.controller.eventhandler.DefaultUserAccountEventHandler;
 import com.s0qva.application.controller.ProductController;
 import com.s0qva.application.controller.scene.SceneSwitcher;
-import com.s0qva.application.controller.user.OrderUserController;
 import com.s0qva.application.dto.product.ProductCreationDto;
 import com.s0qva.application.dto.product.ProductReadingDto;
 import com.s0qva.application.dto.product.detail.ProductDetailsCreationDto;
@@ -12,11 +11,9 @@ import com.s0qva.application.model.enumeration.Country;
 import com.s0qva.application.service.ProductService;
 import com.s0qva.application.util.AlertUtil;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -35,6 +32,7 @@ import java.util.ResourceBundle;
 @Component
 public class ProductAdminController extends ProductController implements Initializable {
     private final Class<MainAdminPageController> mainAdminPageControllerClass;
+    private final DefaultUserAccountEventHandler defaultUserAccountEventHandler;
     @FXML
     private ListView<ProductReadingDto> products;
     @FXML
@@ -51,14 +49,17 @@ public class ProductAdminController extends ProductController implements Initial
     private ComboBox<Country> productMadeInComboBox;
 
     @Autowired
-    public ProductAdminController(ProductService productService, FxmlPageLoader fxmlPageLoader) {
+    public ProductAdminController(ProductService productService,
+                                  FxmlPageLoader fxmlPageLoader,
+                                  DefaultUserAccountEventHandler defaultUserAccountEventHandler) {
         super(productService, fxmlPageLoader);
+        this.defaultUserAccountEventHandler = defaultUserAccountEventHandler;
         this.mainAdminPageControllerClass = MainAdminPageController.class;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        DefaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
+        defaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
         addEventToShowProductDetails(products);
         fillProductMadeInComboBox();
     }
@@ -80,11 +81,10 @@ public class ProductAdminController extends ProductController implements Initial
 
         if (isCreated) {
             AlertUtil.generateInformationAlert(
-                    DefaultAlertValue.INFO_ALERT_TITLE,
-                    DefaultAlertValue.INFO_ALERT_HEADER,
-                    DefaultAlertValue.INFO_ALERT_CONTENT
+                    DefaultAlertValue.INFO_ALERT_CREATED_PRODUCT_TITLE,
+                    DefaultAlertValue.INFO_ALERT_CREATED_PRODUCT_HEADER,
+                    DefaultAlertValue.INFO_ALERT_CREATED_PRODUCT_CONTENT
             );
-
             clearAllProductCreatingFields();
             onReceiveAllProducts();
         }
@@ -122,7 +122,6 @@ public class ProductAdminController extends ProductController implements Initial
             if (!description.isBlank()) {
                 productDetailsCreationDto.setDescription(description);
             }
-
             if (selectedCountry != null) {
                 productDetailsCreationDto.setMadeIn(selectedCountry);
             }
@@ -141,8 +140,8 @@ public class ProductAdminController extends ProductController implements Initial
     }
 
     private static class DefaultAlertValue {
-        private static final String INFO_ALERT_TITLE = "Successful product creation";
-        private static final String INFO_ALERT_HEADER = "The product has been successfully created!";
-        private static final String INFO_ALERT_CONTENT = "The product is available for purchase";
+        private static final String INFO_ALERT_CREATED_PRODUCT_TITLE = "Successful product creation";
+        private static final String INFO_ALERT_CREATED_PRODUCT_HEADER = "The product has been successfully created!";
+        private static final String INFO_ALERT_CREATED_PRODUCT_CONTENT = "The product is available for purchase";
     }
 }
