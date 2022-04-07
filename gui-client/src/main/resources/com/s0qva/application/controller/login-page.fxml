@@ -8,7 +8,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.s0qva.application.controller.LoginController">
    <children>
       <VBox alignment="CENTER" layoutX="56.0" layoutY="50.0" prefHeight="500.0" prefWidth="344.0" spacing="10.0">
@@ -52,7 +51,7 @@
                   </PasswordField>
                </children>
             </HBox>
-            <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSignIn" text="Sign in" textAlignment="CENTER">
+            <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSignIn" prefWidth="180.0" text="Sign in" textAlignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font>
@@ -72,7 +71,7 @@
                   <Insets bottom="50.0" />
                </VBox.margin>
             </Label>
-            <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSignUp" text="Sign up" textAlignment="CENTER">
+            <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSignUp" prefWidth="180.0" text="Sign up" textAlignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font>
