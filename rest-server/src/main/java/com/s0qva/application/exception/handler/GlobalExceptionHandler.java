@@ -25,32 +25,17 @@ public class GlobalExceptionHandler {
             NoSuchOrderException.class
     })
     public ResponseEntity<IncorrectDataContainer> handleNoSuchEntityException(RuntimeException exception) {
-        Map<String, String> exceptions = new HashMap<>();
-
-        exceptions.put("noSuchEntityError", exception.getMessage());
-        IncorrectDataContainer responseData = new IncorrectDataContainer(exceptions);
-
-        return new ResponseEntity<>(responseData, HttpStatus.NOT_FOUND);
+        return buildResponseEntity(exception, HttpStatus.NOT_FOUND, "noSuchEntityError");
     }
 
     @ExceptionHandler({UserAlreadyExistsException.class})
     public ResponseEntity<IncorrectDataContainer> handleEntityAlreadyExistsException(RuntimeException exception) {
-        Map<String, String> exceptions = new HashMap<>();
-
-        exceptions.put("entityAlreadyExists", exception.getMessage());
-        IncorrectDataContainer responseData = new IncorrectDataContainer(exceptions);
-
-        return new ResponseEntity<>(responseData, HttpStatus.CONFLICT);
+        return buildResponseEntity(exception, HttpStatus.CONFLICT, "entityAlreadyExists");
     }
 
     @ExceptionHandler({InvalidPasswordDuringSignInException.class})
     public ResponseEntity<IncorrectDataContainer> handleSignInException(RuntimeException exception) {
-        Map<String, String> exceptions = new HashMap<>();
-
-        exceptions.put("invalidPassword", exception.getMessage());
-        IncorrectDataContainer responseData = new IncorrectDataContainer(exceptions);
-
-        return new ResponseEntity<>(responseData, HttpStatus.CONFLICT);
+        return buildResponseEntity(exception, HttpStatus.CONFLICT, "invalidPassword");
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class})
@@ -65,8 +50,22 @@ public class GlobalExceptionHandler {
                     exceptions.put(fieldName, errorMessage);
                 });
 
+        return buildResponseEntity(exceptions, HttpStatus.CONFLICT);
+    }
+
+    private ResponseEntity<IncorrectDataContainer> buildResponseEntity(Exception exception,
+                                                                       HttpStatus httpStatus,
+                                                                       String errorMessage) {
+        Map<String, String> exceptions = new HashMap<>();
+
+        exceptions.put(errorMessage, exception.getMessage());
         IncorrectDataContainer responseData = new IncorrectDataContainer(exceptions);
 
-        return new ResponseEntity<>(responseData, HttpStatus.CONFLICT);
+        return new ResponseEntity<>(responseData, httpStatus);
+    }
+
+    private ResponseEntity<IncorrectDataContainer> buildResponseEntity(Map<String, String> exceptions,
+                                                                       HttpStatus httpStatus) {
+        return new ResponseEntity<>(new IncorrectDataContainer(exceptions), httpStatus);
     }
 }

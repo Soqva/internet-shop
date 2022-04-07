@@ -7,7 +7,6 @@ import com.s0qva.application.dto.user.UserReadingDto;
 import com.s0qva.application.exception.NoSuchUserException;
 import com.s0qva.application.exception.UserAlreadyExistsException;
 import com.s0qva.application.exception.model.enumeration.DefaultExceptionMessage;
-import com.s0qva.application.mapper.order.GeneralOrderMapper;
 import com.s0qva.application.model.User;
 import com.s0qva.application.repository.UserRepository;
 import com.s0qva.application.mapper.user.GeneralUserMapper;
