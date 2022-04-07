@@ -52,47 +52,47 @@ public class ProductUserController extends ProductController implements Initiali
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        defaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
         showBackToMainAdminPageButton();
         fillProducts();
         fillProductsInCart();
         addEventToShowProductDetails(products, productsInCart);
-        defaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
     }
 
     public void addToCart() {
         ProductReadingDto selectedProduct = products.getSelectionModel().getSelectedItem();
-        getCart().addToCart(selectedProduct);
-        productsInCart.setItems(FXCollections.observableArrayList(getCart().getProducts()));
+        cart.addToCart(selectedProduct);
+        productsInCart.setItems(FXCollections.observableArrayList(cart.getProducts()));
     }
 
     public void removeFromCart() {
         ProductReadingDto selectedProduct = productsInCart.getSelectionModel().getSelectedItem();
-        getCart().removeFromCart(selectedProduct);
-        productsInCart.setItems(FXCollections.observableArrayList(getCart().getProducts()));
+        cart.removeFromCart(selectedProduct);
+        productsInCart.setItems(FXCollections.observableArrayList(cart.getProducts()));
     }
 
     public void onCreateOrder(ActionEvent event) {
-        Parent root = getFxmlPageLoader().loadFxmlFile(orderUserControllerClass);
+        Parent root = fxmlPageLoader.loadFxmlFile(orderUserControllerClass);
         SceneSwitcher.switchScene(event, root);
     }
 
     private void fillProducts() {
-        List<ProductReadingDto> receivedProducts = getProductService().getAllProducts();
+        List<ProductReadingDto> receivedProducts = productService.getAllProducts();
         products.setItems(FXCollections.observableArrayList(receivedProducts));
     }
 
     private void fillProductsInCart() {
-        productsInCart.setItems(FXCollections.observableArrayList(getCart().getProducts()));
+        productsInCart.setItems(FXCollections.observableArrayList(cart.getProducts()));
     }
 
     private void showBackToMainAdminPageButton() {
-        if (UserSession.getInstance().getRole() == UserRole.ADMIN) {
+        if (userSession.getRole() == UserRole.ADMIN) {
             backToMainAdminPageButton.setVisible(true);
         }
     }
 
     public void onBackToMainAdminPage(ActionEvent event) {
-        Parent root = getFxmlPageLoader().loadFxmlFile(mainAdminPageControllerClass);
+        Parent root = fxmlPageLoader.loadFxmlFile(mainAdminPageControllerClass);
         SceneSwitcher.switchScene(event, root);
     }
 }

@@ -1,7 +1,6 @@
 package com.s0qva.application.controller.user;
 
 import com.s0qva.application.controller.OrderController;
-import com.s0qva.application.controller.admin.ProductAdminController;
 import com.s0qva.application.controller.eventhandler.DefaultUserAccountEventHandler;
 import com.s0qva.application.controller.scene.SceneSwitcher;
 import com.s0qva.application.dto.order.OrderCreationDto;
@@ -11,7 +10,6 @@ import com.s0qva.application.dto.product.ProductReadingDto;
 import com.s0qva.application.dto.user.UserIdDto;
 import com.s0qva.application.fxml.FxmlPageLoader;
 import com.s0qva.application.model.enumeration.OrderStatus;
-import com.s0qva.application.model.enumeration.UserRole;
 import com.s0qva.application.service.OrderService;
 import com.s0qva.application.util.AlertUtil;
 import javafx.collections.FXCollections;
@@ -54,19 +52,19 @@ public class OrderUserController extends OrderController implements Initializabl
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        defaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
         fillUserOrders();
         fillCurrentOrder();
-        defaultUserAccountEventHandler.addEventHandlerToShowUserAccount(account);
     }
 
     public void onCreateOrder(ActionEvent event) {
         OrderCreationDto orderCreationDto = buildOrderCreationDto();
-        boolean isCreated = getOrderService().createOrder(orderCreationDto);
+        boolean isCreated = orderService.createOrder(orderCreationDto);
 
         if (isCreated) {
-            getCart().clearCart();
+            cart.clearCart();
 
-            Parent root = getFxmlPageLoader().loadFxmlFile(OrderUserController.class);
+            Parent root = fxmlPageLoader.loadFxmlFile(OrderUserController.class);
             SceneSwitcher.switchScene(event, root);
 
             AlertUtil.generateInformationAlert(
@@ -84,27 +82,27 @@ public class OrderUserController extends OrderController implements Initializabl
     }
 
     public void onBackToProducts(ActionEvent event) {
-        Parent root = getFxmlPageLoader().loadFxmlFile(productUserControllerClass);
+        Parent root = fxmlPageLoader.loadFxmlFile(productUserControllerClass);
         SceneSwitcher.switchScene(event, root);
     }
 
     private void fillUserOrders() {
-        List<OrderReadingDto> userAllOrders = getOrderService().getAllOrdersForSpecificUser(getUserSession().getId());
+        List<OrderReadingDto> userAllOrders = orderService.getAllOrdersForSpecificUser(userSession.getId());
         userOrders.getItems().clear();
         userOrders.setItems(FXCollections.observableArrayList(userAllOrders));
     }
 
     private void fillCurrentOrder() {
-        List<ProductReadingDto> buyingProducts = getCart().getProducts();
+        List<ProductReadingDto> buyingProducts = cart.getProducts();
         userCurrentOrder.setItems(FXCollections.observableArrayList(buyingProducts));
     }
 
     private OrderCreationDto buildOrderCreationDto() {
         UserIdDto userIdDto = UserIdDto.builder()
-                .id(getUserSession().getId())
+                .id(userSession.getId())
                 .build();
 
-        List<ProductIdDto> buyingProductIdDtos = getCart().getProducts().stream()
+        List<ProductIdDto> productIdDtoList = cart.getProducts().stream()
                 .map(ProductReadingDto::getId)
                 .map(ProductIdDto::new)
                 .collect(Collectors.toList());
@@ -113,7 +111,7 @@ public class OrderUserController extends OrderController implements Initializabl
                 .orderDate(LocalDateTime.now())
                 .status(OrderStatus.WAITING)
                 .userId(userIdDto)
-                .products(buyingProductIdDtos)
+                .products(productIdDtoList)
                 .build();
     }
 

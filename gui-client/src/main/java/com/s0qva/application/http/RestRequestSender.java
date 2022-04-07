@@ -24,7 +24,6 @@ public class RestRequestSender {
 
     public ResponseEntity<UserReadingDto> signIn(String url, UserAuthenticationDto userAuthenticationDto) {
         HttpEntity<UserAuthenticationDto> requestEntity = new HttpEntity<>(userAuthenticationDto);
-
         return REST_TEMPLATE.exchange(url, HttpMethod.POST, requestEntity, UserReadingDto.class);
     }
 
@@ -34,13 +33,11 @@ public class RestRequestSender {
 
     public ResponseEntity<Void> post(String url, CreationDto creationDto) {
         HttpEntity<CreationDto> requestEntity = new HttpEntity<>(creationDto);
-
         return REST_TEMPLATE.exchange(url, HttpMethod.POST, requestEntity, Void.class);
     }
 
     public <T extends ReadingDto> ResponseEntity<T> update(String url, CreationDto creationDto, Class<T> receivingType) {
         HttpEntity<CreationDto> requestEntity = new HttpEntity<>(creationDto);
-
         return REST_TEMPLATE.exchange(url, HttpMethod.PUT, requestEntity, receivingType);
     }
 

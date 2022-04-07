@@ -21,10 +21,6 @@ public final class UserSession {
     private UserSession() {
     }
 
-    public static UserSession getInstance() {
-        return INSTANCE;
-    }
-
     public void createUserSession(UserReadingDto user) {
         this.id = user.getId();
         this.username = user.getUsername();
@@ -43,6 +39,10 @@ public final class UserSession {
         this.role = null;
         this.banned = false;
         this.orders = null;
+    }
+
+    public static UserSession getInstance() {
+        return INSTANCE;
     }
 }
 

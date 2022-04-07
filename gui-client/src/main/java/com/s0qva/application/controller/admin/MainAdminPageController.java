@@ -19,12 +19,12 @@ import java.util.ResourceBundle;
 @FxmlView("main-admin-page.fxml")
 @Component
 public class MainAdminPageController implements Initializable {
+    private final DefaultUserAccountEventHandler defaultUserAccountEventHandler;
+    private final FxmlPageLoader fxmlPageLoader;
     private final Class<ProductAdminController> productAdminControllerClass;
     private final Class<ProductUserController> productUserControllerClass;
     private final Class<OrderAdminController> orderAdminControllerClass;
     private final Class<UserAdminController> userAdminControllerClass;
-    private final DefaultUserAccountEventHandler defaultUserAccountEventHandler;
-    private final FxmlPageLoader fxmlPageLoader;
     @FXML
     private HBox account;
 

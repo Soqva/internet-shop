@@ -31,8 +31,8 @@ import java.util.ResourceBundle;
 @FxmlView("products-admin-page.fxml")
 @Component
 public class ProductAdminController extends ProductController implements Initializable {
-    private final Class<MainAdminPageController> mainAdminPageControllerClass;
     private final DefaultUserAccountEventHandler defaultUserAccountEventHandler;
+    private final Class<MainAdminPageController> mainAdminPageControllerClass;
     @FXML
     private ListView<ProductReadingDto> products;
     @FXML
@@ -65,7 +65,7 @@ public class ProductAdminController extends ProductController implements Initial
     }
 
     public void onReceiveAllProducts() {
-        List<ProductReadingDto> receivedProducts = getProductService().getAllProducts();
+        List<ProductReadingDto> receivedProducts = productService.getAllProducts();
         products.setItems(FXCollections.observableArrayList(receivedProducts));
     }
 
@@ -77,7 +77,7 @@ public class ProductAdminController extends ProductController implements Initial
         windowsForCreating.setVisible(false);
 
         ProductCreationDto newProduct = buildProductCreationDto();
-        boolean isCreated = getProductService().createProduct(newProduct);
+        boolean isCreated = productService.createProduct(newProduct);
 
         if (isCreated) {
             AlertUtil.generateInformationAlert(
@@ -107,7 +107,7 @@ public class ProductAdminController extends ProductController implements Initial
     }
 
     public void onBackToMainAdminPage(ActionEvent event) {
-        Parent root = getFxmlPageLoader().loadFxmlFile(mainAdminPageControllerClass);
+        Parent root = fxmlPageLoader.loadFxmlFile(mainAdminPageControllerClass);
         SceneSwitcher.switchScene(event, root);
     }
 

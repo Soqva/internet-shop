@@ -33,8 +33,8 @@ import java.util.stream.Collectors;
 @Component
 @FxmlView("orders-admin-page.fxml")
 public class OrderAdminController extends OrderController implements Initializable {
-    private final Class<MainAdminPageController> mainAdminPageControllerClass;
     private final DefaultUserAccountEventHandler defaultUserAccountEventHandler;
+    private final Class<MainAdminPageController> mainAdminPageControllerClass;
     private OrderReadingDto selectedOrderForChanges;
     @FXML
     private ListView<OrderReadingDto> userOrders;
@@ -62,7 +62,7 @@ public class OrderAdminController extends OrderController implements Initializab
     }
 
     public void onReceiveAllOrders() {
-        List<OrderReadingDto> orders = getOrderService().getAllOrders();
+        List<OrderReadingDto> orders = orderService.getAllOrders();
         userOrders.setItems(FXCollections.observableArrayList(orders));
     }
 
@@ -71,7 +71,7 @@ public class OrderAdminController extends OrderController implements Initializab
         selectedOrderForChanges.setStatus(selectedOrderStatus);
 
         OrderCreationDto updatingOrder = buildOrderCreationDto();
-        OrderReadingDto updatedOrder = getOrderService().updateOrderStatus(selectedOrderForChanges.getId(), updatingOrder);
+        OrderReadingDto updatedOrder = orderService.updateOrderStatus(selectedOrderForChanges.getId(), updatingOrder);
 
         int replacementIndex = userOrders.getItems().indexOf(selectedOrderForChanges);
         userOrders.getItems().set(replacementIndex, updatedOrder);
@@ -79,7 +79,7 @@ public class OrderAdminController extends OrderController implements Initializab
     }
 
     public void onBackToMainAdminPage(ActionEvent event) {
-        Parent root = getFxmlPageLoader().loadFxmlFile(mainAdminPageControllerClass);
+        Parent root = fxmlPageLoader.loadFxmlFile(mainAdminPageControllerClass);
         SceneSwitcher.switchScene(event, root);
     }
 
@@ -120,7 +120,7 @@ public class OrderAdminController extends OrderController implements Initializab
     }
 
     private OrderCreationDto buildOrderCreationDto() {
-        List<ProductIdDto> productIdDtos = selectedOrderForChanges.getProducts().stream()
+        List<ProductIdDto> productIdDtoList = selectedOrderForChanges.getProducts().stream()
                 .map(ProductReadingDto::getId)
                 .map(ProductIdDto::new)
                 .collect(Collectors.toList());
@@ -129,7 +129,7 @@ public class OrderAdminController extends OrderController implements Initializab
                 .orderDate(selectedOrderForChanges.getOrderDate())
                 .status(selectedOrderForChanges.getStatus())
                 .userId(selectedOrderForChanges.getUserId())
-                .products(productIdDtos)
+                .products(productIdDtoList)
                 .build();
     }
 

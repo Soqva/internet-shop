@@ -8,10 +8,10 @@ import lombok.Data;
 
 @Data
 public abstract class OrderController {
-    private final OrderService orderService;
-    private final FxmlPageLoader fxmlPageLoader;
-    private final UserSession userSession;
-    private final Cart cart;
+    protected final OrderService orderService;
+    protected final FxmlPageLoader fxmlPageLoader;
+    protected final UserSession userSession;
+    protected final Cart cart;
 
     public OrderController(OrderService orderService, FxmlPageLoader fxmlPageLoader) {
         this.orderService = orderService;

@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DefaultUserAccountEventHandler {
-    private final Class<LoginController> loginController;
     private final FxmlPageLoader fxmlPageLoader;
+    private final Class<LoginController> loginController;
 
     @Autowired
     public DefaultUserAccountEventHandler(FxmlPageLoader fxmlPageLoader) {

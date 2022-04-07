@@ -5,19 +5,22 @@ import com.s0qva.application.dto.product.detail.ProductDetailsReadingDto;
 import com.s0qva.application.fxml.FxmlPageLoader;
 import com.s0qva.application.model.Cart;
 import com.s0qva.application.service.ProductService;
+import com.s0qva.application.session.UserSession;
 import com.s0qva.application.util.AlertUtil;
 import javafx.scene.control.ListView;
 import lombok.Data;
 
 @Data
 public abstract class ProductController {
-    private final ProductService productService;
-    private final FxmlPageLoader fxmlPageLoader;
-    private final Cart cart;
+    protected final ProductService productService;
+    protected final FxmlPageLoader fxmlPageLoader;
+    protected final UserSession userSession;
+    protected final Cart cart;
 
     public ProductController(ProductService productService, FxmlPageLoader fxmlPageLoader) {
         this.productService = productService;
         this.fxmlPageLoader = fxmlPageLoader;
+        this.userSession = UserSession.getInstance();
         this.cart = Cart.getInstance();
     }
 

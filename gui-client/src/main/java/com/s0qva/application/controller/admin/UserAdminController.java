@@ -25,10 +25,10 @@ import java.util.ResourceBundle;
 @FxmlView("users-admin-page.fxml")
 @Component
 public class UserAdminController implements Initializable {
-    private final Class<MainAdminPageController> mainAdminPageControllerClass;
     private final UserService userService;
     private final FxmlPageLoader fxmlPageLoader;
     private final DefaultUserAccountEventHandler defaultUserAccountEventHandler;
+    private final Class<MainAdminPageController> mainAdminPageControllerClass;
     @FXML
     private ListView<UserReadingDto> users;
     @FXML
