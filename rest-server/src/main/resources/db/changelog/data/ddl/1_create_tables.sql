@@ -65,6 +65,15 @@ CREATE TABLE commodity
     producing_name_country VARCHAR(64)  NOT NULL REFERENCES dictionary_country (name)
 );
 
+CREATE TABLE order_commodity
+(
+    id                         BIGSERIAL PRIMARY KEY,
+    order_id                   BIGINT  NOT NULL REFERENCES orders (id),
+    commodity_id               BIGINT  NOT NULL REFERENCES commodity (id),
+    amount_of_bought_commodity INTEGER NOT NULL,
+    UNIQUE (order_id, commodity_id)
+);
+
 CREATE TABLE sold_commodity
 (
     id                         BIGSERIAL PRIMARY KEY,
