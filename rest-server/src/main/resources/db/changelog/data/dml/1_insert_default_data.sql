@@ -11,11 +11,11 @@ INSERT INTO dictionary_role (name, short_name, description)
 VALUES ('user', 'U', 'среднестатистический пользователь магазина'),
        ('admin', 'A', 'администратор магазина');
 
-INSERT INTO user_role (user_name, role_name)
-VALUES ('s0qva', 'admin'),
-       ('misha', 'user'),
-       ('egor', 'user'),
-       ('zenya', 'user');
+INSERT INTO user_role (user_id, role_id)
+VALUES (1, 2),
+       (2, 1),
+       (3, 1),
+       (4, 1);
 
 INSERT INTO dictionary_order_status (name, short_name, description)
 VALUES ('accepted', 'ACC', 'заказ принят администратором магазина'),

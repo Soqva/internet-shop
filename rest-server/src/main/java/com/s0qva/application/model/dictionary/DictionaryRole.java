@@ -1,5 +1,6 @@
-package com.s0qva.application.model;
+package com.s0qva.application.model.dictionary;
 
+import com.s0qva.application.model.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,43 +10,35 @@ import lombok.ToString;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "dictionary_role")
+public class DictionaryRole {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    private String username;
+    private String name;
 
-    private String password;
+    @Column(name = "short_name")
+    private String shortName;
 
-    @Column(name = "first_name")
-    private String firstName;
+    private String description;
 
-    @Column(name = "last_name")
-    private String lastName;
-
-    private Boolean blocked;
-
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "role")
     @Builder.Default
     @ToString.Exclude
     private List<UserRole> userRoles = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
-    @Builder.Default
-    @ToString.Exclude
-    private List<UserOrder> userOrders = new ArrayList<>();
 }

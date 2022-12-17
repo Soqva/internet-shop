@@ -1,5 +1,10 @@
 package com.s0qva.application.model.enumeration;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Getter
 public enum Country {
     USA("United States of America"),
     AFGHANISTAN("Afghanistan"),
@@ -206,12 +211,4 @@ public enum Country {
     ZIMBABWE("Zimbabwe");
 
     private final String fullName;
-
-    Country(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
 }

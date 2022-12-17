@@ -1,6 +1,6 @@
 package com.s0qva.application.model;
 
-import com.s0qva.application.model.dictionary.DictionaryOrderStatus;
+import com.s0qva.application.model.dictionary.DictionarySupplier;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +10,6 @@ import lombok.ToString;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,32 +20,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "orders")
-public class Order {
+@Table(name = "supply")
+public class Supply {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "order_status_id")
-    private DictionaryOrderStatus orderStatus;
+    @JoinColumn(name = "supplier_id")
+    private DictionarySupplier supplier;
 
-    @Column(name = "order_cost")
-    private Double orderCost;
+    @Column(name = "receiving_date")
+    private Long receivingDate;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "supply")
     @Builder.Default
     @ToString.Exclude
-    private List<UserOrder> userOrders = new ArrayList<>();
-
-    @OneToMany(mappedBy = "order")
-    @Builder.Default
-    @ToString.Exclude
-    private List<OrderCommodity> orderCommodities = new ArrayList<>();
+    private List<SupplyCommodity> supplyCommodities = new ArrayList<>();
 }

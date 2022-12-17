@@ -13,56 +13,59 @@ CREATE TABLE users
 
 CREATE TABLE dictionary_role
 (
-    name        VARCHAR(32) PRIMARY KEY,
+    id          SERIAL PRIMARY KEY,
+    name        VARCHAR(32),
     short_name  VARCHAR(16),
     description VARCHAR(128)
 );
 
 CREATE TABLE user_role
 (
-    id        BIGSERIAL PRIMARY KEY,
-    user_name VARCHAR(64) NOT NULL REFERENCES users (username),
-    role_name VARCHAR(32) DEFAULT 'user' REFERENCES dictionary_role (name),
-    UNIQUE (user_name, role_name)
+    id      BIGSERIAL PRIMARY KEY,
+    user_id BIGINT NOT NULL REFERENCES users (id),
+    role_id INT    NOT NULL REFERENCES dictionary_role (id),
+    UNIQUE (user_id, role_id)
 );
 
 CREATE TABLE dictionary_order_status
 (
-    name        VARCHAR(32) PRIMARY KEY,
+    id          SERIAL PRIMARY KEY,
+    name        VARCHAR(32),
     short_name  VARCHAR(16),
     description VARCHAR(128)
 );
 
 CREATE TABLE orders
 (
-    id                BIGSERIAL PRIMARY KEY,
-    order_status_name VARCHAR(32) NOT NULL REFERENCES dictionary_order_status (name),
-    order_cost        DECIMAL     NOT NULL
+    id              BIGSERIAL PRIMARY KEY,
+    order_status_id INT     NOT NULL REFERENCES dictionary_order_status (id),
+    order_cost      DECIMAL NOT NULL
 );
 
 CREATE TABLE user_order
 (
-    id            BIGSERIAL PRIMARY KEY,
-    user_username VARCHAR(64) NOT NULL REFERENCES users (username),
-    order_id      BIGINT      NOT NULL REFERENCES orders (id),
-    UNIQUE (user_username, order_id)
+    id       BIGSERIAL PRIMARY KEY,
+    user_id  BIGINT NOT NULL REFERENCES users (id),
+    order_id BIGINT NOT NULL REFERENCES orders (id),
+    UNIQUE (user_id, order_id)
 );
 
 CREATE TABLE dictionary_country
 (
-    name        VARCHAR(64) PRIMARY KEY,
+    id          SERIAL PRIMARY KEY,
+    name        VARCHAR(64),
     short_name  VARCHAR(32),
     description VARCHAR(128)
 );
 
 CREATE TABLE commodity
 (
-    id                     BIGSERIAL PRIMARY KEY,
-    name                   VARCHAR(128) NOT NULL,
-    cost                   DECIMAL      NOT NULL,
-    available_amount       INTEGER      NOT NULL,
-    description            VARCHAR(512),
-    producing_name_country VARCHAR(64)  NOT NULL REFERENCES dictionary_country (name)
+    id                   BIGSERIAL PRIMARY KEY,
+    name                 VARCHAR(128) NOT NULL,
+    cost                 DECIMAL      NOT NULL,
+    available_amount     INTEGER      NOT NULL,
+    description          VARCHAR(512),
+    producing_country_id INT          NOT NULL REFERENCES dictionary_country (id)
 );
 
 CREATE TABLE order_commodity
@@ -84,7 +87,8 @@ CREATE TABLE sold_commodity
 
 CREATE TABLE dictionary_supplier
 (
-    name        VARCHAR(64) PRIMARY KEY,
+    id          SERIAL PRIMARY KEY,
+    name        VARCHAR(64),
     short_name  VARCHAR(32),
     description VARCHAR(128)
 );
@@ -92,8 +96,8 @@ CREATE TABLE dictionary_supplier
 CREATE TABLE supply
 (
     id             BIGSERIAL PRIMARY KEY,
-    supplier_name  VARCHAR(64) NOT NULL REFERENCES dictionary_supplier (name),
-    receiving_date BIGINT      NOT NULL
+    supplier_id    INT    NOT NULL REFERENCES dictionary_supplier (id),
+    receiving_date BIGINT NOT NULL
 );
 
 CREATE TABLE supply_commodity

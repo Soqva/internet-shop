@@ -1,73 +1,42 @@
 package com.s0qva.application.service;
 
-import com.s0qva.application.dto.order.OrderCreationDto;
-import com.s0qva.application.dto.order.OrderIdDto;
-import com.s0qva.application.dto.order.OrderReadingDto;
-import com.s0qva.application.exception.NoSuchOrderException;
-import com.s0qva.application.exception.model.enumeration.DefaultExceptionMessage;
-import com.s0qva.application.mapper.order.GeneralOrderMapper;
+import com.s0qva.application.dto.OrderDto;
 import com.s0qva.application.model.Order;
+import com.s0qva.application.repository.CommodityRepository;
 import com.s0qva.application.repository.OrderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class OrderService {
+    private final OrderCommodityService orderCommodityService;
     private final OrderRepository orderRepository;
-    private final GeneralOrderMapper orderMapper;
+    private final CommodityRepository commodityRepository;
 
-    @Autowired
-    public OrderService(OrderRepository orderRepository, GeneralOrderMapper orderMapper) {
-        this.orderRepository = orderRepository;
-        this.orderMapper = orderMapper;
-    }
+    @Transactional
+    public Long create(OrderDto orderDto) {
+        var orderedCommodities = orderDto.getOrderedCommodities();
+        var orderCost = 0.0;
 
-    public List<OrderReadingDto> getAllOrders() {
-        List<Order> orders = orderRepository.findAll();
+        for (var commodityWithBoughtAmount : orderedCommodities.entrySet()) {
+            orderCost += commodityWithBoughtAmount.getValue().getCost() * commodityWithBoughtAmount.getKey();
+        }
+        var order = Order.builder()
+                .id(orderDto.getId())
+                .orderStatus(orderDto.getOrderStatus())
+                .orderCost(orderCost)
+                .build();
+        var createdOrderId = orderRepository.save(order).getId();
 
-        return orders.stream()
-                .map(orderMapper::mapOrderToOrderReadingDto)
-                .collect(Collectors.toList());
-    }
-
-    public OrderReadingDto getOrder(Long id) {
-        Optional<Order> maybeOrder = orderRepository.findById(id);
-
-        return maybeOrder.map(orderMapper::mapOrderToOrderReadingDto)
-                .orElseThrow(() ->
-                        new NoSuchOrderException(DefaultExceptionMessage.NO_SUCH_ORDER_WITH_ID.getMessage() + id));
-    }
-
-    public OrderIdDto saveOrder(OrderCreationDto orderCreationDto) {
-        Order order = orderMapper.mapOrderCreationDtoToOrder(orderCreationDto);
-        Order savedOrder = orderRepository.save(order);
-
-        return orderMapper.mapOrderToOrderIdDto(savedOrder);
-    }
-
-    public OrderReadingDto updateOrder(Long id, OrderCreationDto orderCreationDto) {
-        Optional<Order> maybeOldOrder = orderRepository.findById(id);
-        Order oldOrder = maybeOldOrder.orElseThrow(() ->
-                new NoSuchOrderException(DefaultExceptionMessage.NO_SUCH_ORDER_WITH_ID.getMessage() + id));
-        Order newOrder = orderMapper.mapOrderCreationDtoToOrder(orderCreationDto);
-
-        oldOrder.setStatus(newOrder.getStatus());
-
-        Order updatedOrder = orderRepository.save(oldOrder);
-
-        return orderMapper.mapOrderToOrderReadingDto(updatedOrder);
-
-    }
-
-    public void deleteOrder(Long id) {
-        Optional<Order> maybeOrder = orderRepository.findById(id);
-        Order order = maybeOrder.orElseThrow(() ->
-                new NoSuchOrderException(DefaultExceptionMessage.NO_SUCH_ORDER_WITH_ID.getMessage() + id));
-
-        orderRepository.delete(order);
+        for (var commodityWithBoughtAmount : orderedCommodities.entrySet()) {
+            orderCommodityService.create(
+                    createdOrderId,
+                    commodityWithBoughtAmount.getValue().getId(),
+                    commodityWithBoughtAmount.getKey()
+            );
+        }
+        return createdOrderId;
     }
 }
