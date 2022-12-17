@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class OrderService {
+    private final UserOrderService userOrderService;
     private final OrderCommodityService orderCommodityService;
     private final OrderRepository orderRepository;
-    private final CommodityRepository commodityRepository;
 
     @Transactional
     public Long create(OrderDto orderDto) {
@@ -37,6 +37,7 @@ public class OrderService {
                     commodityWithBoughtAmount.getKey()
             );
         }
+        userOrderService.create(orderDto.getUser().getId(), createdOrderId);
         return createdOrderId;
     }
 }

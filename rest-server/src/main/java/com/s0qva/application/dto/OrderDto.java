@@ -16,5 +16,5 @@ public class OrderDto {
     private Long id;
     private DictionaryOrderStatus orderStatus;
     private Map<Integer, CommodityDto> orderedCommodities;
-    private Long userId;
+    private UserDto user;
 }

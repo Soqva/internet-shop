@@ -1,6 +1,6 @@
 package com.s0qva.application.dto;
 
-import com.s0qva.application.model.dictionary.DictionaryRole;
+import com.s0qva.application.dto.dictionary.DictionaryRoleDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,5 +18,5 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private Boolean blocked;
-    private List<DictionaryRole> roles;
+    private List<DictionaryRoleDto> roles;
 }

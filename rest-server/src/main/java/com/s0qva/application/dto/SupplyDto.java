@@ -1,6 +1,6 @@
 package com.s0qva.application.dto;
 
-import com.s0qva.application.model.dictionary.DictionarySupplier;
+import com.s0qva.application.dto.dictionary.DictionarySupplierDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +14,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class SupplyDto {
     private Long id;
-    private DictionarySupplier supplier;
+    private DictionarySupplierDto supplier;
     private Long receivingDate;
     private Map<Integer, CommodityDto> suppliedCommodities;
 }
