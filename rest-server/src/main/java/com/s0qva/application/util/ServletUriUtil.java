@@ -8,10 +8,16 @@ import java.net.URI;
 @UtilityClass
 public class ServletUriUtil {
 
-    public URI getUriFromCurrentRequest(String path, Object... parameter) {
+    public URI getUriFromCurrentRequest(String path, Object... parameters) {
         return ServletUriComponentsBuilder.fromCurrentRequest()
                 .path(path)
-                .buildAndExpand(parameter)
+                .buildAndExpand(parameters)
+                .toUri();
+    }
+
+    public URI getUri(String uriPath, Object... parameters) {
+        return ServletUriComponentsBuilder.fromUriString(uriPath)
+                .buildAndExpand(parameters)
                 .toUri();
     }
 }

@@ -1,9 +1,11 @@
 package com.s0qva.application.model;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -16,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+
+import static lombok.AccessLevel.NONE;
 
 @Data
 @Builder
@@ -38,6 +42,7 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
+    @Getter(NONE)
     private Boolean blocked;
 
     @OneToMany(mappedBy = "user")
@@ -51,4 +56,8 @@ public class User {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<UserOrder> userOrders = new ArrayList<>();
+
+    public Boolean isBlocked() {
+        return blocked;
+    }
 }

@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +26,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @AllArgsConstructor
 @Entity
 @Table(name = "dictionary_role")
-public class DictionaryRole {
+public class DictionaryRole implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -41,4 +42,9 @@ public class DictionaryRole {
     @Builder.Default
     @ToString.Exclude
     private List<UserRole> userRoles = new ArrayList<>();
+
+    @Override
+    public String getAuthority() {
+        return name;
+    }
 }

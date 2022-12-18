@@ -31,6 +31,11 @@ public class UserService {
                 .orElse(null);
     }
 
+    public User getByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElse(null);
+    }
+
     private UserDto mapToDto(User user) {
         return UserMapper.mapToDto(user);
     }
