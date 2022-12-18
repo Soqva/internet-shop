@@ -4,6 +4,7 @@ import com.s0qva.application.model.dictionary.DictionarySupplier;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -43,5 +44,6 @@ public class Supply {
     @OneToMany(mappedBy = "supply")
     @Builder.Default
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<SupplyCommodity> supplyCommodities = new ArrayList<>();
 }

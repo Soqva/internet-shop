@@ -4,8 +4,10 @@ import com.s0qva.application.model.dictionary.DictionaryCountry;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.apache.commons.lang3.builder.HashCodeExclude;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -50,10 +52,12 @@ public class Commodity {
     @OneToMany(mappedBy = "commodity")
     @Builder.Default
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<OrderCommodity> orderCommodities = new ArrayList<>();
 
     @OneToMany(mappedBy = "commodity")
     @Builder.Default
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<SupplyCommodity> supplyCommodities = new ArrayList<>();
 }

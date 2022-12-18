@@ -4,6 +4,7 @@ import com.s0qva.application.model.dictionary.DictionaryOrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -43,10 +44,12 @@ public class Order {
     @OneToMany(mappedBy = "order")
     @Builder.Default
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<UserOrder> userOrders = new ArrayList<>();
 
     @OneToMany(mappedBy = "order")
     @Builder.Default
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<OrderCommodity> orderCommodities = new ArrayList<>();
 }

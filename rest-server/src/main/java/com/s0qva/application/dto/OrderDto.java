@@ -1,12 +1,12 @@
 package com.s0qva.application.dto;
 
-import com.s0qva.application.model.dictionary.DictionaryOrderStatus;
+import com.s0qva.application.dto.dictionary.DictionaryOrderStatusDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Map;
+import java.util.List;
 
 @Data
 @Builder
@@ -14,7 +14,8 @@ import java.util.Map;
 @AllArgsConstructor
 public class OrderDto {
     private Long id;
-    private DictionaryOrderStatus orderStatus;
-    private Map<Integer, CommodityDto> orderedCommodities;
+    private DictionaryOrderStatusDto orderStatus;
+    private List<CommodityDto> orderedCommodities;
+    private Double orderCost;
     private UserDto user;
 }

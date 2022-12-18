@@ -1,8 +1,10 @@
 package com.s0qva.application.service;
 
 import com.s0qva.application.dto.OrderDto;
+import com.s0qva.application.mapper.OrderMapper;
 import com.s0qva.application.model.Order;
-import com.s0qva.application.repository.CommodityRepository;
+import com.s0qva.application.model.OrderCommodity;
+import com.s0qva.application.model.UserOrder;
 import com.s0qva.application.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,28 +18,47 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     @Transactional
-    public Long create(OrderDto orderDto) {
-        var orderedCommodities = orderDto.getOrderedCommodities();
-        var orderCost = 0.0;
+    public OrderDto create(OrderDto orderDto) {
+        var createdOrderDto = saveOrUpdateOrder(orderDto);
+        var createdOrderId = createdOrderDto.getId();
 
-        for (var commodityWithBoughtAmount : orderedCommodities.entrySet()) {
-            orderCost += commodityWithBoughtAmount.getValue().getCost() * commodityWithBoughtAmount.getKey();
-        }
-        var order = Order.builder()
-                .id(orderDto.getId())
-                .orderStatus(orderDto.getOrderStatus())
-                .orderCost(orderCost)
-                .build();
-        var createdOrderId = orderRepository.save(order).getId();
+        orderDto.getOrderedCommodities().forEach(orderedCommodity ->
+                saveOrUpdateOrderCommodity(createdOrderId, orderedCommodity.getId(), orderedCommodity.getAmount())
+        );
+        saveOrUpdateUserOrder(orderDto.getUser().getId(), createdOrderId);
+        return createdOrderDto;
+    }
 
-        for (var commodityWithBoughtAmount : orderedCommodities.entrySet()) {
-            orderCommodityService.create(
-                    createdOrderId,
-                    commodityWithBoughtAmount.getValue().getId(),
-                    commodityWithBoughtAmount.getKey()
-            );
-        }
-        userOrderService.create(orderDto.getUser().getId(), createdOrderId);
-        return createdOrderId;
+    private OrderDto saveOrUpdateOrder(OrderDto orderDto) {
+        var orderCost = determineOrderCost(orderDto);
+        var order = mapToEntity(orderDto);
+
+        order.setOrderCost(orderCost);
+
+        var createdOrder = orderRepository.save(order);
+
+        return mapToDto(createdOrder);
+    }
+
+    private OrderCommodity saveOrUpdateOrderCommodity(Long orderId, Long commodityId, Integer orderedAmount) {
+        return orderCommodityService.createOrUpdate(orderId, commodityId, orderedAmount);
+    }
+
+    private UserOrder saveOrUpdateUserOrder(Long userId, Long orderId) {
+        return userOrderService.create(userId, orderId);
+    }
+
+    private Double determineOrderCost(OrderDto orderDto) {
+        return orderDto.getOrderedCommodities().stream()
+                .reduce(0.0, (subOrderCost, secondCommodity) -> subOrderCost
+                        + secondCommodity.getCost() * secondCommodity.getAmount(), Double::sum);
+    }
+
+    private OrderDto mapToDto(Order order) {
+        return OrderMapper.mapToDto(order);
+    }
+
+    private Order mapToEntity(OrderDto orderDto) {
+        return OrderMapper.mapToEntity(orderDto);
     }
 }

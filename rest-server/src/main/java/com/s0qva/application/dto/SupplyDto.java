@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Map;
+import java.util.List;
 
 @Data
 @Builder
@@ -16,5 +16,5 @@ public class SupplyDto {
     private Long id;
     private DictionarySupplierDto supplier;
     private Long receivingDate;
-    private Map<Integer, CommodityDto> suppliedCommodities;
+    private List<CommodityDto> suppliedCommodities;
 }

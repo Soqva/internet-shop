@@ -1,14 +1,17 @@
 package com.s0qva.application.service;
 
 import com.s0qva.application.dto.CommodityDto;
+import com.s0qva.application.mapper.DefaultMapper;
 import com.s0qva.application.model.Commodity;
 import com.s0qva.application.repository.CommodityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ObjectUtils;
 
 import java.util.List;
+import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -16,26 +19,32 @@ import java.util.List;
 public class CommodityService {
     private final CommodityRepository commodityRepository;
 
-    public List<Commodity> getAll() {
-        return commodityRepository.findAll();
+    public List<CommodityDto> getAll() {
+        return commodityRepository.findAll().stream()
+                .map(this::mapToDto)
+                .collect(toList());
     }
 
-    public Commodity getById(Long id) {
-        return commodityRepository.findById(id).orElseThrow();
+    public CommodityDto getById(Long id) {
+        return commodityRepository.findById(id)
+                .map(this::mapToDto)
+                .orElse(null);
     }
 
     @Transactional
-    public Long createOrUpdate(CommodityDto commodityDto) {
-        var commodity = Commodity.builder()
-                .name(commodityDto.getName())
-                .cost(commodityDto.getCost())
-                .availableAmount(commodityDto.getAvailableAmount())
-                .description(commodityDto.getDescription())
-                .producingCountry(commodityDto.getProducingCountry())
-                .build();
-        if (!ObjectUtils.isEmpty(commodityDto.getId())) {
-            commodity.setId(commodityDto.getId());
-        }
-        return commodityRepository.save(commodity).getId();
+    public CommodityDto createOrUpdate(CommodityDto commodityDto) {
+        var commodity = mapToEntity(commodityDto);
+
+        return Optional.of(commodityRepository.save(commodity))
+                .map(this::mapToDto)
+                .orElse(null);
+    }
+
+    private CommodityDto mapToDto(Commodity commodity) {
+        return DefaultMapper.mapToDto(commodity, CommodityDto.class);
+    }
+
+    private Commodity mapToEntity(CommodityDto commodityDto) {
+        return DefaultMapper.mapToEntity(commodityDto, Commodity.class);
     }
 }

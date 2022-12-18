@@ -14,12 +14,26 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserOrderService {
     private final UserOrderRepository userOrderRepository;
 
+    public UserOrder getByUserIdAndOrderId(Long userId, Long orderId) {
+        return userOrderRepository.findByUserIdAndOrderId(userId, orderId).orElse(null);
+    }
+
     @Transactional
     public UserOrder create(Long userId, Long orderId) {
-        var userOrder = UserOrder.builder()
+        var userOrder = mapToEntity(userId, orderId);
+
+        return create(userOrder);
+    }
+
+    @Transactional
+    public UserOrder create(UserOrder userOrder) {
+        return userOrderRepository.save(userOrder);
+    }
+
+    private UserOrder mapToEntity(Long userId, Long orderId) {
+        return UserOrder.builder()
                 .user(User.builder().id(userId).build())
                 .order(Order.builder().id(orderId).build())
                 .build();
-        return userOrderRepository.save(userOrder);
     }
 }

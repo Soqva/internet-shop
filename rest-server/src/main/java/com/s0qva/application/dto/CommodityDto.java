@@ -15,6 +15,7 @@ public class CommodityDto {
     private String name;
     private String description;
     private Double cost;
+    private Integer amount;
     private Integer availableAmount;
     private DictionaryCountry producingCountry;
 }
