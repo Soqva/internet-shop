@@ -42,7 +42,7 @@ public class LoginService implements UserDetailsService {
                 true,
                 true,
                 !existingUser.isBlocked(),
-                getRoles(existingUser)
+                existingUser.getRoles()
         );
     }
 
@@ -68,13 +68,6 @@ public class LoginService implements UserDetailsService {
 
     private UserRole saveUserRole(Long userId) {
         return userRoleService.createOrUpdate(userId);
-    }
-
-    private Collection<? extends GrantedAuthority> getRoles(User user) {
-        return user.getUserRoles()
-                .stream()
-                .map(UserRole::getRole)
-                .collect(toList());
     }
 
     private User mapToEntity(AuthDto authDto) {

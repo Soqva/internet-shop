@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,8 +18,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
 import static lombok.AccessLevel.NONE;
 
 @Data
@@ -59,5 +62,11 @@ public class User {
 
     public Boolean isBlocked() {
         return blocked;
+    }
+
+    public Collection<? extends GrantedAuthority> getRoles() {
+        return userRoles.stream()
+                .map(UserRole::getRole)
+                .collect(toList());
     }
 }
