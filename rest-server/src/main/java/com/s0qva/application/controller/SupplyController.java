@@ -2,6 +2,7 @@ package com.s0qva.application.controller;
 
 import com.s0qva.application.dto.SupplyDto;
 import com.s0qva.application.service.SupplyService;
+import com.s0qva.application.util.ServletUriUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +21,9 @@ public class SupplyController {
 
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody SupplyDto supplyDto) {
-        var createdSupplyId = supplyService.create(supplyDto);
-        var location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(createdSupplyId)
-                .toUri();
+        var createdSupplyId = supplyService.create(supplyDto).getId();
+        var location = ServletUriUtil.getUriFromCurrentRequest("/{id}", createdSupplyId);
+
         return ResponseEntity.created(location).build();
     }
 }

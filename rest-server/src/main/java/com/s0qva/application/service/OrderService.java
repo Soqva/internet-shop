@@ -10,12 +10,30 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
+
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class OrderService {
     private final UserOrderService userOrderService;
     private final OrderCommodityService orderCommodityService;
     private final OrderRepository orderRepository;
+
+    public List<OrderDto> getAll() {
+        return orderRepository.findAll().stream()
+                .map(this::mapToDto)
+                .collect(toList());
+    }
+
+    public List<OrderDto> getAllByUserId(Long userId) {
+        return userOrderService.getAllByUserId(userId).stream()
+                .map(UserOrder::getOrder)
+                .map(this::mapToDto)
+                .collect(toList());
+    }
 
     @Transactional
     public OrderDto create(OrderDto orderDto) {
@@ -30,11 +48,7 @@ public class OrderService {
     }
 
     private OrderDto saveOrUpdateOrder(OrderDto orderDto) {
-        var orderCost = determineOrderCost(orderDto);
         var order = mapToEntity(orderDto);
-
-        order.setOrderCost(orderCost);
-
         var createdOrder = orderRepository.save(order);
 
         return mapToDto(createdOrder);
@@ -46,12 +60,6 @@ public class OrderService {
 
     private UserOrder saveOrUpdateUserOrder(Long userId, Long orderId) {
         return userOrderService.create(userId, orderId);
-    }
-
-    private Double determineOrderCost(OrderDto orderDto) {
-        return orderDto.getOrderedCommodities().stream()
-                .reduce(0.0, (subOrderCost, secondCommodity) -> subOrderCost
-                        + secondCommodity.getCost() * secondCommodity.getAmount(), Double::sum);
     }
 
     private OrderDto mapToDto(Order order) {

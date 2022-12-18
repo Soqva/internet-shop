@@ -8,11 +8,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class UserOrderService {
     private final UserOrderRepository userOrderRepository;
+
+    public List<UserOrder> getAllByUserId(Long userId) {
+        return userOrderRepository.findAllByUserId(userId);
+    }
 
     public UserOrder getByUserIdAndOrderId(Long userId, Long orderId) {
         return userOrderRepository.findByUserIdAndOrderId(userId, orderId).orElse(null);

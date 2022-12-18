@@ -1,5 +1,6 @@
 package com.s0qva.application.dto;
 
+import com.s0qva.application.dto.dictionary.DictionaryCountryDto;
 import com.s0qva.application.model.dictionary.DictionaryCountry;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,5 +18,5 @@ public class CommodityDto {
     private Double cost;
     private Integer amount;
     private Integer availableAmount;
-    private DictionaryCountry producingCountry;
+    private DictionaryCountryDto producingCountry;
 }
