@@ -3,14 +3,12 @@ package com.s0qva.application.controller.user;
 import com.s0qva.application.controller.OrderController;
 import com.s0qva.application.controller.eventhandler.DefaultUserAccountEventHandler;
 import com.s0qva.application.controller.scene.SceneSwitcher;
-import com.s0qva.application.dto.order.OrderCreationDto;
-import com.s0qva.application.dto.order.OrderReadingDto;
-import com.s0qva.application.dto.product.ProductIdDto;
-import com.s0qva.application.dto.product.ProductReadingDto;
-import com.s0qva.application.dto.user.UserIdDto;
+import com.s0qva.application.dto.CommodityDto;
+import com.s0qva.application.dto.OrderDto;
+import com.s0qva.application.dto.dictionary.DictionaryOrderStatusDto;
 import com.s0qva.application.fxml.FxmlPageLoader;
-import com.s0qva.application.model.enumeration.OrderStatus;
 import com.s0qva.application.service.OrderService;
+import com.s0qva.application.session.UserSession;
 import com.s0qva.application.util.AlertUtil;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -24,20 +22,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 @Component
 @FxmlView("orders-page.fxml")
 public class OrderUserController extends OrderController implements Initializable {
     private final DefaultUserAccountEventHandler defaultUserAccountEventHandler;
-    private final Class<ProductUserController> productUserControllerClass;
+    private final Class<CommodityUserController> productUserControllerClass;
     @FXML
-    private ListView<OrderReadingDto> userOrders;
+    private ListView<OrderDto> userOrders;
     @FXML
-    private ListView<ProductReadingDto> userCurrentOrder;
+    private ListView<CommodityDto> userCurrentOrder;
     @FXML
     private HBox account;
 
@@ -47,7 +42,7 @@ public class OrderUserController extends OrderController implements Initializabl
                                DefaultUserAccountEventHandler defaultUserAccountEventHandler) {
         super(orderService, fxmlPageLoader);
         this.defaultUserAccountEventHandler = defaultUserAccountEventHandler;
-        this.productUserControllerClass = ProductUserController.class;
+        this.productUserControllerClass = CommodityUserController.class;
     }
 
     @Override
@@ -58,27 +53,27 @@ public class OrderUserController extends OrderController implements Initializabl
     }
 
     public void onCreateOrder(ActionEvent event) {
-        OrderCreationDto orderCreationDto = buildOrderCreationDto();
-        boolean isCreated = orderService.createOrder(orderCreationDto);
+        var orderDto = buildOrderDto();
+        var created = orderService.create(orderDto);
 
-        if (isCreated) {
-            cart.clearCart();
-
-            Parent root = fxmlPageLoader.loadFxmlFile(OrderUserController.class);
-            SceneSwitcher.switchScene(event, root);
-
-            AlertUtil.generateInformationAlert(
-                    DefaultAlertValue.INFO_ALERT_TITLE,
-                    DefaultAlertValue.INFO_ALERT_HEADER,
-                    DefaultAlertValue.INFO_ALERT_CONTENT
-            );
-        } else {
+        if (!created) {
             AlertUtil.generateErrorAlert(
                     DefaultAlertValue.ERROR_ALERT_TITLE,
                     DefaultAlertValue.ERROR_ALERT_HEADER,
                     DefaultAlertValue.ERROR_ALERT_CONTENT
             );
+            return;
         }
+        cart.clearCart();
+
+        var root = fxmlPageLoader.loadFxmlFile(OrderUserController.class);
+
+        SceneSwitcher.switchScene(event, root);
+        AlertUtil.generateInformationAlert(
+                DefaultAlertValue.INFO_ALERT_TITLE,
+                DefaultAlertValue.INFO_ALERT_HEADER,
+                DefaultAlertValue.INFO_ALERT_CONTENT
+        );
     }
 
     public void onBackToProducts(ActionEvent event) {
@@ -87,31 +82,23 @@ public class OrderUserController extends OrderController implements Initializabl
     }
 
     private void fillUserOrders() {
-        List<OrderReadingDto> userAllOrders = orderService.getAllOrdersForSpecificUser(userSession.getId());
+        var userAllOrders = orderService.getAllByUserId(userSession.getId());
+
         userOrders.getItems().clear();
         userOrders.setItems(FXCollections.observableArrayList(userAllOrders));
     }
 
     private void fillCurrentOrder() {
-        List<ProductReadingDto> buyingProducts = cart.getProducts();
-        userCurrentOrder.setItems(FXCollections.observableArrayList(buyingProducts));
+        var buyingCommodities = cart.getCommodities();
+
+        userCurrentOrder.setItems(FXCollections.observableArrayList(buyingCommodities));
     }
 
-    private OrderCreationDto buildOrderCreationDto() {
-        UserIdDto userIdDto = UserIdDto.builder()
-                .id(userSession.getId())
-                .build();
-
-        List<ProductIdDto> productIdDtoList = cart.getProducts().stream()
-                .map(ProductReadingDto::getId)
-                .map(ProductIdDto::new)
-                .collect(Collectors.toList());
-
-        return OrderCreationDto.builder()
-                .orderDate(LocalDateTime.now())
-                .status(OrderStatus.WAITING)
-                .userId(userIdDto)
-                .products(productIdDtoList)
+    private OrderDto buildOrderDto() {
+        return OrderDto.builder()
+                .orderStatus(DictionaryOrderStatusDto.builder().id(2L).build())
+                .orderedCommodities(cart.getCommodities())
+                .user(UserSession.getInstance().getUser())
                 .build();
     }
 

@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.s0qva.application.controller.admin.ProductAdminController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.s0qva.application.controller.admin.CommodityAdminController">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="330.0" layoutY="22.0" text="Products admin page">
          <font>
@@ -18,7 +18,7 @@
       </Label>
       <Pane fx:id="tablePane" layoutX="61.0" layoutY="100.0" prefHeight="208.0" prefWidth="656.0">
          <children>
-            <ListView fx:id="products" layoutX="25.0" layoutY="25.0" prefHeight="160.0" prefWidth="608.0" />
+            <ListView fx:id="commodities" layoutX="25.0" layoutY="25.0" prefHeight="160.0" prefWidth="608.0" />
          </children>
       </Pane>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="352.0" layoutY="73.0" text="Products" textAlignment="CENTER">
@@ -41,12 +41,12 @@
             </ImageView>
          </children>
       </HBox>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="193.0" layoutY="316.0" mnemonicParsing="false" onAction="#onReceiveAllProducts" prefWidth="180.0" text="Receive all products">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="193.0" layoutY="316.0" mnemonicParsing="false" onAction="#onReceiveAllCommodities" prefWidth="180.0" text="Receive all products">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="406.0" layoutY="316.0" mnemonicParsing="false" onAction="#onCreateNewProduct" prefWidth="180.0" text="Create new product">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="406.0" layoutY="316.0" mnemonicParsing="false" onAction="#onCreateNewCommodity" prefWidth="180.0" text="Create new product">
          <font>
             <Font size="14.0" />
          </font>
@@ -61,13 +61,13 @@
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="250.0" spacing="20.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="65.0" text="Name" />
-                  <TextField fx:id="productName" prefWidth="150.0" />
+                  <TextField fx:id="commodityName" prefWidth="150.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="250.0" spacing="20.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="65.0" text="Price" />
-                  <TextField fx:id="productPrice" prefWidth="150.0" />
+                  <TextField fx:id="commodityPrice" prefWidth="150.0" />
                </children>
             </HBox>
             <Label alignment="CENTER" contentDisplay="CENTER" text="Product's details">
@@ -78,18 +78,18 @@
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="250.0" spacing="20.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="65.0" text="Description" />
-                  <TextField fx:id="productDescription" prefWidth="150.0" />
+                  <TextField fx:id="commodityDescription" prefWidth="150.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="250.0" spacing="20.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="65.0" text="Made in" />
-                  <ComboBox fx:id="productMadeInComboBox" prefWidth="150.0" />
+                  <ComboBox fx:id="commodityMadeInComboBox" prefWidth="150.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="250.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onCancelCreatingProduct" prefWidth="70.0" text="Cancel" />
+                  <Button mnemonicParsing="false" onAction="#onCancelCreatingCommodity" prefWidth="70.0" text="Cancel" />
                   <Button mnemonicParsing="false" onAction="#onConfirmCreatingProduct" prefWidth="70.0" text="Confirm" />
                </children>
             </HBox>

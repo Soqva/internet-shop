@@ -1,24 +1,17 @@
 package com.s0qva.application.service;
 
-import com.s0qva.application.dto.AuthDto;
 import com.s0qva.application.dto.UserDto;
-import com.s0qva.application.mapper.DefaultMapper;
 import com.s0qva.application.mapper.UserMapper;
 import com.s0qva.application.model.User;
 import com.s0qva.application.model.UserRole;
 import com.s0qva.application.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
-
-import java.util.Collection;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +23,7 @@ public class LoginService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var existingUser = userService.getByUsername(username);
+        var existingUser = mapToEntity(userService.getByUsername(username));
 
         if (ObjectUtils.isEmpty(existingUser)) {
             throw new UsernameNotFoundException("There is not user with this username");
@@ -47,22 +40,21 @@ public class LoginService implements UserDetailsService {
     }
 
     @Transactional
-    public Long signUp(AuthDto authDto) {
-        var createdUserId = saveUser(authDto).getId();
-
-        saveUserRole(createdUserId);
-        return createdUserId;
+    public Long signUp(UserDto userDto) {
+        return saveUser(userDto).getId();
     }
 
-    private UserDto saveUser(AuthDto authDto) {
-        var user = mapToEntity(authDto);
+    private UserDto saveUser(UserDto userDto) {
+        var user = mapToEntity(userDto);
         var existingUser = userService.getByUsername(user.getUsername());
 
         if (!ObjectUtils.isEmpty(existingUser)) {
             throw new RuntimeException("The user already exists");
         }
         var createdUser = userRepository.save(user);
+        var createdUserRole = saveUserRole(createdUser.getId());
 
+        createdUserRole.setUser(createdUser);
         return mapToDto(createdUser);
     }
 
@@ -70,8 +62,8 @@ public class LoginService implements UserDetailsService {
         return userRoleService.createOrUpdate(userId);
     }
 
-    private User mapToEntity(AuthDto authDto) {
-        return DefaultMapper.mapToEntity(authDto, User.class);
+    private User mapToEntity(UserDto userDto) {
+        return UserMapper.mapToEntity(userDto);
     }
 
     private UserDto mapToDto(User user) {

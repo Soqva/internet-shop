@@ -1,6 +1,7 @@
 package com.s0qva.application.advice;
 
 import com.s0qva.application.dto.AuthDto;
+import com.s0qva.application.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpInputMessage;
@@ -14,29 +15,29 @@ import java.lang.reflect.Type;
 @ControllerAdvice
 @RequiredArgsConstructor
 @SuppressWarnings("NullableProblems")
-public class ClientPasswordEncoderAdvice extends RequestBodyAdviceAdapter {
+public class UserPasswordEncoderAdvice extends RequestBodyAdviceAdapter {
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public Object afterBodyRead(Object body, HttpInputMessage inputMessage, MethodParameter parameter,
                                 Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
 
-        var authDto = (AuthDto) body;
+        var userDto = (UserDto) body;
 
-        encodePassword(authDto);
-        return authDto;
+        encodePassword(userDto);
+        return userDto;
     }
 
-    private void encodePassword(AuthDto authDto) {
-        var encodedPassword = passwordEncoder.encode(authDto.getPassword());
+    private void encodePassword(UserDto userDto) {
+        var encodedPassword = passwordEncoder.encode(userDto.getPassword());
 
-        authDto.setPassword(encodedPassword);
+        userDto.setPassword(encodedPassword);
     }
 
     @Override
     public boolean supports(MethodParameter methodParameter, Type targetType,
                             Class<? extends HttpMessageConverter<?>> converterType) {
 
-        return ((Type) AuthDto.class).equals(targetType);
+        return UserDto.class.equals(targetType);
     }
 }

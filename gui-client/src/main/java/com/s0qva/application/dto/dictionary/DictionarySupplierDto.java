@@ -1,4 +1,4 @@
-package com.s0qva.application.dto.product;
+package com.s0qva.application.dto.dictionary;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductIdDto {
+public class DictionarySupplierDto {
     private Long id;
+    private String name;
+    private String shortName;
+    private String description;
 }

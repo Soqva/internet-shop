@@ -1,10 +1,10 @@
 package com.s0qva.application.service;
 
-import com.s0qva.application.dto.user.UserCreationDto;
-import com.s0qva.application.dto.user.UserReadingDto;
+import com.s0qva.application.dto.UserDto;
 import com.s0qva.application.http.RestRequestSender;
+import com.s0qva.application.session.UserSession;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -16,24 +16,24 @@ public class UserService {
     @Value("${rest-server.url.users}")
     private String usersUrl;
 
-    public List<UserReadingDto> getAllUsers() {
-        ResponseEntity<UserReadingDto[]> responseEntity = RestRequestSender.getAll(usersUrl, UserReadingDto[].class);
+    public List<UserDto> getAll() {
+        var bearerToken = UserSession.getInstance().getBearerHttpHeader();
+        var responseEntity = RestRequestSender.getAll(usersUrl, new HttpEntity<>(null, bearerToken), UserDto[].class);
 
         if (responseEntity.getBody() != null) {
             return Arrays.asList(responseEntity.getBody());
         }
-
         return Collections.emptyList();
     }
 
-    public UserReadingDto changeUserAccess(Long id, UserCreationDto userCreationDto) {
-        String url = usersUrl + "/" + id;
-        ResponseEntity<UserReadingDto> responseEntity = RestRequestSender.update(url, userCreationDto, UserReadingDto.class);
+    public UserDto changeUserAccess(Long id, UserDto userDto) {
+        var url = usersUrl + "/" + id;
+        var bearerToken = UserSession.getInstance().getBearerHttpHeader();
+        var responseEntity = RestRequestSender.update(url, new HttpEntity<>(userDto, bearerToken), UserDto.class);
 
         if (responseEntity.getBody() != null) {
             return responseEntity.getBody();
         }
-
-        return new UserReadingDto();
+        return new UserDto();
     }
 }

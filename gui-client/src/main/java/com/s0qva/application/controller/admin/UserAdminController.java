@@ -2,15 +2,13 @@ package com.s0qva.application.controller.admin;
 
 import com.s0qva.application.controller.eventhandler.DefaultUserAccountEventHandler;
 import com.s0qva.application.controller.scene.SceneSwitcher;
-import com.s0qva.application.dto.user.UserCreationDto;
-import com.s0qva.application.dto.user.UserReadingDto;
+import com.s0qva.application.dto.UserDto;
 import com.s0qva.application.fxml.FxmlPageLoader;
 import com.s0qva.application.service.UserService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -19,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 @FxmlView("users-admin-page.fxml")
@@ -30,7 +27,7 @@ public class UserAdminController implements Initializable {
     private final DefaultUserAccountEventHandler defaultUserAccountEventHandler;
     private final Class<MainAdminPageController> mainAdminPageControllerClass;
     @FXML
-    private ListView<UserReadingDto> users;
+    private ListView<UserDto> users;
     @FXML
     private VBox windowForBan;
     @FXML
@@ -53,52 +50,50 @@ public class UserAdminController implements Initializable {
     }
 
     public void onReceiveAllUsers() {
-        List<UserReadingDto> receivedUsers = userService.getAllUsers();
+        var receivedUsers = userService.getAll();
+
         users.setItems(FXCollections.observableArrayList(receivedUsers));
     }
 
     public void onBanSelectedUser() {
-        changeUserAccess(true);
+        changeUserAccess();
     }
 
     public void onUnbanSelectedUser() {
-        changeUserAccess(false);
+        changeUserAccess();
     }
 
     public void onCloseWindowForBan() {
         windowForBan.setVisible(false);
     }
 
-    private void changeUserAccess(boolean isBanned) {
-        UserReadingDto selectedUser = users.getSelectionModel().getSelectedItem();
-        UserCreationDto updatingUser = buildUserCreationDto(selectedUser, isBanned);
-        UserReadingDto updatedUser = userService.changeUserAccess(selectedUser.getId(), updatingUser);
+    private void changeUserAccess() {
+        var selectedUser = users.getSelectionModel().getSelectedItem();
 
-        int replacementIndex = users.getItems().indexOf(selectedUser);
+        changeBlockStatus(selectedUser);
+
+        var updatedUser = userService.changeUserAccess(selectedUser.getId(), selectedUser);
+        var replacementIndex = users.getItems().indexOf(selectedUser);
+
         users.getItems().set(replacementIndex, updatedUser);
         windowForBan.setVisible(false);
     }
 
     public void onBackToMainAdminPage(ActionEvent event) {
-        Parent root = fxmlPageLoader.loadFxmlFile(mainAdminPageControllerClass);
+        var root = fxmlPageLoader.loadFxmlFile(mainAdminPageControllerClass);
+
         SceneSwitcher.switchScene(event, root);
     }
 
     private void addEventToShowWindowToBanSelectedUser() {
-        users.setOnMouseClicked((click) -> {
+        users.setOnMouseClicked(click -> {
             if (click.getClickCount() == 2) {
                 windowForBan.setVisible(true);
             }
         });
     }
 
-    private UserCreationDto buildUserCreationDto(UserReadingDto user, boolean isBanned) {
-        return UserCreationDto.builder()
-                .username(user.getUsername())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .role(user.getRole())
-                .banned(isBanned)
-                .build();
+    private void changeBlockStatus(UserDto user) {
+        user.setBlocked(!user.isBlocked());
     }
 }

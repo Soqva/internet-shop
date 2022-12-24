@@ -31,8 +31,9 @@ public class UserService {
                 .orElse(null);
     }
 
-    public User getByUsername(String username) {
+    public UserDto getByUsername(String username) {
         return userRepository.findByUsername(username)
+                .map(this::mapToDto)
                 .orElse(null);
     }
 

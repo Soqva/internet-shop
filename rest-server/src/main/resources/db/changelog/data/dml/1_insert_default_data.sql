@@ -1,11 +1,11 @@
 --liquibase formatted sql
 --changeSet SemakovND:1
 
-INSERT INTO users (username, password, first_name, last_name)
-VALUES ('s0qva', 's0qva', 'Никита', 'Семаков'),
-       ('misha', 'misha', 'Миша', 'Михайлов'),
-       ('egor', 'egor', 'Егор', 'Егоров'),
-       ('zenya', 'zenya', 'Женя', 'Женов');
+INSERT INTO users (email, username, password, first_name, last_name)
+VALUES ('s0qva@mail.ru', 's0qva', 's0qva', 'Никита', 'Семаков'),
+       ('misha@mail.ru', 'misha', 'misha', 'Миша', 'Михайлов'),
+       ('egor@mail.ru', 'egor', 'egor', 'Егор', 'Егоров'),
+       ('zenya@mail.ru', 'zenya', 'zenya', 'Женя', 'Женов');
 
 INSERT INTO dictionary_role (name, short_name, description)
 VALUES ('user', 'U', 'среднестатистический пользователь магазина'),

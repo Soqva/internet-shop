@@ -1,9 +1,7 @@
 package com.s0qva.application.mapper;
 
-import com.s0qva.application.dto.OrderDto;
 import com.s0qva.application.dto.UserDto;
 import com.s0qva.application.dto.dictionary.DictionaryRoleDto;
-import com.s0qva.application.model.Order;
 import com.s0qva.application.model.User;
 import com.s0qva.application.model.UserRole;
 import lombok.experimental.UtilityClass;
@@ -11,8 +9,8 @@ import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -41,6 +39,12 @@ public class UserMapper {
                 var entityToDtoRoleConverter = getEntityToDtoRoleConverter();
 
                 using(entityToDtoRoleConverter).map(source).setRoles(null);
+            }
+        });
+        mapper.addMappings(new PropertyMap<UserDto, User>() {
+            @Override
+            protected void configure() {
+                map().setUserRoles(new ArrayList<>());
             }
         });
         return mapper;

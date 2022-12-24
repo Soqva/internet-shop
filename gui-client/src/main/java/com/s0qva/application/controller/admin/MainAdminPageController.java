@@ -2,12 +2,11 @@ package com.s0qva.application.controller.admin;
 
 import com.s0qva.application.controller.eventhandler.DefaultUserAccountEventHandler;
 import com.s0qva.application.controller.scene.SceneSwitcher;
-import com.s0qva.application.controller.user.ProductUserController;
+import com.s0qva.application.controller.user.CommodityUserController;
 import com.s0qva.application.fxml.FxmlPageLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +20,8 @@ import java.util.ResourceBundle;
 public class MainAdminPageController implements Initializable {
     private final DefaultUserAccountEventHandler defaultUserAccountEventHandler;
     private final FxmlPageLoader fxmlPageLoader;
-    private final Class<ProductAdminController> productAdminControllerClass;
-    private final Class<ProductUserController> productUserControllerClass;
+    private final Class<CommodityAdminController> productAdminControllerClass;
+    private final Class<CommodityUserController> productUserControllerClass;
     private final Class<OrderAdminController> orderAdminControllerClass;
     private final Class<UserAdminController> userAdminControllerClass;
     @FXML
@@ -33,8 +32,8 @@ public class MainAdminPageController implements Initializable {
                                    FxmlPageLoader fxmlPageLoader) {
         this.defaultUserAccountEventHandler = defaultUserAccountEventHandler;
         this.fxmlPageLoader = fxmlPageLoader;
-        this.productAdminControllerClass = ProductAdminController.class;
-        this.productUserControllerClass = ProductUserController.class;
+        this.productAdminControllerClass = CommodityAdminController.class;
+        this.productUserControllerClass = CommodityUserController.class;
         this.orderAdminControllerClass = OrderAdminController.class;
         this.userAdminControllerClass = UserAdminController.class;
     }
@@ -45,22 +44,26 @@ public class MainAdminPageController implements Initializable {
     }
 
     public void onGoToAdminProductsPage(ActionEvent event) {
-        Parent root = fxmlPageLoader.loadFxmlFile(productAdminControllerClass);
+        var root = fxmlPageLoader.loadFxmlFile(productAdminControllerClass);
+
         SceneSwitcher.switchScene(event, root);
     }
 
     public void onGoToProductsPage(ActionEvent event) {
-        Parent root = fxmlPageLoader.loadFxmlFile(productUserControllerClass);
+        var root = fxmlPageLoader.loadFxmlFile(productUserControllerClass);
+
         SceneSwitcher.switchScene(event, root);
     }
 
     public void onGoToAdminOrdersPage(ActionEvent event) {
-        Parent root = fxmlPageLoader.loadFxmlFile(orderAdminControllerClass);
+        var root = fxmlPageLoader.loadFxmlFile(orderAdminControllerClass);
+
         SceneSwitcher.switchScene(event, root);
     }
 
     public void onGoToAdminUsersPage(ActionEvent event) {
-        Parent root = fxmlPageLoader.loadFxmlFile(userAdminControllerClass);
+        var root = fxmlPageLoader.loadFxmlFile(userAdminControllerClass);
+
         SceneSwitcher.switchScene(event, root);
     }
 }

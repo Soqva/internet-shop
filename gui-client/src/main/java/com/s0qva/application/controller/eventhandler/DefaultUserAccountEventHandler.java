@@ -5,12 +5,13 @@ import com.s0qva.application.controller.scene.SceneSwitcher;
 import com.s0qva.application.fxml.FxmlPageLoader;
 import com.s0qva.application.session.UserSession;
 import com.s0qva.application.util.AlertUtil;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import static javafx.scene.input.MouseButton.PRIMARY;
+import static javafx.scene.input.MouseButton.SECONDARY;
 
 @Component
 public class DefaultUserAccountEventHandler {
@@ -24,17 +25,16 @@ public class DefaultUserAccountEventHandler {
     }
 
     public void addEventHandlerToShowUserAccount(HBox account) {
-        UserSession user = UserSession.getInstance();
-        Label username = (Label) account.getChildren().get(0);
+        var user = UserSession.getInstance();
+        var username = (Label) account.getChildren().get(0);
+
         username.setText(user.getUsername());
-
         account.setOnMouseClicked((event) -> {
-            MouseButton mouseButton = event.getButton();
+            var mouseButton = event.getButton();
 
-            if (mouseButton == MouseButton.PRIMARY) {
+            if (mouseButton == PRIMARY) {
                 String content = "username: " + user.getUsername()
-                        + "\nfull name: " + user.getFirstName() + " " + user.getLastName()
-                        + "\namount of orders: " + user.getOrders().size();
+                        + "\nfull name: " + user.getFirstName() + " " + user.getLastName();
 
                 AlertUtil.generateInformationAlert(
                         DefaultAlertValue.INFO_ALERT_ACCOUNT_TITLE,
@@ -42,10 +42,11 @@ public class DefaultUserAccountEventHandler {
                         content
                 );
             }
-            if (mouseButton == MouseButton.SECONDARY) {
-                user.closeUserSession();
-                Parent root = fxmlPageLoader.loadFxmlFile(loginController);
+            if (mouseButton == SECONDARY) {
+                var root = fxmlPageLoader.loadFxmlFile(loginController);
+
                 SceneSwitcher.switchScene(event, root);
+                user.closeUserSession();
             }
         });
     }

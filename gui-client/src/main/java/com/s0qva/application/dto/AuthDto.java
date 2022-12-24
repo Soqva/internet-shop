@@ -1,4 +1,4 @@
-package com.s0qva.application.dto.user;
+package com.s0qva.application.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAuthenticationDto {
+public class AuthDto {
     private String username;
     private String password;
 }

@@ -11,8 +11,9 @@ import lombok.experimental.UtilityClass;
 public class SceneSwitcher {
 
     public void switchScene(Event event, Parent root) {
-        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
+        var stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        var scene = new Scene(root);
+
         stage.setScene(scene);
         stage.show();
     }

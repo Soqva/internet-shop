@@ -1,19 +1,16 @@
 package com.s0qva.application.controller.user;
 
-import com.s0qva.application.controller.ProductController;
+import com.s0qva.application.controller.CommodityController;
 import com.s0qva.application.controller.admin.MainAdminPageController;
 import com.s0qva.application.controller.eventhandler.DefaultUserAccountEventHandler;
 import com.s0qva.application.controller.scene.SceneSwitcher;
-import com.s0qva.application.dto.product.ProductReadingDto;
+import com.s0qva.application.dto.CommodityDto;
 import com.s0qva.application.fxml.FxmlPageLoader;
-import com.s0qva.application.model.enumeration.UserRole;
-import com.s0qva.application.service.ProductService;
-import com.s0qva.application.session.UserSession;
+import com.s0qva.application.service.CommodityService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
@@ -22,29 +19,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
+import static com.s0qva.application.model.enumeration.UserRole.ADMIN;
+
 @Component
-@FxmlView("products-page.fxml")
-public class ProductUserController extends ProductController implements Initializable {
+@FxmlView("commodity-page.fxml")
+public class CommodityUserController extends CommodityController implements Initializable {
     private final DefaultUserAccountEventHandler defaultUserAccountEventHandler;
     private final Class<OrderUserController> orderUserControllerClass;
     private final Class<MainAdminPageController> mainAdminPageControllerClass;
     @FXML
-    private ListView<ProductReadingDto> products;
+    private ListView<CommodityDto> commodities;
     @FXML
-    private ListView<ProductReadingDto> productsInCart;
+    private ListView<CommodityDto> commoditiesInCart;
     @FXML
     private HBox account;
     @FXML
     private Button backToMainAdminPageButton;
 
     @Autowired
-    public ProductUserController(ProductService productService,
-                                 FxmlPageLoader fxmlPageLoader,
-                                 DefaultUserAccountEventHandler defaultUserAccountEventHandler) {
-        super(productService, fxmlPageLoader);
+    public CommodityUserController(CommodityService commodityService,
+                                   FxmlPageLoader fxmlPageLoader,
+                                   DefaultUserAccountEventHandler defaultUserAccountEventHandler) {
+        super(commodityService, fxmlPageLoader);
         this.defaultUserAccountEventHandler = defaultUserAccountEventHandler;
         this.orderUserControllerClass = OrderUserController.class;
         this.mainAdminPageControllerClass = MainAdminPageController.class;
@@ -56,43 +54,48 @@ public class ProductUserController extends ProductController implements Initiali
         showBackToMainAdminPageButton();
         fillProducts();
         fillProductsInCart();
-        addEventToShowProductDetails(products, productsInCart);
+        addEventToShowProductDetails(commodities, commoditiesInCart);
     }
 
     public void addToCart() {
-        ProductReadingDto selectedProduct = products.getSelectionModel().getSelectedItem();
-        cart.addToCart(selectedProduct);
-        productsInCart.setItems(FXCollections.observableArrayList(cart.getProducts()));
+        var selectedCommodity = commodities.getSelectionModel().getSelectedItem();
+
+        cart.addToCart(selectedCommodity);
+        commoditiesInCart.setItems(FXCollections.observableArrayList(cart.getCommodities()));
     }
 
     public void removeFromCart() {
-        ProductReadingDto selectedProduct = productsInCart.getSelectionModel().getSelectedItem();
+        var selectedProduct = commoditiesInCart.getSelectionModel().getSelectedItem();
+
         cart.removeFromCart(selectedProduct);
-        productsInCart.setItems(FXCollections.observableArrayList(cart.getProducts()));
+        commoditiesInCart.setItems(FXCollections.observableArrayList(cart.getCommodities()));
     }
 
     public void onCreateOrder(ActionEvent event) {
-        Parent root = fxmlPageLoader.loadFxmlFile(orderUserControllerClass);
+        var root = fxmlPageLoader.loadFxmlFile(orderUserControllerClass);
+
         SceneSwitcher.switchScene(event, root);
     }
 
     private void fillProducts() {
-        List<ProductReadingDto> receivedProducts = productService.getAllProducts();
-        products.setItems(FXCollections.observableArrayList(receivedProducts));
+        var receivedProducts = commodityService.getAll();
+
+        commodities.setItems(FXCollections.observableArrayList(receivedProducts));
     }
 
     private void fillProductsInCart() {
-        productsInCart.setItems(FXCollections.observableArrayList(cart.getProducts()));
+        commoditiesInCart.setItems(FXCollections.observableArrayList(cart.getCommodities()));
     }
 
     private void showBackToMainAdminPageButton() {
-        if (userSession.getRole() == UserRole.ADMIN) {
+        if (userSession.containsRole(ADMIN)) {
             backToMainAdminPageButton.setVisible(true);
         }
     }
 
     public void onBackToMainAdminPage(ActionEvent event) {
-        Parent root = fxmlPageLoader.loadFxmlFile(mainAdminPageControllerClass);
+        var root = fxmlPageLoader.loadFxmlFile(mainAdminPageControllerClass);
+
         SceneSwitcher.switchScene(event, root);
     }
 }

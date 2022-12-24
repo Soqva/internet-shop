@@ -23,6 +23,23 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
+                  <Label prefHeight="25.0" prefWidth="80.0" text="Email">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="email" prefHeight="25.0" prefWidth="180.0" promptText="s0qva">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
                   <Label prefHeight="25.0" prefWidth="80.0" text="Username">
                      <font>
                         <Font size="18.0" />

@@ -9,8 +9,10 @@ import com.s0qva.application.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -45,6 +47,17 @@ public class OrderService {
         );
         saveOrUpdateUserOrder(orderDto.getUser().getId(), createdOrderId);
         return createdOrderDto;
+    }
+
+    @Transactional
+    public OrderDto update(Long id, OrderDto orderDto) {
+        return orderRepository.findById(id)
+                .map(existingOrder -> {
+                    orderDto.setId(existingOrder.getId());
+                    create(orderDto);
+                    return orderDto;
+                })
+                .orElseThrow(() -> new RuntimeException("There is not order with id = " + id));
     }
 
     private OrderDto saveOrUpdateOrder(OrderDto orderDto) {

@@ -9,29 +9,27 @@ import lombok.experimental.UtilityClass;
 public class AlertUtil {
 
     public void generateErrorAlert(String title, String headerText, String contentText) {
-        Alert alert = createAlert(title, headerText, contentText, Alert.AlertType.ERROR);
+        var alert = createAlert(title, headerText, contentText, Alert.AlertType.ERROR);
+
         alert.showAndWait();
     }
 
     public void generateInformationAlert(String title, String headerText, String contentText) {
-        Alert alert = createAlert(title, headerText, contentText, Alert.AlertType.INFORMATION);
+        var alert = createAlert(title, headerText, contentText, Alert.AlertType.INFORMATION);
+
         alert.showAndWait();
     }
 
     private Alert createAlert(String title, String headerText, String contentText, Alert.AlertType alertType) {
-        Alert alert = new Alert(alertType);
+        var alert = new Alert(alertType);
+        var dialogPaneContent = new VBox();
+        var contentLabel = new Label();
+
         alert.setTitle(title);
         alert.setHeaderText(headerText);
-
-        VBox dialogPaneContent = new VBox();
-
-        Label contentLabel = new Label();
         contentLabel.setText(contentText);
-
         dialogPaneContent.getChildren().add(contentLabel);
-
         alert.getDialogPane().setContent(dialogPaneContent);
-
         return alert;
     }
 

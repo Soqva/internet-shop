@@ -6,11 +6,11 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.s0qva.application.controller.user.ProductUserController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.s0qva.application.controller.user.CommodityUserController">
    <children>
       <Pane fx:id="tablePane" layoutX="62.0" layoutY="100.0" prefHeight="400.0" prefWidth="300.0">
          <children>
-            <ListView fx:id="products" layoutX="25.0" layoutY="25.0" prefHeight="350.0" prefWidth="250.0" />
+            <ListView fx:id="commodities" layoutX="25.0" layoutY="25.0" prefHeight="350.0" prefWidth="250.0" />
          </children>
       </Pane>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="175.0" layoutY="87.0" text="Products" textAlignment="CENTER">
@@ -25,7 +25,7 @@
       </Button>
       <Pane layoutX="450.0" layoutY="100.0" prefHeight="400.0" prefWidth="300.0">
          <children>
-            <ListView fx:id="productsInCart" layoutX="25.0" layoutY="25.0" prefHeight="350.0" prefWidth="250.0" />
+            <ListView fx:id="commoditiesInCart" layoutX="25.0" layoutY="25.0" prefHeight="350.0" prefWidth="250.0" />
          </children>
       </Pane>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="568.0" layoutY="87.0" text="My cart" textAlignment="CENTER">
