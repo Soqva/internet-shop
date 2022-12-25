@@ -5,8 +5,9 @@ import com.s0qva.application.controller.eventhandler.DefaultUserAccountEventHand
 import com.s0qva.application.controller.scene.SceneSwitcher;
 import com.s0qva.application.dto.CommodityDto;
 import com.s0qva.application.dto.SupplyDto;
+import com.s0qva.application.dto.dictionary.DictionaryCountryDto;
+import com.s0qva.application.dto.dictionary.DictionarySupplierDto;
 import com.s0qva.application.fxml.FxmlPageLoader;
-import com.s0qva.application.model.enumeration.Country;
 import com.s0qva.application.service.CommodityService;
 import com.s0qva.application.service.SupplyService;
 import com.s0qva.application.util.AlertUtil;
@@ -24,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 @FxmlView("commodity-admin-page.fxml")
@@ -39,13 +41,19 @@ public class CommodityAdminController extends CommodityController implements Ini
     @FXML
     private VBox windowsForCreating;
     @FXML
+    private TextField supplierName;
+    @FXML
+    private TextField supplierDescription;
+    @FXML
     private TextField commodityName;
     @FXML
-    private TextField commodityPrice;
+    private TextField commodityCost;
     @FXML
     private TextField commodityDescription;
     @FXML
-    private ComboBox<Country> commodityMadeInComboBox;
+    private TextField suppliedCommodityAmount;
+    @FXML
+    private ComboBox<DictionaryCountryDto> commodityMadeInComboBox;
 
     @Autowired
     public CommodityAdminController(CommodityService commodityService,
@@ -98,12 +106,12 @@ public class CommodityAdminController extends CommodityController implements Ini
     }
 
     private void fillCommodityMadeInComboBox() {
-        commodityMadeInComboBox.getItems().addAll(Country.values());
+        commodityMadeInComboBox.getItems().addAll(commodityService.getProducingCountries());
     }
 
     private void clearAllCommodityCreatingFields() {
         commodityName.clear();
-        commodityPrice.clear();
+        commodityCost.clear();
         commodityDescription.clear();
         commodityMadeInComboBox.getSelectionModel().clearSelection();
     }
@@ -115,10 +123,31 @@ public class CommodityAdminController extends CommodityController implements Ini
     }
 
     private SupplyDto buildSupplyDto() {
-        var description = commodityDescription.getText();
+        var enteredSupplierName = supplierName.getText();
+        var enteredSupplierDescription = supplierDescription.getText();
+        var enteredCommodityName = commodityName.getText();
+        var enteredCommodityDescription = commodityDescription.getText();
         var selectedCountry = commodityMadeInComboBox.getSelectionModel().getSelectedItem();
+        var enteredCommodityCost = Double.parseDouble(commodityCost.getText());
+        var enteredSuppliedAmount = Integer.parseInt(suppliedCommodityAmount.getText());
 
-        return SupplyDto.builder().build();
+        return SupplyDto.builder()
+                .supplier(DictionarySupplierDto.builder()
+                        .name(enteredSupplierName)
+                        .description(enteredSupplierDescription)
+                        .build()
+                )
+                .receivingDate(System.currentTimeMillis())
+                .suppliedCommodities(List.of(
+                        CommodityDto.builder()
+                                .name(enteredCommodityName)
+                                .description(enteredCommodityDescription)
+                                .producingCountry(selectedCountry)
+                                .cost(enteredCommodityCost)
+                                .amount(enteredSuppliedAmount)
+                                .build()
+                ))
+                .build();
     }
 
     private static class DefaultAlertValue {

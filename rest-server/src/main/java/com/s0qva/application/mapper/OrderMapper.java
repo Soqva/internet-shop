@@ -9,6 +9,7 @@ import lombok.experimental.UtilityClass;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -59,11 +60,10 @@ public class OrderMapper {
         return context -> context.getSource().getOrderCommodities()
                 .stream()
                 .map(orderCommodity -> {
-                    var amountOfBoughtCommodities = orderCommodity.getAmountOfBoughtCommodities();
                     var commodity = orderCommodity.getCommodity();
                     var commodityDto = mapInternal(commodity, CommodityDto.class);
 
-                    commodityDto.setAmount(amountOfBoughtCommodities);
+                    commodityDto.setAmount(null);
                     return commodityDto;
                 })
                 .collect(toList());
@@ -81,6 +81,7 @@ public class OrderMapper {
     private Converter<OrderDto, Double> getDtoToEntityOrderCostConverter() {
         return context -> context.getSource().getOrderedCommodities()
                 .stream()
+                .filter(currentCommodityDto -> !ObjectUtils.isEmpty(currentCommodityDto.getAmount()))
                 .reduce(0.0, (subOrderCost, secondCommodity) -> subOrderCost
                         + secondCommodity.getCost() * secondCommodity.getAmount(), Double::sum);
     }

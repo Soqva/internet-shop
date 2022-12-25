@@ -7,6 +7,7 @@ import com.s0qva.application.dto.CommodityDto;
 import com.s0qva.application.dto.OrderDto;
 import com.s0qva.application.dto.dictionary.DictionaryOrderStatusDto;
 import com.s0qva.application.fxml.FxmlPageLoader;
+import com.s0qva.application.model.enumeration.OrderStatus;
 import com.s0qva.application.service.OrderService;
 import com.s0qva.application.session.UserSession;
 import com.s0qva.application.util.AlertUtil;
@@ -22,7 +23,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+
+import static com.s0qva.application.model.enumeration.OrderStatus.WAITING;
+import static java.util.stream.Collectors.toList;
 
 @Component
 @FxmlView("orders-page.fxml")
@@ -95,9 +101,23 @@ public class OrderUserController extends OrderController implements Initializabl
     }
 
     private OrderDto buildOrderDto() {
+        var initialOrderStatus = orderService.getStatuses().stream()
+                .filter(currentOrderStatus -> currentOrderStatus.getName().equals(WAITING.getName()))
+                .findFirst()
+                .orElseThrow();
+        var orderedAmountOfCommodities = new HashMap<CommodityDto, Integer>();
+
+        cart.getCommodities().forEach(currentCommodityDto -> {
+            orderedAmountOfCommodities.computeIfAbsent(currentCommodityDto, key -> 0);
+            orderedAmountOfCommodities.computeIfPresent(currentCommodityDto, (key, amount) -> amount + 1);
+        });
+        orderedAmountOfCommodities.forEach(CommodityDto::setAmount);
         return OrderDto.builder()
-                .orderStatus(DictionaryOrderStatusDto.builder().id(2L).build())
-                .orderedCommodities(cart.getCommodities())
+                .orderStatus(initialOrderStatus)
+                .orderedCommodities(cart.getCommodities().stream()
+                        .distinct()
+                        .collect(toList())
+                )
                 .user(UserSession.getInstance().getUser())
                 .build();
     }

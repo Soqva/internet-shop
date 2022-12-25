@@ -53,11 +53,23 @@
       </Button>
       <VBox fx:id="windowsForCreating" alignment="TOP_CENTER" layoutX="270.0" layoutY="156.0" prefHeight="350.0" prefWidth="250.0" spacing="15.0" style="-fx-background-color: aqua;" visible="false">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="Creating a new product">
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Creating a new commodity">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="250.0" spacing="20.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="65.0" text="Supplier name" />
+                  <TextField fx:id="supplierName" prefWidth="150.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="250.0" spacing="20.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="65.0" text="Supplier description" />
+                  <TextField fx:id="supplierDescription" prefWidth="150.0" />
+               </children>
+            </HBox>
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="250.0" spacing="20.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="65.0" text="Name" />
@@ -67,7 +79,7 @@
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="250.0" spacing="20.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="65.0" text="Price" />
-                  <TextField fx:id="commodityPrice" prefWidth="150.0" />
+                  <TextField fx:id="commodityCost" prefWidth="150.0" />
                </children>
             </HBox>
             <Label alignment="CENTER" contentDisplay="CENTER" text="Product's details">
@@ -85,6 +97,12 @@
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="65.0" text="Made in" />
                   <ComboBox fx:id="commodityMadeInComboBox" prefWidth="150.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="250.0" spacing="20.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="65.0" text="Supplied amount" />
+                  <TextField fx:id="suppliedCommodityAmount" prefWidth="150.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="250.0" spacing="20.0">

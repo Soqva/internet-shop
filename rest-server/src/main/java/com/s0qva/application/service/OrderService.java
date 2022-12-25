@@ -1,19 +1,20 @@
 package com.s0qva.application.service;
 
 import com.s0qva.application.dto.OrderDto;
+import com.s0qva.application.mapper.DefaultMapper;
 import com.s0qva.application.mapper.OrderMapper;
 import com.s0qva.application.model.Order;
 import com.s0qva.application.model.OrderCommodity;
 import com.s0qva.application.model.UserOrder;
+import com.s0qva.application.model.dictionary.DictionaryOrderStatus;
 import com.s0qva.application.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ObjectUtils;
 
 import java.util.List;
-import java.util.Optional;
 
+import static com.s0qva.application.model.enumeration.OrderStatus.ACCEPTED;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -22,6 +23,7 @@ import static java.util.stream.Collectors.toList;
 public class OrderService {
     private final UserOrderService userOrderService;
     private final OrderCommodityService orderCommodityService;
+    private final SoldCommodityService soldCommodityService;
     private final OrderRepository orderRepository;
 
     public List<OrderDto> getAll() {
@@ -51,13 +53,37 @@ public class OrderService {
 
     @Transactional
     public OrderDto update(Long id, OrderDto orderDto) {
-        return orderRepository.findById(id)
-                .map(existingOrder -> {
-                    orderDto.setId(existingOrder.getId());
-                    create(orderDto);
-                    return orderDto;
-                })
+        var existingOrder = orderRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("There is not order with id = " + id));
+        var orderStatus = orderDto.getOrderStatus().getName();
+
+        existingOrder.setOrderStatus(DefaultMapper.mapToEntity(orderDto.getOrderStatus(), DictionaryOrderStatus.class));
+
+        if (!ACCEPTED.getName().equals(orderStatus)) {
+            return saveOrUpdateOrder(existingOrder);
+        }
+        var updatedOrder = saveOrUpdateOrder(existingOrder);
+
+        existingOrder.getOrderCommodities().forEach(currentOrderCommodity -> {
+            var currentOrderedCommodity = currentOrderCommodity.getCommodity();
+            var orderedCommodityAmount = currentOrderCommodity.getAmountOfBoughtCommodities();
+            var oldCommodityAmount = currentOrderedCommodity.getAvailableAmount();
+
+            currentOrderedCommodity.setAvailableAmount(oldCommodityAmount - orderedCommodityAmount);
+            soldCommodityService.create(currentOrderedCommodity, orderedCommodityAmount);
+            saveOrUpdateOrderCommodity(
+                    existingOrder.getId(),
+                    currentOrderedCommodity.getId(),
+                    orderedCommodityAmount
+            );
+        });
+        return updatedOrder;
+    }
+
+    private OrderDto saveOrUpdateOrder(Order order) {
+        var createdOrder = orderRepository.save(order);
+
+        return mapToDto(createdOrder);
     }
 
     private OrderDto saveOrUpdateOrder(OrderDto orderDto) {

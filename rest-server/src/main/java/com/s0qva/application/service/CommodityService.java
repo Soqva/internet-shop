@@ -1,6 +1,7 @@
 package com.s0qva.application.service;
 
 import com.s0qva.application.dto.CommodityDto;
+import com.s0qva.application.mapper.CommodityMapper;
 import com.s0qva.application.mapper.DefaultMapper;
 import com.s0qva.application.model.Commodity;
 import com.s0qva.application.repository.CommodityRepository;
@@ -41,10 +42,10 @@ public class CommodityService {
     }
 
     private CommodityDto mapToDto(Commodity commodity) {
-        return DefaultMapper.mapToDto(commodity, CommodityDto.class);
+        return CommodityMapper.mapToDto(commodity);
     }
 
     private Commodity mapToEntity(CommodityDto commodityDto) {
-        return DefaultMapper.mapToEntity(commodityDto, Commodity.class);
+        return CommodityMapper.mapToEntity(commodityDto);
     }
 }
