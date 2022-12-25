@@ -151,8 +151,8 @@ public class CommodityAdminController extends CommodityController implements Ini
     }
 
     private static class DefaultAlertValue {
-        private static final String INFO_ALERT_CREATED_PRODUCT_TITLE = "Successful product creation";
-        private static final String INFO_ALERT_CREATED_PRODUCT_HEADER = "The product has been successfully created!";
-        private static final String INFO_ALERT_CREATED_PRODUCT_CONTENT = "The product is available for purchase";
+        private static final String INFO_ALERT_CREATED_PRODUCT_TITLE = "Поставка оформлена";
+        private static final String INFO_ALERT_CREATED_PRODUCT_HEADER = "Поставка была успешно оформлена!";
+        private static final String INFO_ALERT_CREATED_PRODUCT_CONTENT = "Товары доступны для покупки";
     }
 }

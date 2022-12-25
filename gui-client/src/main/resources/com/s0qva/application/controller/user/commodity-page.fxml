@@ -13,12 +13,12 @@
             <ListView fx:id="commodities" layoutX="25.0" layoutY="25.0" prefHeight="350.0" prefWidth="250.0" />
          </children>
       </Pane>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="175.0" layoutY="87.0" text="Products" textAlignment="CENTER">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="175.0" layoutY="87.0" text="Товары" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="addingToCartButton" alignment="CENTER" contentDisplay="CENTER" layoutX="122.0" layoutY="500.0" mnemonicParsing="false" onAction="#addToCart" prefWidth="180.0" text="Add to the cart" textAlignment="CENTER">
+      <Button fx:id="addingToCartButton" alignment="CENTER" contentDisplay="CENTER" layoutX="122.0" layoutY="500.0" mnemonicParsing="false" onAction="#addToCart" prefWidth="180.0" text="Добавить в корзину" textAlignment="CENTER">
          <font>
             <Font size="14.0" />
          </font>
@@ -28,22 +28,22 @@
             <ListView fx:id="commoditiesInCart" layoutX="25.0" layoutY="25.0" prefHeight="350.0" prefWidth="250.0" />
          </children>
       </Pane>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="568.0" layoutY="87.0" text="My cart" textAlignment="CENTER">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="568.0" layoutY="87.0" text="Корзина" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="creatingOrderButton" layoutX="511.0" layoutY="539.0" mnemonicParsing="false" onAction="#onCreateOrder" prefWidth="180.0" text="Create order">
+      <Button fx:id="creatingOrderButton" layoutX="511.0" layoutY="539.0" mnemonicParsing="false" onAction="#onCreateOrder" prefWidth="180.0" text="Оформить заказ">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="353.0" layoutY="23.0" text="Products page">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="353.0" layoutY="23.0" text="Страница товаров">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="510.0" layoutY="500.0" mnemonicParsing="false" onAction="#removeFromCart" prefWidth="180.0" text="Remove from the cart">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="510.0" layoutY="500.0" mnemonicParsing="false" onAction="#removeFromCart" prefWidth="180.0" text="Убрать из корзины">
          <font>
             <Font size="14.0" />
          </font>
@@ -58,7 +58,7 @@
             </ImageView>
          </children>
       </HBox>
-      <Button fx:id="backToMainAdminPageButton" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="22.0" mnemonicParsing="false" onAction="#onBackToMainAdminPage" prefWidth="89.0" text="Back to main" textAlignment="CENTER" visible="false">
+      <Button fx:id="backToMainAdminPageButton" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="22.0" mnemonicParsing="false" onAction="#onBackToMainAdminPage" prefWidth="89.0" text="Вернуться на главную" textAlignment="CENTER" visible="false">
          <font>
             <Font size="10.0" />
          </font>

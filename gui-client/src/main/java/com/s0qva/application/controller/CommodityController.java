@@ -30,8 +30,8 @@ public abstract class CommodityController {
             currentList.setOnMouseClicked(click -> {
                 if (click.getClickCount() >= 2) {
                     var selectedCommodity = currentList.getSelectionModel().getSelectedItem();
-                    var description = "There is no any description";
-                    var madeIn = "Unknown";
+                    var description = "Описание отсутствует";
+                    var madeIn = "Неизвестно";
 
                     if (selectedCommodity.getDescription() != null) {
                         description = selectedCommodity.getDescription();
@@ -40,7 +40,7 @@ public abstract class CommodityController {
                     if (selectedCommodity.getProducingCountry() != null) {
                         madeIn = selectedCommodity.getProducingCountry().getName();
                     }
-                    var content = "Description: " + description + " \nMade in: " + madeIn;
+                    var content = "Описание: " + description + " \nПроизведено в: " + madeIn;
 
                     AlertUtil.generateInformationAlert(
                             DefaultAlertValue.INFO_ALERT_PRODUCT_DETAILS_TITLE,
@@ -53,7 +53,7 @@ public abstract class CommodityController {
     }
 
     private static class DefaultAlertValue {
-        private static final String INFO_ALERT_PRODUCT_DETAILS_TITLE = "Details";
-        private static final String INFO_ALERT_PRODUCT_DETAILS_HEADER = "Here is details about the product";
+        private static final String INFO_ALERT_PRODUCT_DETAILS_TITLE = "Детали";
+        private static final String INFO_ALERT_PRODUCT_DETAILS_HEADER = "Здесь представлены детали о товаре";
     }
 }

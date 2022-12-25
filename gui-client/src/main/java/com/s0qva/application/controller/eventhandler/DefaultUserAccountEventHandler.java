@@ -33,8 +33,8 @@ public class DefaultUserAccountEventHandler {
             var mouseButton = event.getButton();
 
             if (mouseButton == PRIMARY) {
-                String content = "username: " + user.getUsername()
-                        + "\nfull name: " + user.getFirstName() + " " + user.getLastName();
+                String content = "логин: " + user.getUsername()
+                        + "\nполное имя: " + user.getFirstName() + " " + user.getLastName();
 
                 AlertUtil.generateInformationAlert(
                         DefaultAlertValue.INFO_ALERT_ACCOUNT_TITLE,
@@ -52,7 +52,7 @@ public class DefaultUserAccountEventHandler {
     }
 
     private static class DefaultAlertValue {
-        private static final String INFO_ALERT_ACCOUNT_TITLE = "My account";
-        private static final String INFO_ALERT_ACCOUNT_HEADER = "Here is information about me";
+        private static final String INFO_ALERT_ACCOUNT_TITLE = "Аккаунт";
+        private static final String INFO_ALERT_ACCOUNT_HEADER = "Информация обо мне";
     }
 }

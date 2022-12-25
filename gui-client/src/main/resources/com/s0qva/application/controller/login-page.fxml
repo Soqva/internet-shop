@@ -12,7 +12,7 @@
    <children>
       <VBox alignment="CENTER" layoutX="56.0" layoutY="50.0" prefHeight="500.0" prefWidth="344.0" spacing="10.0">
          <children>
-            <Label contentDisplay="CENTER" text="Sign in" textAlignment="CENTER">
+            <Label contentDisplay="CENTER" text="Войти" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
@@ -22,7 +22,7 @@
             </Label>
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="30.0">
                <children>
-                  <Label prefWidth="100.0" text="Username" textAlignment="CENTER">
+                  <Label prefWidth="100.0" text="Логин" textAlignment="CENTER">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -39,7 +39,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="30.0">
                <children>
-                  <Label prefWidth="100.0" text="Password" textAlignment="CENTER">
+                  <Label prefWidth="100.0" text="Пароль" textAlignment="CENTER">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -51,7 +51,7 @@
                   </PasswordField>
                </children>
             </HBox>
-            <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSignIn" prefWidth="180.0" text="Sign in" textAlignment="CENTER">
+            <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSignIn" prefWidth="180.0" text="Войти" textAlignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font>
@@ -63,7 +63,7 @@
       </VBox>
       <VBox alignment="CENTER" layoutX="400.0" layoutY="50.0" prefHeight="500.0" prefWidth="344.0" spacing="130.0">
          <children>
-            <Label contentDisplay="CENTER" text="Sign up" textAlignment="CENTER">
+            <Label contentDisplay="CENTER" text="Регистрация" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
@@ -71,7 +71,7 @@
                   <Insets bottom="50.0" />
                </VBox.margin>
             </Label>
-            <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSignUp" prefWidth="180.0" text="Sign up" textAlignment="CENTER">
+            <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSignUp" prefWidth="180.0" text="Зарегистрироваться" textAlignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font>

@@ -93,11 +93,11 @@ public class OrderAdminController extends OrderController implements Initializab
 
             if (button == PRIMARY && click.getClickCount() >= 2) {
                 var selectedOrder = userOrders.getSelectionModel().getSelectedItem();
-                var content = "Order id: " + selectedOrder.getId() + "\n" +
-                        "Order status: " + selectedOrder.getOrderStatus().getName() + "\n" +
-                        "User id: " + selectedOrder.getUser().getId() + "\n" +
-                        "Ordered commodities: " + selectedOrder.getOrderedCommodities() + "\n" +
-                        "Total price: " + selectedOrder.getOrderCost();
+                var content = "Id заказа: " + selectedOrder.getId() + "\n" +
+                        "Статус заказа: " + selectedOrder.getOrderStatus().getName() + "\n" +
+                        "Id пользователя: " + selectedOrder.getUser().getId() + "\n" +
+                        "Заказанные товары: " + selectedOrder.getOrderedCommodities() + "\n" +
+                        "Цена заказа: " + selectedOrder.getOrderCost();
                 AlertUtil.generateInformationAlert(
                         DefaultAlertValue.INFO_ALERT_TITLE,
                         DefaultAlertValue.INFO_ALERT_HEADER,
@@ -123,7 +123,7 @@ public class OrderAdminController extends OrderController implements Initializab
     }
 
     private static class DefaultAlertValue {
-        private static final String INFO_ALERT_TITLE = "Order information";
-        private static final String INFO_ALERT_HEADER = "Here is information about the order";
+        private static final String INFO_ALERT_TITLE = "Информация о заказе";
+        private static final String INFO_ALERT_HEADER = "Здесь представлена информация о заказе";
     }
 }

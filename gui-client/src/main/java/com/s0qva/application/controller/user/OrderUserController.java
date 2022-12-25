@@ -123,13 +123,11 @@ public class OrderUserController extends OrderController implements Initializabl
     }
 
     private static class DefaultAlertValue {
-        private static final String INFO_ALERT_TITLE = "Successful order creation";
-        private static final String INFO_ALERT_HEADER = "Your order has been successfully created!";
-        private static final String INFO_ALERT_CONTENT = "The order will be handled by an administrator. " +
-                "Please wait his decision. You can check the order's status in list of your orders";
-        private static final String ERROR_ALERT_TITLE = "Order creation error";
-        private static final String ERROR_ALERT_HEADER = "Your order hasn't been created";
-        private static final String ERROR_ALERT_CONTENT = "Something went wrong during the order creation. " +
-                "We would try to fix the problem";
+        private static final String INFO_ALERT_TITLE = "Заказ успешно оформлен";
+        private static final String INFO_ALERT_HEADER = "Ваш заказ успешно оформлен!";
+        private static final String INFO_ALERT_CONTENT = "Заказ будет обработан администратором магазина";
+        private static final String ERROR_ALERT_TITLE = "Ошибка оформления заказа";
+        private static final String ERROR_ALERT_HEADER = "Ваш заказ не был оформлен";
+        private static final String ERROR_ALERT_CONTENT = "Что-то пошло не так, попробуйте позже";
     }
 }

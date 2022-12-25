@@ -74,6 +74,7 @@ public class OrderMapper {
                 .stream()
                 .map(UserOrder::getUser)
                 .map(UserMapper::mapToDto)
+                .peek(currentUserDto -> currentUserDto.setPassword(null))
                 .findFirst()
                 .orElse(null);
     }

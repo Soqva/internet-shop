@@ -1,7 +1,6 @@
 package com.s0qva.application.service;
 
 import com.s0qva.application.dto.UserDto;
-import com.s0qva.application.mapper.DefaultMapper;
 import com.s0qva.application.mapper.UserMapper;
 import com.s0qva.application.model.User;
 import com.s0qva.application.repository.UserRepository;
@@ -18,6 +17,12 @@ import static java.util.stream.Collectors.toList;
 @Transactional
 public class UserService {
     private final UserRepository userRepository;
+
+    public List<UserDto> getAllAdmins() {
+        return userRepository.findAllAdmins().stream()
+                .map(this::mapToDto)
+                .collect(toList());
+    }
 
     public List<UserDto> getAll() {
         return userRepository.findAll().stream()

@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.s0qva.application.controller.RegistrationController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.s0qva.application.controller.RegistrationController">
    <children>
       <VBox alignment="CENTER" layoutX="150.0" layoutY="100.0" prefHeight="400.0" prefWidth="500.0" spacing="30.0">
          <children>
             <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="232.0" text="Registration" textAlignment="CENTER">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="232.0" text="Регистрация" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="30.0" />
                      </font>
@@ -23,7 +25,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Label prefHeight="25.0" prefWidth="80.0" text="Email">
+                  <Label prefHeight="25.0" prefWidth="80.0" text="Почта">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -40,7 +42,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Label prefHeight="25.0" prefWidth="80.0" text="Username">
+                  <Label prefHeight="25.0" prefWidth="80.0" text="Логин">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -57,26 +59,26 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Label prefHeight="25.0" prefWidth="80.0" text="Password">
+                  <Label prefHeight="25.0" prefWidth="80.0" text="Пароль">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="password" prefHeight="25.0" prefWidth="180.0">
+                  <PasswordField fx:id="password" prefHeight="30.0" prefWidth="182.0">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </PasswordField>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+            <HBox alignment="CENTER" prefHeight="121.0" prefWidth="325.0" spacing="20.0">
                <children>
-                  <Label prefHeight="25.0" text="First name">
+                  <Label prefHeight="27.0" prefWidth="76.0" text="Имя">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="firstName" prefHeight="25.0" prefWidth="180.0" promptText="Nikita">
+                  <TextField fx:id="firstName" prefHeight="30.0" prefWidth="180.0" promptText="Nikita">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -88,7 +90,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Label prefHeight="25.0" text="Last name">
+                  <Label prefHeight="25.0" text="Фамилия">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -106,7 +108,7 @@
                   <Insets />
                </VBox.margin>
             </HBox>
-            <Button fx:id="signUp" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSignUp" prefWidth="180.0" text="Sign up" textAlignment="CENTER">
+            <Button fx:id="signUp" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSignUp" prefWidth="180.0" text="Зарегистрироваться" textAlignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font>
@@ -116,7 +118,7 @@
             <Insets left="100.0" right="100.0" />
          </padding>
       </VBox>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onBackToLogin" prefHeight="15.0" prefWidth="100.0" text="Back to sign in">
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onBackToLogin" prefHeight="15.0" prefWidth="100.0" text="Вернуться к входу">
          <font>
             <Font size="10.0" />
          </font>

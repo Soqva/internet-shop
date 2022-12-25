@@ -89,12 +89,10 @@ public class LoginController {
     }
 
     private static class DefaultAlertValue {
-        private static final String ERROR_ALERT_TITLE = "Sign in error";
-        private static final String ERROR_ALERT_HEADER = "The entered information is wrong";
-        private static final String ERROR_ALERT_CONTENT = "Username or password is incorrect. Please," +
-                " check the data or sign up if you do not have an account";
-        private static final String ERROR_ALERT_BAN_HEADER = "Your account has been banned";
-        private static final String ERROR_ALERT_BAN_CONTENT = "The store administrator has banned your account" +
-                " for violating store rules";
+        private static final String ERROR_ALERT_TITLE = "Ошибка входа";
+        private static final String ERROR_ALERT_HEADER = "Введенная информация содержит ошибки";
+        private static final String ERROR_ALERT_CONTENT = "Логин или пароль неверный";
+        private static final String ERROR_ALERT_BAN_HEADER = "Вы заблокированы";
+        private static final String ERROR_ALERT_BAN_CONTENT = "Администратор магазина заблокировал ваш аккаунт";
     }
 }

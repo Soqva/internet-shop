@@ -78,13 +78,11 @@ public class RegistrationController {
     }
 
     private static class DefaultAlertValue {
-        private static final String ERROR_ALERT_TITLE = "Registration error";
-        private static final String ERROR_ALERT_HEADER = "The username already exists";
-        private static final String ERROR_ALERT_CONTENT = "User with this username already exists. Please," +
-                " enter a unique username";
-        private static final String INFO_ALERT_TITLE = "Successful registration";
-        private static final String INFO_ALERT_HEADER = "Registration has been completed successfully. Please," +
-                " sign in now to continue.";
+        private static final String ERROR_ALERT_TITLE = "Ошибка регистрации";
+        private static final String ERROR_ALERT_HEADER = "Логин уже существует";
+        private static final String ERROR_ALERT_CONTENT = "Пользователь с таким логином уже существует";
+        private static final String INFO_ALERT_TITLE = "Успешная регистрация";
+        private static final String INFO_ALERT_HEADER = "Регистрация прошла успешно, теперь войдите в свой аккаунт";
         private static final String INFO_ALERT_CONTENT = "";
     }
 }

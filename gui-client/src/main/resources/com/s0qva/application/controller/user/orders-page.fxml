@@ -10,29 +10,29 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.s0qva.application.controller.user.OrderUserController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="362.0" layoutY="24.0" text="Orders page">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="362.0" layoutY="24.0" text="Страница заказов">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
       <ListView fx:id="userOrders" layoutX="101.0" layoutY="120.0" prefHeight="150.0" prefWidth="600.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="357.0" layoutY="85.0" text="My orders">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="357.0" layoutY="85.0" text="Мои заказы">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="backToProductsButton" layoutX="14.0" layoutY="23.0" mnemonicParsing="false" onAction="#onBackToProducts" text="Back to products">
+      <Button fx:id="backToProductsButton" layoutX="14.0" layoutY="23.0" mnemonicParsing="false" onAction="#onBackToProducts" text="Вернуться к товарам">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
       <ListView fx:id="userCurrentOrder" layoutX="272.0" layoutY="332.0" prefHeight="200.0" prefWidth="261.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="330.0" layoutY="287.0" text="My current order">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="330.0" layoutY="287.0" text="Текущий заказ">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="351.0" layoutY="545.0" mnemonicParsing="false" onAction="#onCreateOrder" text="Create order" textAlignment="CENTER">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="351.0" layoutY="545.0" mnemonicParsing="false" onAction="#onCreateOrder" text="Оформить заказ" textAlignment="CENTER">
          <font>
             <Font size="14.0" />
          </font>
